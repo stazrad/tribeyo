@@ -4,14 +4,19 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
         <title>Tribeyo - a cheaper way to reconnect</title>
-
+        <!-- Google font -->
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:200,400,700" rel="stylesheet" />
+        <link href="css/bootstrap.min.css" rel="stylesheet" />
+        <link href="css/styles.css" rel="stylesheet" />
         <!-- Stripe JS -->
         <!-- <script src="https://js.stripe.com/v2/"></script>
         <script src="https://js.stripe.com/v3/"></script> -->
         <script async src="https://checkout.stripe.com/checkout.js"></script>
     </head>
     <body>
-        <div id="app"></div>
+        <div id="app">
+            <img class="pre-loader" src="http://thinkfuture.com/wp-content/uploads/2013/10/loading_spinner.gif" />
+        </div>
         <script src="build/bundle.js"></script>
     </body>
 </html>

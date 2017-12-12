@@ -16,7 +16,8 @@ var analyticsInit = require('./api/analytics/initData');
 
 // MIDDLEWARE (IMPORTS) //
 var analytics  = require('./api/middleware/analytics'),
-    auth       = require('./api/middleware/auth');
+    auth       = require('./api/middleware/auth'),
+    routeMatch = require('./api/middleware/routeMatch');
 
 // MIDDLEWARE //
 app.use(auth);
@@ -25,10 +26,8 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 app.use(express.static('client'));
 
-// SERVE STATIC POLYMER SPA //
-app.get('/', function(req, res) {
-    res.render('index.html');
-});
+// SERVE STATIC REACT SPA //
+app.use(routeMatch);
 
 // ROUTES (IMPORTS) //
 var incomingCall  = require('./api/routes/incomingCall'),
