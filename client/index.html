@@ -1,139 +1,17 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="generator" content="Polymer Starter Kit">
-    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+        <title>Tribeyo - a cheaper way to reconnect</title>
 
-
-    <title>Tribeyo - a cheaper way to reconnect</title>
-    <meta name="description" content="My App description">
-
-    <link rel="icon" href="/images/tribeyo_mark.png">
-
-    <!-- See https://goo.gl/OOhYW5 -->
-    <link rel="manifest" href="manifest.json">
-
-    <!-- See https://goo.gl/qRE0vM -->
-    <meta name="theme-color" content="#3f51b5">
-
-    <!-- Add to homescreen for Chrome on Android. Fallback for manifest.json -->
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="My App">
-
-    <!-- Add to homescreen for Safari on iOS -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="My App">
-
-    <!-- Older Chrome configuration -->
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Notes">
-    <link rel="icon"
-      sizes="192x192"
-      href="bower_components/note-app/common/images/icon-4x.png">
-
-    <!-- Homescreen icons -->
-    <link rel="apple-touch-icon" href="/images/manifest/icon-48x48.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="/images/manifest/icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="96x96" href="/images/manifest/icon-96x96.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="/images/manifest/icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="192x192" href="/images/manifest/icon-192x192.png">
-
-    <!-- Tile icon for Windows 8 (144x144 + tile color) -->
-    <meta name="msapplication-TileImage" content="/images/manifest/icon-144x144.png">
-    <meta name="msapplication-TileColor" content="#3f51b5">
-    <meta name="msapplication-tap-highlight" content="no">
-
-
-    <script>
-      // Setup Polymer options
-      window.Polymer = {
-        dom: 'shadow',
-        lazyRegister: true,
-      };
-
-      // Load webcomponentsjs polyfill if browser does not support native
-      // Web Components
-      (function() {
-        'use strict';
-
-        var onload = function() {
-          // For native Imports, manually fire WebComponentsReady so user code
-          // can use the same code path for native and polyfill'd imports.
-          if (!window.HTMLImports) {
-            document.dispatchEvent(
-              new CustomEvent('WebComponentsReady', {bubbles: true})
-            );
-          }
-        };
-
-        var webComponentsSupported = (
-          'registerElement' in document
-          && 'import' in document.createElement('link')
-          && 'content' in document.createElement('template')
-        );
-
-        if (!webComponentsSupported) {
-          var script = document.createElement('script');
-          script.async = true;
-          script.src = 'bower_components/webcomponentsjs/webcomponents-lite.min.js';
-          script.onload = onload;
-          document.head.appendChild(script);
-        } else {
-          onload();
-        }
-      })();
-
-      // Load pre-caching Service Worker
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function() {
-          navigator.serviceWorker.register('service-worker.js');
-        });
-      }
-    </script>
-
-    <!-- Polymer Dependencies -->
-    <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
-    <script src="bower_components/web-animations-js/web-animations.min.js"></script>
-    <link rel="import" href="bower_components/platinum-sw/platinum-sw-elements.html">
-    <link rel="import" href="bower_components/polymerfire/firebase-app.html">
-    <link rel="import"
-    href="bower_components/paper-header-panel/paper-header-panel.html">
-    <link rel="import"
-    href="bower_components/paper-toolbar/paper-toolbar.html">
-    <link rel="import"
-    href="bower_components/iron-flex-layout/iron-flex-layout.html">
-    <link rel="import" href="bower_components/app-storage/app-indexeddb-mirror/app-indexeddb-mirror.html">
-    <link rel="import" href="src/twilio-app.html">
-
-    <!-- Stripe JS -->
-    <!-- <script src="https://js.stripe.com/v2/"></script>
-    <script src="https://js.stripe.com/v3/"></script> -->
-    <script async src="https://checkout.stripe.com/checkout.js"></script>
-
-
-    <style>
-      body {
-        margin: 0;
-        font-family: 'Oxygen', 'Roboto', sans-serif;
-        line-height: 1.5;
-        min-height: 100vh;
-        background-color: white;
-      }
-
-    </style>
-  </head>
-  <body>
-    <platinum-sw-register
-      auto-register
-      skip-waiting
-      clients-claim
-      reload-on-install
-      href="sw-import.js">
-      <platinum-sw-cache default-cache-strategy="networkFirst" precache-file="precache.json">
-      </platinum-sw-cache>
-    </platinum-sw-register>
-    <twilio-app></twilio-app>
-  </body>
+        <!-- Stripe JS -->
+        <!-- <script src="https://js.stripe.com/v2/"></script>
+        <script src="https://js.stripe.com/v3/"></script> -->
+        <script async src="https://checkout.stripe.com/checkout.js"></script>
+    </head>
+    <body>
+        <div id="app"></div>
+        <script src="build/bundle.js"></script>
+    </body>
 </html>

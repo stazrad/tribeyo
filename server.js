@@ -23,7 +23,7 @@ app.use(auth);
 app.use(analytics);
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
-app.use(express.static('public'));
+app.use(express.static('client'));
 
 // SERVE STATIC POLYMER SPA //
 app.get('/', function(req, res) {
