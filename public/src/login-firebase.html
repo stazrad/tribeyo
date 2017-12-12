@@ -1,0 +1,134 @@
+<link rel="import" href="../bower_components/polymerfire/firebase-auth.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/iron-form/iron-form.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="my-icons.html">
+
+
+<dom-module id="login-firebase">
+    <template>
+        <style>
+            :host {
+                display: none;
+            }
+
+            :host([active]) {
+                display: block;
+            }
+
+            .login-icon {
+                margin: 2px;
+            }
+
+            paper-input-container {
+              display: inline-block;
+              width: 50%;
+              min-wdith: 250px;
+            }
+
+            .signUpForm {
+              display: block;
+              width: auto;
+              height: 480px;
+            }
+
+            #signInButton {
+              margin-top: 20px;
+              background: var(--app-primary-color);
+              color: white;
+            }
+
+            a {
+                text-decoration: none;
+                color: var(--app-secondary-color);
+            }
+
+        </style>
+
+        <firebase-auth
+            id="auth"
+            signed-in="{{signedIn}}"
+            user="{{user}}"
+            status-known="{{statusKnown}}">
+        </firebase-auth>
+
+        <!-- <template is="dom-if" if="[[user]]">
+            <paper-button raised on-tap="logout">Logout, [[user.displayName]]</paper-button>
+        </template> -->
+
+        <paper-element class="signUpForm" elevation="5">
+            <h2>Signed In: [[signedIn]]</h2>
+            <form is="iron-form" on-iron-form-response="login" id="loginForm" method="POST" action="/profile/login" autocomplete="on">
+
+                <iron-icon icon="icons:mail"></iron-icon>
+                <paper-input-container>
+                    <label>Email</label>
+                    <input id="email" name="email" is="iron-input" type="email" required>
+                </paper-input-container>
+
+                <br>
+
+                <iron-icon icon="icons:lock"></iron-icon>
+                <paper-input-container>
+                    <label>Password</label>
+                    <input id="password" name="password" is="iron-input" minlength="6" type="password" required>
+                </paper-input-container>
+
+                <br>
+
+                <paper-button id="signInButton" on-tap="submitForm">Sign In</paper-button>
+
+            </form>
+            <h3>New user? <a href="/#/sign-up">Create account here!</a></h3>
+        </paper-element>
+
+    </template>
+
+    <script>
+        Polymer({
+            is: 'login-firebase',
+
+            properties: {
+                active: {
+                    type: Boolean,
+                    value: false,
+                    reflectToAttribute: true
+                }
+            },
+
+            loadProfile: function() {
+
+            },
+
+            login: function() {
+
+            },
+
+            logout: function() {
+                return this.$.auth.signOut();
+            },
+
+            submitForm: function(event) {
+                var form = Polymer.dom(event).localTarget.parentElement;
+                var email = this.$.email.value;
+                var password = this.$.password.value;
+
+                if(email == '' || password == '') {
+                    alert('COMPLETE REQUIRED FIELDS!');
+                } else {
+                    //this.disabled = true;
+                    form.submit();
+                    const promise = firebase.auth().signInWithEmailAndPassword(email, password);
+                    promise.catch(e => console.log(e.message));
+                }
+
+            },
+
+            _userChange: function() {
+
+            }
+        });
+    </script>
+</dom-module>

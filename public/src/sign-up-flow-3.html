@@ -1,0 +1,110 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-icons/communication-icons.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-input/paper-input-container.html">
+<link rel="import" href="../bower_components/paper-radio-button/paper-radio-button.html">
+<link rel="import" href="../bower_components/paper-radio-group/paper-radio-group.html">
+<link rel="import" href="../bower_components/iron-a11y-keys-behavior/iron-a11y-keys-behavior.html">
+<link rel="import" href="../bower_components/iron-menu-behavior/iron-menu-behavior.html">
+<link rel="import" href="../bower_components/paper-behavior/paper-button-behavior.html">
+
+<dom-module id="sign-up-flow-3">
+    <template>
+        <style include="shared-styles">
+            :host {
+                display: block;
+                outline: none;
+            }
+
+            paper-radio-button {
+                --paper-radio-button-label-color: var(--app-alt-color);
+                --paper-radio-button-unchecked-color: var(--app-alt-color);
+                --paper-radio-button-checked-color: var(--app-primary-color);
+                --paper-radio-button-size: 30px;
+                background: var(--app-neutral-color);
+                border-radius: 4px;
+                border: 3px solid var(--app-neutral-color);
+                margin: auto;
+                margin-top: 10px;
+                margin-bottom: 14px;
+                display: block;
+                width: 268px;
+                height: 58px;
+                font-size: 22px;
+                text-align: left;
+                padding-left: 30px !important;
+                padding-right: 0px !important;
+                padding-top: 20px !important;
+                transition: border .6s;
+            }
+            paper-radio-button:focus {
+                border: 3px solid var(--app-primary-color);
+            }
+
+            h3 {
+                font-weight: 100;
+                font-size: 35px;
+                text-align: center;
+                width: 100%;
+                margin-top: 52px;
+                margin-bottom: 20px;
+                cursor: default;
+            }
+
+            iron-icon {
+                font-size: 35px;
+                margin-bottom: 4px;
+                margin-right: 4px;
+            }
+
+            #spacer {
+                display: block;
+                height: 80px;
+            }
+
+        </style>
+
+        <h3>Choose a plan:</h3>
+
+        <paper-radio-group attr-for-selected="value" selected="{{readyNext}}">
+            <paper-radio-button value="planOne">300 minutes/mo <br/> $20/mo</paper-radio-button>
+            <paper-radio-button value="planTwo">150 minutes/mo <br/> $15/mo</paper-radio-button>
+        </paper-radio-group>
+
+        <div id="spacer"></div>
+
+    </template>
+
+    <script>
+
+        Polymer({
+            is: 'sign-up-flow-3',
+
+            behaviors: [
+                Polymer.PaperButtonBehavior,
+                Polymer.IronA11yKeysBehavior,
+                Polymer.IronMenuBehavior
+            ],
+
+            properties: {
+                readyNext: {
+                    type: Boolean,
+                    value: false,
+                    notify: true,
+                    reflectToAttribute: true
+                },
+            },
+
+            _readyNext: function() {
+                this.readyNext = true;
+            },
+
+            responseHandler: function(e) {
+                console.log(e.detail.response);
+            }
+        });
+    </script>
+</dom-module>

@@ -1,0 +1,119 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="home-view">
+    <template>
+        <style include="shared-styles">
+            :host {
+                display: block;
+                text-align: center;
+                padding: 10px;
+                background: white;
+            }
+
+            .card {
+                box-shadow: none;
+            }
+
+            #imageContainer {
+                display: block;
+                margin: 12px;
+                overflow: hidden;
+                border-radius: 5px;
+                object-fit: cover;
+            }
+
+            #mainImage {
+                opacity: .6;
+            }
+
+            #logo {
+                width: 100%;
+                margin-bottom: 12px;
+            }
+
+            h1 {
+                font-size: 82px;
+                letter-spacing: 12px;
+                color: #e64545;
+            }
+            h3 {
+                font-weight: 100;
+                font-size: 50px;
+                text-align: center;
+                width: 100%;
+                margin-top: 0px;
+                margin-bottom: 0px;
+            }
+
+            img {
+                display: block;
+                width: 100%;
+            }
+
+            p {
+                font-size: 28px;
+            }
+
+            paper-button {
+                color: white;
+                background: var(--app-primary-color);
+                margin: 12px;
+                display: block;
+                min-width: 150px;
+                height: 140px;
+                font-size: 50px;
+            }
+
+            paper-button:hover {
+                opacity: .8;
+            }
+
+            @media only screen and (max-width: 1000px) {
+                h3 {
+                    font-size: 38px;
+                }
+
+                paper-button {
+                    font-size: 38px;
+                    height: 106px;
+                }
+
+                p {
+                    font-size: 24px;
+                }
+            }
+
+        </style>
+
+        <div class="card">
+
+            <img id="logo" src="../images/tribeyo_logo.png">
+
+            <h3><em>A cheaper way to reconnect.</em></h3>
+            <div id="imageContainer">
+                <img id="mainImage" src="../images/map_blank.png">
+            </div>
+
+
+            <p>Find out how you can make affordable long distance calls.</p>
+
+            <paper-button on-tap="loadPlans">Learn More</paper-button>
+            <!-- <paper-button on-tap="loadSignUp">How Does It Work?</paper-button> -->
+
+        </div>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'home-view',
+            loadPlans: function() {
+                window.location.hash = '/subscription-plans'
+            },
+            loadSignUp: function() {
+                window.location.hash = '/sign-up'
+            }
+        });
+    </script>
+</dom-module>

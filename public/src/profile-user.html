@@ -1,0 +1,94 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/polymerfire/polymerfire.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-auth.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-query.html">
+<script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/iron-form/iron-form.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/stripe-payment-form/stripe-payment-form.html">
+<link rel="import" href="twilio-purchase.html">
+<link rel="import" href="stripe-charge.html">
+
+
+<dom-module id="profile-user">
+  <template>
+    <style include="shared-styles">
+    :host {
+        display: none;
+    }
+
+    .card {
+      box-shadow: none;
+    }
+
+    :host([active]) {
+        display: block;
+        padding: 10px;
+    }
+
+    .red {
+        color: #e64545;
+    }
+    </style>
+
+    <firebase-auth
+        id="auth"
+        signed-in="{{signedIn}}"
+        user="{{user}}">
+    </firebase-auth>
+
+    <iron-ajax
+        id="query"
+        auto
+        handle-as="json"
+        url="/profile/[[user.uid]]/queryUserInfo"
+        on-reponse="responseHandler"
+        last-response="{{userInfo}}">
+    </iron-ajax>
+
+    <h2>Welcome, [[userInfo.name.first]]!</h2>
+    <h3>Purchased number: <span class="red">[[userInfo.twilio.number.purchasedNumber]]</span></h3>
+
+    <twilio-purchase></twilio-purchase>
+  </template>
+
+  <script>
+    Polymer({
+        is: 'profile-user',
+
+        properties: {
+            userInfo: {
+                type: Object,
+                notify: true,
+                reflectToAttribute: true,
+                observer: 'dataChanged'
+            },
+            active: {
+                type: Boolean,
+                value: false,
+                reflectToAttribute: true
+            },
+            twilioNumber: {
+                type: String
+            }
+        },
+
+        authReady: function() {
+            this.$.query.generateRequest();
+        },
+
+        dataChanged: function (newData, oldData) {
+            // do something when the query returns values
+        },
+
+        responseHandler: function(e) {
+            console.log('userinfo ajax');
+        }
+    });
+  </script>
+</dom-module>

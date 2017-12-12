@@ -1,0 +1,84 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/iron-form/iron-form.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-auth.html">
+<link rel="import" href="login-firebase.html">
+<link rel="import" href="profile-user.html">
+
+
+
+<dom-module id="profile-view">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+        padding: 10px;
+      }
+
+      .card {
+        box-shadow: none;
+      }
+
+      .profile-icon {
+        width: 100%;
+        height: 100%;
+        color: #4285f4;
+        bottom: 2px;
+      }
+    </style>
+
+    <firebase-auth
+        id="auth"
+        signed-in="{{signedIn}}"
+        user="{{user}}"
+        status-known="{{statusKnown}}"
+        on-error="_errorHandler">
+    </firebase-auth>
+
+    <app-route
+        route="{{route}}"
+        pattern="/:user_id"
+        active="{{userActive}}"
+        routeTail="{{userId}}"
+        data="{{userData}}">
+    </app-route>
+
+
+    <div class="card">
+        <!-- <div class="circle">
+            <iron-icon class="profile-icon" icon="icons:account-circle"></iron-icon>
+        </div> -->
+        <template>
+            <h3>user id: {{signedIn}}</h3>
+        </template>
+
+        <login-firebase route="{{route}}" active="[[!user]]"></login-firebase>
+        <profile-user route="{{route}}" active="[[user]]" user-id="[[userId]]"></profile-user>
+
+    </div>
+  </template>
+
+  <script>
+    Polymer({
+        is: 'profile-view',
+
+        properties: {
+            active: {
+                type: Boolean,
+                value: false,
+                reflectToAttribute: true
+            }
+        },
+
+        responseHandler: function(e) {
+
+        }
+    });
+  </script>
+</dom-module>
