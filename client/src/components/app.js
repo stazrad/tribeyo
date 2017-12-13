@@ -1,18 +1,20 @@
 // PACKAGES //
 import React from 'react';
-import { BrowserRouter, Route, browserHistory } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
 // COMPONENTS //
-import Home from './views/home';
-
-console.log('browserHistory',browserHistory);
+import Header from './layout/header';
+import Main   from './layout/main';
+import Footer from './layout/footer';
 
 class App extends React.Component {
     render() {
         return (
-            <BrowserRouter history={browserHistory}>
-                <Route path='/' component={Home} />
-            </BrowserRouter>
+            <div>
+                <Header />
+                <Main />
+                <Footer />
+            </div>
         )
     }
 }
