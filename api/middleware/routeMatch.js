@@ -8,15 +8,19 @@ module.exports = function(req, res, next) {
     var directRoutes   = routes.direct,
         redirectRoutes = routes.redirect,
         slice          = req.originalUrl.slice(0,4),
-        url            = req.originalUrl.substring(0, req.originalUrl.indexOf('?'));
-
-	// ignore api requests
+        url            = req.originalUrl;
+    // ignore api requests
     if(slice == '/api') return next();
+
+    // check for url query params
+    if(url.includes('?')) {
+        url = req.originalUrl.substring(0, req.originalUrl.indexOf('?'));
+    };
 
     // send index.html for direct urls and allow React Router to route from client
     var direct = directRoutes.includes(url);
     if(direct) {
-        return res.sendFile(path.join(__dirname, '../../client/index.html'));
+        return res.sendFile(path.join(__dirname, '../../client/src/index.html'));
     };
 
     // redirect routes to /
