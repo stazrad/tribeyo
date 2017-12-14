@@ -17,6 +17,11 @@ module.exports = function(req, res, next) {
         url = req.originalUrl.substring(0, req.originalUrl.indexOf('?'));
     };
 
+    // check for url params in profile routes
+    if(url.startsWith('/profile/')) {
+        url = '/profile/:id';
+    };
+
     // send index.html for direct urls and allow React Router to route from client
     var direct = directRoutes.includes(url);
     if(direct) {

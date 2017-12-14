@@ -20,7 +20,7 @@ var analytics  = require('./api/middleware/analytics'),
     routeMatch = require('./api/middleware/routeMatch');
 
 // MIDDLEWARE //
-app.use(auth);
+//app.use(auth);
 app.use(analytics);
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());

@@ -7,8 +7,14 @@ class Dashboard extends React.Component {
     constructor() {
         super();
         this.state = {
-            displayNumber: '(636) 878-9999',
-            number: '1'
+            number: {
+                purchasedNumber: {
+                    displayNumber: '(636) 878-9999'
+                },
+                forwardToNumber: {
+                    displayNumber: '(909) 877-1991'
+                }
+            }
         }
     }
 
@@ -19,11 +25,14 @@ class Dashboard extends React.Component {
         return (
             <div id='dashboard'>
                 {/* <h1>Dashboard: {this.props.match.params.id}</h1> */}
-                <h2>YOUR NUMBER:</h2>
-                <h2 id='phone-number'>{this.state.displayNumber}</h2>
+                <h2>YOUR TRIBEYO NUMBER:</h2>
+                <h2 id='phone-number'>{this.state.number.purchasedNumber.displayNumber}</h2>
+                <h3 id='forwards-to'>Forwards to:
+                    <span id='forwards-to-number'>{this.state.number.forwardToNumber.displayNumber}</span>
+                </h3>
                 <h2 className='call-to-action'>{!this.state.number ? callToAction : null}</h2>
                 {!this.state.number ? subscribeButton : null}
-                <button className='update-profile'>UPDATE PROFILE</button>
+                <button className='edit-profile'>EDIT PROFILE</button>
                 <div className="contact">
                     Have questions?&nbsp;
                     <Link to="/how-it-works" className='contact-us'>

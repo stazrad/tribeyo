@@ -10,6 +10,13 @@ var accountSid     = process.env.ACCOUNT_SID,
 
 // FIREBASE INIT //
 var serviceAccount = require('../../serviceAccountKey.json');
+firebase.initializeApp({
+    apiKey: process.env.FIREBASE_KEY,
+    authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+    databaseURL: process.env.FIREBASE_DB_URL,
+    storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.FIREBASE_SENDER_ID
+});
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
     databaseURL: "https://twilio-app-7c723.firebaseio.com"
@@ -21,6 +28,17 @@ var updateAnalytics = require('../analytics/updateData');
 
 // POST /api/profile
 exports.create = function(req, res) {
+    firebase.auth().createUserWithEmailAndPassword(req.body.email, req.body.password)
+    .then(function(result) {
+        console.log('Result',result.uid);
+    })
+    .catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        console.log('error',error);
+    });
+    return res.status(200).json({status:200,message:'success!'});
     if(!req.body) {
 		updateAnalytics(400, req.reqId, 'INCLUDE PROFILE INFO');
 		return res.status(400).send('INCLUDE PROFILE INFO');
@@ -28,6 +46,7 @@ exports.create = function(req, res) {
     // instantiate a new user object
     var user = {
         name: req.body.name,
+        email: req.body.email,
         twilio: {
             accountSid: 'none',
             authToken: 'none',
