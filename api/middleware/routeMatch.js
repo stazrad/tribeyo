@@ -20,7 +20,7 @@ module.exports = function(req, res, next) {
     // send index.html for direct urls and allow React Router to route from client
     var direct = directRoutes.includes(url);
     if(direct) {
-        return res.sendFile(path.join(__dirname, '../../client/src/index.html'));
+        return res.sendFile(path.join(__dirname, '../../client/index.html'));
     };
 
     // redirect routes to /

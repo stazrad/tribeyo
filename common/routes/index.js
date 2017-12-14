@@ -1,10 +1,11 @@
 // client side routes that are accesible by direct search
 exports.direct = [
     '/',
-    '/cfs-build-protection',
-    '/welcome',
+    '/how-it-works',
     '/login',
-    '/faq'
+    '/plans',
+    '/profile',
+    '/signup'
 ];
 
 // client side routes that get redirected to home
