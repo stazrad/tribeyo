@@ -9,6 +9,9 @@ class SignUp extends React.Component {
         super(props);
 
         this.state = {
+            emailError: null,
+            nameError: null,
+            passwordError: null,
             emailValue: '',
             nameValue: '',
             passwordValue: ''
@@ -37,12 +40,35 @@ class SignUp extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
+        if(!this.state.nameValue || !this.state.emailValue || !this.state.passwordValue) {
+            if(!this.state.nameValue) {
+                this.setState({
+                    nameError: 'Please enter your name'
+                });
+            }
+            if(!this.state.emailValue) {
+                this.setState({
+                    emailError: 'Please enter your email'
+                });
+            }
+            if(!this.state.passwordValue) {
+                this.setState({
+                    passwordError: 'Please choose a password'
+                });
+            }
+            return
+        }
+        this.setState({
+            emailError: null,
+            nameError: null,
+            passwordError: null
+        });
+
         const formData = {
             email: this.state.emailValue,
             name: this.state.nameValue,
             password: this.state.passwordValue
         };
-
         fetch('/api/profile', {
             headers: {
                 'Content-Type': 'application/json'
@@ -52,10 +78,23 @@ class SignUp extends React.Component {
         })
         .then((response) => response.json())
         .then((result) => {
+            if(result.status != 200) {
+                let msg = result.message.toLowerCase();
+                if(msg.includes('email')) {
+                    this.setState({
+                        emailError: result.message
+                    });
+                }
+                if(msg.includes('password')) {
+                    this.setState({
+                        passwordError: result.message
+                    });
+                }
+            }
             console.log('RESULT',result);
         })
         .catch((err) => {
-            console.log(err);
+            console.log('ERROR',err);
         });
     }
 
@@ -73,18 +112,21 @@ class SignUp extends React.Component {
                         placeholder='first name'
                         value={this.state.nameValue}
                         onChange={this.handleChangeName} />
+                    <label htmlFor='name' id='name-error'>{this.state.nameError}</label>
                     <input
                         type='text'
                         name='email'
                         placeholder='email'
                         value={this.state.emailValue}
                         onChange={this.handleChangeEmail} />
+                    <label htmlFor='email' id='email-error'>{this.state.emailError}</label>
                     <input
                         type='password'
                         name='password'
                         placeholder='password'
                         value={this.state.passwordValue}
                         onChange={this.handleChangePassword} />
+                    <label htmlFor='password' id='password-error'>{this.state.passwordError}</label>
                     <button type="submit">SIGN UP</button>
                 </form>
                 {/* <h1><Link to='/profile/user_id'>Login</Link></h1> */}

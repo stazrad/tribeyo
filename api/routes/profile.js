@@ -5,8 +5,7 @@ var accountSid     = process.env.ACCOUNT_SID,
     firebase       = require('firebase'),
     admin          = require('firebase-admin'),
     stripe         = require('stripe')(process.env.STRIPE_TEST),
-    request        = require('request-json'),
-    cuid           = require('cuid');
+    request        = require('request-json');
 
 // FIREBASE INIT //
 var serviceAccount = require('../../serviceAccountKey.json');
@@ -28,25 +27,34 @@ var updateAnalytics = require('../analytics/updateData');
 
 // POST /api/profile
 exports.create = function(req, res) {
-    firebase.auth().createUserWithEmailAndPassword(req.body.email, req.body.password)
+    if(!req.body.password || !req.body.email) {
+        var error = {
+            status: 400,
+            message: 'Include password & email!'
+        };
+        updateAnalytics(400, req.reqId, error);
+        return res.status(400).json(error);
+    }
+    var email    = req.body.email,
+        name     = req.body.name,
+        password = req.body.password;
+    firebase.auth().createUserWithEmailAndPassword(email, password)
     .then(function(result) {
-        console.log('Result',result.uid);
+        return createTwilioAndStripeAccounts(result.uid);
     })
-    .catch(function(error) {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        console.log('error',error);
+    .catch(function(err) {
+        var error = {
+            status: 409,
+            message: err.message
+        };
+        updateAnalytics(409, req.reqId, error);
+		return res.status(409).json(error);
     });
-    return res.status(200).json({status:200,message:'success!'});
-    if(!req.body) {
-		updateAnalytics(400, req.reqId, 'INCLUDE PROFILE INFO');
-		return res.status(400).send('INCLUDE PROFILE INFO');
-	}
+    //return //res.status(200).json({status:200,message:'success!'});
     // instantiate a new user object
     var user = {
-        name: req.body.name,
-        email: req.body.email,
+        name: name,
+        email: email,
         twilio: {
             accountSid: 'none',
             authToken: 'none',
@@ -66,34 +74,35 @@ exports.create = function(req, res) {
             id: 'none'
         }
     };
-    var uid      = cuid(),
-        usersRef = db.ref().child('users/' + uid);
-    // update user object in Firebase
-    var setStripeId         = db.ref().child('users/'+uid+'/stripe/id'),
-        setTwilioAuthToken  = db.ref().child('users/'+uid+'/twilio/authToken'),
-        setTwilioAccountSid = db.ref().child('users/'+uid+'/twilio/accountSid');
-    usersRef.set(user)
-        .then(function() {
-            return stripe.customers.create();
-        })
-        .then(function(customer) {
-            setStripeId.set(customer.id);
-            return twilio.accounts.create({friendlyName: req.body.name});
-        })
-        .then(function(account) {
-            setTwilioAuthToken.set(account.authToken);
-            setTwilioAccountSid.set(account.sid);
-            var response = {
-                message: 'New profile created for ' + req.body.name + '!',
-                uid: uid
-            }
-            updateAnalytics(200, req.reqId);
-			return res.status(200).json(response);
-        })
-        .catch(function(err) {
-            updateAnalytics(500, req.reqId, err);
-            return res.status(500).send(err);
-        });
+    function createTwilioAndStripeAccounts(uid) {
+        var usersRef = db.ref().child('users/' + uid);
+        // update user object in Firebase
+        var setStripeId         = db.ref().child('users/'+uid+'/stripe/id'),
+            setTwilioAuthToken  = db.ref().child('users/'+uid+'/twilio/authToken'),
+            setTwilioAccountSid = db.ref().child('users/'+uid+'/twilio/accountSid');
+        usersRef.set(user)
+            .then(function() {
+                return stripe.customers.create();
+            })
+            .then(function(customer) {
+                setStripeId.set(customer.id);
+                return twilio.api.accounts.create({friendlyName: name});
+            })
+            .then(function(account) {
+                setTwilioAuthToken.set(account.authToken);
+                setTwilioAccountSid.set(account.sid);
+                var response = {
+                    message: 'New profile created for ' + name + '!',
+                    uid: uid
+                };
+                updateAnalytics(200, req.reqId);
+    			return res.status(200).json(response);
+            })
+            .catch(function(err) {
+                updateAnalytics(500, req.reqId, err);
+                return res.status(500).send(err);
+            });
+    };
 };
 
 // POST /api/profile/:id/purchaseNumber

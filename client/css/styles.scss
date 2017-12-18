@@ -34,7 +34,7 @@ main {
     display: block;
     margin: auto;
     max-width: 800px;
-    margin-top: 120px;
+    margin-top: 60px;
     cursor: default;
 }
 
@@ -101,6 +101,12 @@ button:hover {
     color: $white;
 }
 
+form {
+    width: 35%;
+    margin: auto;
+    position: relative;
+}
+
 input {
     display: block;
     border-radius: 5px;
@@ -109,8 +115,8 @@ input {
     outline: none;
     font-size: 16px;
     margin: auto;
-    margin-bottom: 20px;
-    width: 35%;
+    margin-bottom: 32px;
+    width: 100%;
     height: 20px;
     padding: 10px;
 }
@@ -128,6 +134,15 @@ input:placeholder {
 }
 :-moz-placeholder { /* Firefox 18- */
   color: $neutral-color-on-white;
+}
+
+label {
+    font-size: 12px;
+    position: absolute;
+    width: 100%;
+    left: 12px;
+    color: red;
+    line-height: 1;
 }
 
 // nav bar styles
@@ -298,9 +313,29 @@ button.edit-profile:hover {
     text-align: center;
 }
 
+#name-error {
+    top: 50px;
+}
+
+#email-error {
+    top: 128px;
+}
+
+#password-error {
+    top: 206px;
+}
+
 // RESPONSIVE //
 @media (max-width: 1024px) {
     main {
         padding: 0px 10%;
+    }
+
+    form {
+        width: 80%;
+    }
+
+    input {
+        text-align: center;
     }
 }

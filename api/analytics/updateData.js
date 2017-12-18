@@ -15,7 +15,7 @@ module.exports = function(status, reqId, err) {
        return record.id == reqId;
     });
     var storedReq = storage.usage[i];
-    
+
     if(!storedReq) return;
 
     // calculate total time of request in node.js
@@ -26,10 +26,7 @@ module.exports = function(status, reqId, err) {
         return updateStorage(storage);
     } else {
         console.log('error: ', err);
-        storedReq.error = {
-            code: status,
-            details: err
-        };
+        storedReq.error = err;
         return updateStorage(storage);
     };
 };
