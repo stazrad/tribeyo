@@ -56,22 +56,22 @@ exports.create = function(req, res) {
         name: name,
         email: email,
         twilio: {
-            accountSid: 'none',
-            authToken: 'none',
+            accountSid: 0,
+            authToken: 0,
             number: {
-                areaCode: 'none',
+                areaCode: 0,
                 forwardToNumber: {
-                    displayNumber: 'none',
-                    number: 'none'
+                    displayNumber: 0,
+                    number: 0
                 },
                 purchasedNumber: {
-                    displayNumber: 'none',
-                    number: 'none'
+                    displayNumber: 0,
+                    number: 0
                 }
             }
         },
         stripe: {
-            id: 'none'
+            id: 0
         }
     };
     function createTwilioAndStripeAccounts(uid) {
@@ -92,6 +92,7 @@ exports.create = function(req, res) {
                 setTwilioAuthToken.set(account.authToken);
                 setTwilioAccountSid.set(account.sid);
                 var response = {
+                    status: 200,
                     message: 'New profile created for ' + name + '!',
                     uid: uid
                 };
@@ -134,8 +135,8 @@ exports.purchaseNumber = function(req, res) {
             var numberConfig = {
                 phoneNumber: number.phone_number,
                 accountSid: clientSid,
-                voiceUrl: 'http://twimlets.com/forward?PhoneNumber=' + forwardToNumber,
-                voiceFallbackUrl: 'http://www.tribeyo.com/voice/' +  foundUser.uid,
+                voiceUrl: 'http://www.tribeyo.com/voice/' +  foundUser.uid,
+                voiceFallbackUrl: 'http://twimlets.com/forward?PhoneNumber=' + forwardToNumber,
                 smsUrl: 'http://www.tribeyo.com/message/' +  foundUser.uid,
                 voiceMethod: "POST",
                 voiceFallbackMethod: "POST",
@@ -153,6 +154,7 @@ exports.purchaseNumber = function(req, res) {
             transferNumber.update({accountSid: clientSid});
 
             var response = {
+                status: 200,
                 message: 'Successfully purchased number forwarded to: ' + forwardToNumber,
                 purchasedNumber: purchasedNumber.phoneNumber
             }
