@@ -6,7 +6,7 @@ import fetch from 'isomorphic-fetch'
 // COMPONENTS //
 import Loader from '../../layout/partials/loader'
 
-class SignUp extends React.Component {
+class Signup extends React.Component {
 
     constructor(props) {
         super(props)
@@ -133,21 +133,21 @@ class SignUp extends React.Component {
                         placeholder='first name'
                         value={this.state.nameValue}
                         onChange={this.handleChangeName} />
-                    <label htmlFor='name' id='name-error'>{this.state.nameError}</label>
+                    <label htmlFor='name' id='name-error-signup'>{this.state.nameError}</label>
                     <input
                         type='text'
                         name='email'
                         placeholder='email'
                         value={this.state.emailValue}
                         onChange={this.handleChangeEmail} />
-                    <label htmlFor='email' id='email-error'>{this.state.emailError}</label>
+                    <label htmlFor='email' id='email-error-signup'>{this.state.emailError}</label>
                     <input
                         type='password'
                         name='password'
                         placeholder='password'
                         value={this.state.passwordValue}
                         onChange={this.handleChangePassword} />
-                    <label htmlFor='password' id='password-error'>{this.state.passwordError}</label>
+                    <label htmlFor='password' id='password-error-signup'>{this.state.passwordError}</label>
                     <button type="submit">SIGN UP</button>
                 </form>
                 {/* <h1><Link to='/profile/user_id'>Login</Link></h1> */}
@@ -156,4 +156,4 @@ class SignUp extends React.Component {
     }
 }
 
-export default SignUp
+export default Signup

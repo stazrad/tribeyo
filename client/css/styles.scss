@@ -173,7 +173,6 @@ nav {
     background-color: $alt-color;
     color: $white;
     font-size: 20px;
-    width: 100%;
     height: 88px;
     padding: 0px 10%;
 }
@@ -331,20 +330,28 @@ button.edit-profile:hover {
     margin: auto;
 }
 
+#email-error-login {
+    top: 50px;
+}
+
+#password-error-login {
+    top: 128px;
+}
+
 // signup view styles
 #sign-up {
     text-align: center;
 }
 
-#name-error {
+#name-error-signup {
     top: 50px;
 }
 
-#email-error {
+#email-error-signup {
     top: 128px;
 }
 
-#password-error {
+#password-error-signup {
     top: 206px;
 }
 

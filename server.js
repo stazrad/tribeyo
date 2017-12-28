@@ -37,7 +37,7 @@ var incomingCall  = require('./api/routes/incomingCall'),
 // REST API //
 app.get('/api/profile/:id/queryUserInfo', profile.queryUserInfo);
 app.post('/api/profile', profile.create);
-app.post('/api/profile/auth', profile.auth);
+app.post('/api/profile/login', profile.login);
 app.post('/api/profile/:id/charge', profile.stripeCharge);
 app.post('/api/profile/:id/purchaseNumber', profile.purchaseNumber);
 app.post('/api/profile/:id/unsubscribe', profile.unsubscribe);

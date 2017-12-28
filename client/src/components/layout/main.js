@@ -9,7 +9,7 @@ import Login      from '../views/login';
 import NotFound   from '../views/notFound';
 import Plans      from '../views/plans';
 import Profile    from '../views/profile';
-import SignUp     from '../views/signUp';
+import Signup     from '../views/signup';
 
 class Main extends React.Component {
     render() {
@@ -21,7 +21,7 @@ class Main extends React.Component {
                     <Route path='/login' component={Login} />
                     <Route path='/plans' component={Plans} />
                     <Route path='/profile/:id' component={Profile} />
-                    <Route path='/signup' component={SignUp} />
+                    <Route path='/signup' component={Signup} />
                     <Route component={NotFound} />
                 </Switch>
             </main>
