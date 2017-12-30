@@ -18,7 +18,7 @@ firebase.initializeApp({
 })
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
-    databaseURL: "https://twilio-app-7c723.firebaseio.com"
+    databaseURL: process.env.FIREBASE_DB_URL
 })
 var db = admin.database()
 
@@ -39,18 +39,18 @@ exports.create = function(req, res) {
         name     = req.body.name,
         password = req.body.password
     firebase.auth().createUserWithEmailAndPassword(email, password)
-    .then(function(result) {
-        return createTwilioAndStripeAccounts(result.uid)
-    })
-    .catch(function(err) {
-        var error = {
-            status: 409,
-            message: err.message
-        }
-        updateAnalytics(409, req.reqId, error)
-		return res.status(409).json(error)
-    })
-    //return //res.status(200).json({status:200,message:'success!'})
+        .then(function(result) {
+            return createTwilioAndStripeAccounts(result.uid)
+        })
+        .catch(function(err) {
+            var error = {
+                status: 409,
+                message: err.message
+            }
+            updateAnalytics(409, req.reqId, error)
+    		return res.status(409).json(error)
+        })
+
     // instantiate a new user object
     var user = {
         name: name,
@@ -112,29 +112,18 @@ exports.login = function(req, res) {
     var password = req.body.password
     firebase.auth().signInWithEmailAndPassword(email, password)
         .then(function(result) {
-            console.log(result)
+            var response = {
+                status: 200,
+                emailVerified: result.emailVerified,
+                uid: result.uid
+            }
+            updateAnalytics(200, req.reqId)
+            return res.status(200).json(response)
         })
         .catch(function(err) {
             updateAnalytics(500, req.reqId, err)
             return res.status(500).send(err)
         })
-    // admin.auth().verifyIdToken(req.body.idToken)
-    // .then(function(decodedToken) {
-    //     var uid = decodedToken.uid
-    //
-    //     admin.auth().getUser(uid)
-    //     .then(function(userRecord) {
-    //         res.writeHead(200, {'Content-Type': 'application/json'})
-    //         // res.json({data: userRecord})
-    //         res.end(JSON.stringify(userRecord))
-    //     })
-    //     .catch(function(error) {
-    //         console.log("Error fetching user data:", error)
-    //     })
-    //
-    // }).catch(function(error) {
-    //     console.log('error @ admin.auth: ' + error)
-    // })
 }
 
 // POST /api/profile/:id/purchaseNumber
@@ -207,11 +196,11 @@ exports.queryUserInfo = function(req, res) {
     var token = req.body.token
     var query = admin.database().ref().child('users/'+req.params.id)
     query.once('value')
-    .then(function(snapshot){
-        var foundUser = snapshot.exportVal()
-        res.writeHead(200, {'Content-Type': 'application/json'})
-        res.end(JSON.stringify(foundUser))
-    })
+        .then(function(snapshot){
+            var foundUser = snapshot.exportVal()
+            res.writeHead(200, {'Content-Type': 'application/json'})
+            res.end(JSON.stringify(foundUser))
+        })
 }
 
 

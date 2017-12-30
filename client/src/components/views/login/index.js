@@ -1,6 +1,6 @@
 // PACKAGES //
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 
 // COMPONENTS //
 import Loader from '../../layout/partials/loader'
@@ -15,7 +15,9 @@ class Login extends React.Component {
             passwordError: null,
             emailValue: '',
             passwordValue: '',
-            loading: false
+            authenticated: false,
+            loading: false,
+            uid: null
         }
 
         this.handleChangeEmail = this.handleChangeEmail.bind(this)
@@ -80,9 +82,14 @@ class Login extends React.Component {
                 }
                 if(msg.includes('password')) {
                     this.setState({
-                        passwordError: result.message
+                        passwordError: 'This password is invalid'
                     })
                 }
+            } else {
+                this.setState({
+                    authenticated: true,
+                    uid: result.uid
+                })
             }
         })
         .catch((err) => {
@@ -91,7 +98,8 @@ class Login extends React.Component {
     }
 
     render() {
-        const redirect = this.state.profileCreated ? <Redirect to={`/profile/${id}`} /> : null
+        const id = this.state.uid
+        const redirect = this.state.authenticated ? <Redirect to={`/profile/${id}`} /> : null
         const spinner = Loader(this.state.loading)
 
         return (
