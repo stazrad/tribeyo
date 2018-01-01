@@ -34,7 +34,8 @@ main {
     display: block;
     margin: auto;
     max-width: 800px;
-    margin-top: 60px;
+    margin-top: 88px;
+    padding-top: 60px;
     cursor: default;
 }
 
@@ -176,6 +177,10 @@ nav {
     font-size: 20px;
     height: 88px;
     padding: 0px 10%;
+}
+
+.navbar-toggle {
+    width: unset;
 }
 
 #logo-container {
@@ -327,7 +332,8 @@ button.edit-profile:hover {
 }
 
 .bubbles {
-    width: 35%;
+    width: 100%;
+    max-width: 140px;
     margin: auto;
 }
 
