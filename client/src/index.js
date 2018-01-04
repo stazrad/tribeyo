@@ -1,13 +1,22 @@
-// IMPORT REACT //
-import React from 'react';
-import { render } from 'react-dom';
-import { BrowserRouter, browserHistory } from 'react-router-dom';
+// PACKAGES //
+import React from 'react'
+import { render } from 'react-dom'
+import { BrowserRouter, browserHistory } from 'react-router-dom'
+import { Provider } from 'react-redux'
+
+// STORE //
+import configureStore from './store/configureStore'
+const store = configureStore()
 
 // COMPONENTS //
-import App from './components/app';
+import App from './components/app'
 
-render((
-    <BrowserRouter history={browserHistory}>
-        <App />
-    </BrowserRouter>
-), document.getElementById('app'));
+const reactApp = (
+    <Provider store={store}>
+        <BrowserRouter history={browserHistory}>
+            <App />
+        </BrowserRouter>
+    </Provider>
+)
+
+render(reactApp, document.getElementById('app'))

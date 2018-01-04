@@ -1,9 +1,13 @@
 // PACKAGES //
 import React from 'react'
 import { Link, Redirect } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 // COMPONENTS //
 import Loader from '../../layout/partials/loader'
+
+// ACTIONS //
+import { login } from '../../../actions/user'
 
 class Login extends React.Component {
 
@@ -72,7 +76,6 @@ class Login extends React.Component {
             return response.json()
         })
         .then((result) => {
-            console.log(result)
             if(result.status != 200) {
                 let msg = result.message.toLowerCase()
                 if(msg.includes('email')) {
@@ -86,9 +89,10 @@ class Login extends React.Component {
                     })
                 }
             } else {
+                this.props.dispatch(login(result.user))
                 this.setState({
                     authenticated: true,
-                    uid: result.uid
+                    uid: result.user.uid
                 })
             }
         })
@@ -133,4 +137,4 @@ class Login extends React.Component {
     }
 }
 
-export default Login
+export default connect()(Login)

@@ -55,33 +55,38 @@ exports.create = function(req, res) {
     var user = {
         name: name,
         email: email,
+        emailVerified: false,
         twilio: {
-            accountSid: 0,
-            authToken: 0,
+            accountSid: '',
+            authToken: '',
             number: {
-                areaCode: 0,
+                areaCode: '',
                 forwardToNumber: {
-                    displayNumber: 0,
-                    number: 0
+                    displayNumber: '',
+                    number: ''
                 },
                 purchasedNumber: {
-                    displayNumber: 0,
-                    number: 0
+                    displayNumber: '',
+                    number: ''
                 }
             }
         },
         stripe: {
-            id: 0
-        }
+            id: '',
+            subscription: ''
+        },
+        uid: ''
     }
     function createTwilioAndStripeAccounts(uid) {
         var usersRef = db.ref().child('users/' + uid)
         // update user object in Firebase
         var setStripeId         = db.ref().child('users/'+uid+'/stripe/id'),
             setTwilioAuthToken  = db.ref().child('users/'+uid+'/twilio/authToken'),
-            setTwilioAccountSid = db.ref().child('users/'+uid+'/twilio/accountSid')
+            setTwilioAccountSid = db.ref().child('users/'+uid+'/twilio/accountSid'),
+            setUid              = db.ref().child('users/'+uid+'/uid')
         usersRef.set(user)
             .then(function() {
+                setUid.set(uid)
                 return stripe.customers.create()
             })
             .then(function(customer) {
@@ -91,10 +96,15 @@ exports.create = function(req, res) {
             .then(function(account) {
                 setTwilioAuthToken.set(account.authToken)
                 setTwilioAccountSid.set(account.sid)
+                return usersRef.once('value')
+            })
+            .then(function(snapshot){
+                return snapshot.exportVal()
+            })
+            .then(function(user) {
                 var response = {
                     status: 200,
-                    message: 'New profile created for ' + name + '!',
-                    uid: uid
+                    user: user
                 }
                 updateAnalytics(200, req.reqId)
     			return res.status(200).json(response)
@@ -112,10 +122,16 @@ exports.login = function(req, res) {
     var password = req.body.password
     firebase.auth().signInWithEmailAndPassword(email, password)
         .then(function(result) {
+            db.ref().child('users/'+result.uid+'/emailVerified').set(result.emailVerified)
+            return db.ref().child('users/' + result.uid).once('value')
+        })
+        .then(function(snapshot){
+            return snapshot.exportVal()
+        })
+        .then(function(user) {
             var response = {
                 status: 200,
-                emailVerified: result.emailVerified,
-                uid: result.uid
+                user: user
             }
             updateAnalytics(200, req.reqId)
             return res.status(200).json(response)
@@ -148,7 +164,7 @@ exports.purchaseNumber = function(req, res) {
             clientAuth = foundUser.twilio.authToken
             clientSid  = foundUser.twilio.accountSid
             client = require('twilio')(clientSid, clientAuth)
-            return client.availablePhoneNumbers("US").local.list({areaCode: areaCode})
+            return client.availablePhoneNumbers('US').local.list({areaCode: areaCode})
         })
         .then(function(data){
             var number = data.availablePhoneNumbers[0]

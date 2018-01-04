@@ -11,7 +11,7 @@ class Header extends React.Component {
         super(props);
 
         this.state = {
-            sidebarOpen: true
+            sidebarOpen: false
         }
 
         this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this)

@@ -1,10 +1,14 @@
 // PACKAGES //
 import React from 'react'
 import { Link, Redirect } from 'react-router-dom'
+import { connect } from 'react-redux'
 import fetch from 'isomorphic-fetch'
 
 // COMPONENTS //
 import Loader from '../../layout/partials/loader'
+
+// ACTIONS //
+import { login } from '../../../actions/user'
 
 class Signup extends React.Component {
 
@@ -101,12 +105,12 @@ class Signup extends React.Component {
                     })
                 }
             } else {
+                this.props.dispatch(login(result.user))
                 this.setState({
                     profileCreated: true,
-                    uid: result.uid
+                    uid: result.user.uid
                 })
             }
-            console.log('RESULT',result)
         })
         .catch((err) => {
             console.log('ERROR',err)
@@ -156,4 +160,4 @@ class Signup extends React.Component {
     }
 }
 
-export default Signup
+export default connect()(Signup)
