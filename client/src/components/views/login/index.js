@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 import Loader from '../../layout/partials/loader'
 
 // ACTIONS //
-import { login } from '../../../actions/user'
+import { userLogin } from '../../../actions/user'
 
 class Login extends React.Component {
 
@@ -64,6 +64,7 @@ class Login extends React.Component {
             email: this.state.emailValue,
             password: this.state.passwordValue
         }
+        return this.props.dispatch(userLogin(formData))
         fetch('/api/profile/login', {
             headers: {
                 'Content-Type': 'application/json'

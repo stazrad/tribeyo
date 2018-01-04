@@ -1,8 +1,8 @@
 {
     "usage": [
         {
-            "id": "cjc034i5y0000nsoptdh1ubbc",
-            "date": "Thu Jan 04 2018 00:02:34 GMT-0600 (CST)",
+            "id": "cjc12pqd60000k8op4xbxd32w",
+            "date": "Thu Jan 04 2018 16:38:51 GMT-0600 (CST)",
             "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36",
             "clientIp": "::1",
             "method": "GET",
@@ -10,6 +10,67 @@
             "error": false,
             "success": false,
             "responseTime": null
+        },
+        {
+            "id": "cjc12psr70001k8opux0n5l1i",
+            "date": "Thu Jan 04 2018 16:38:54 GMT-0600 (CST)",
+            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36",
+            "clientIp": "::1",
+            "method": "GET",
+            "url": "/api",
+            "error": false,
+            "success": false,
+            "responseTime": null
+        },
+        {
+            "id": "cjc12rpkz0002k8opyujt5q8m",
+            "date": "Thu Jan 04 2018 16:40:24 GMT-0600 (CST)",
+            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36",
+            "clientIp": "::1",
+            "method": "GET",
+            "url": "/api",
+            "error": false,
+            "success": false,
+            "responseTime": null
+        },
+        {
+            "id": "cjc132mkc0003k8opxlwvyfke",
+            "date": "Thu Jan 04 2018 16:48:53 GMT-0600 (CST)",
+            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36",
+            "clientIp": "::1",
+            "method": "POST",
+            "url": "/api/profile/login",
+            "error": {
+                "code": "auth/user-not-found",
+                "message": "There is no user record corresponding to this identifier. The user may have been deleted."
+            },
+            "success": false,
+            "responseTime": 636
+        },
+        {
+            "id": "cjc13l91s0004k8opx7izjoxe",
+            "date": "Thu Jan 04 2018 17:03:22 GMT-0600 (CST)",
+            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36",
+            "clientIp": "::1",
+            "method": "POST",
+            "url": "/api/profile/login",
+            "error": {
+                "code": "auth/user-not-found",
+                "message": "There is no user record corresponding to this identifier. The user may have been deleted."
+            },
+            "success": false,
+            "responseTime": 545
+        },
+        {
+            "id": "cjc13lzdf0005k8opo5rcv41z",
+            "date": "Thu Jan 04 2018 17:03:56 GMT-0600 (CST)",
+            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36",
+            "clientIp": "::1",
+            "method": "POST",
+            "url": "/api/profile/login",
+            "error": false,
+            "success": true,
+            "responseTime": 1110
         }
     ]
 }

@@ -171,9 +171,9 @@ exports.purchaseNumber = function(req, res) {
             var numberConfig = {
                 phoneNumber: number.phone_number,
                 accountSid: clientSid,
-                voiceUrl: 'http://www.tribeyo.com/voice/' +  foundUser.uid,
+                voiceUrl: 'http://www.tribeyo.com/api/voice/' +  foundUser.uid,
                 voiceFallbackUrl: 'http://twimlets.com/forward?PhoneNumber=' + forwardToNumber,
-                smsUrl: 'http://www.tribeyo.com/message/' +  foundUser.uid,
+                smsUrl: 'http://www.tribeyo.com/api/message/' +  foundUser.uid,
                 voiceMethod: "POST",
                 voiceFallbackMethod: "POST",
                 smsMethod: "POST",
