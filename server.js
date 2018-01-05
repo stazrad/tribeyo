@@ -40,7 +40,7 @@ app.post('/api/profile/:id/purchaseNumber', profile.purchaseNumber)
 app.post('/api/profile/:id/unsubscribe', profile.unsubscribe)
 app.post('/api/voice/:id', incomingCall.forward)
 
-// SERVE STATIC REACT SPA //
+// SERVE REACT SPA //
 app.use(serveSPA)
 
 // LISTEN ON PORT //

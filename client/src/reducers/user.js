@@ -1,50 +1,54 @@
 const userReducerDefaultState = {
     isLoggedIn: false,
-    user: {
-        name: '',
-        email: '',
-        emailVerified: false,
-        twilio: {
-            accountSid: '',
-            authToken: '',
-            number: {
-                areaCode: '',
-                forwardToNumber: {
-                    displayNumber: '',
-                    number: ''
-                },
-                purchasedNumber: {
-                    displayNumber: '',
-                    number: ''
-                }
+    error: false,
+    name: '',
+    email: '',
+    emailVerified: false,
+    twilio: {
+        accountSid: '',
+        authToken: '',
+        number: {
+            areaCode: '',
+            forwardToNumber: {
+                displayNumber: '',
+                number: ''
+            },
+            purchasedNumber: {
+                displayNumber: '',
+                number: ''
             }
-        },
-        stripe: {
-            id: '',
-            subscription: ''
-        },
-        uid: ''
-    }
+        }
+    },
+    stripe: {
+        id: '',
+        subscription: ''
+    },
+    uid: ''
 }
 const userReducer = (state = userReducerDefaultState, action) => {
     switch(action.type) {
         case 'LOGIN':
-            console.log('action', action)
             return {
+                ...state,
+                ...action.user,
                 isLoggedIn: true,
-                user: {
-                    ...action.user
-                }
+                error: false
+            }
+        case 'LOGIN_ERROR':
+            return {
+                isLoggedIn: false,
+                error: action.error
             }
         case 'LOGOUT':
             return {
                 ...state,
-                text: action.filter
+                isLoggedIn: false,
+                error: false
             }
-        case 'SIGNUP':
+        case 'SIGNUP_ERROR':
             return {
-                ...state,
-                startDate: action.startDate
+                isLoggedIn: false,
+                error: action.error
             }
         default:
             return state

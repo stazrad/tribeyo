@@ -8,7 +8,7 @@ import fetch from 'isomorphic-fetch'
 import Loader from '../../layout/partials/loader'
 
 // ACTIONS //
-import { login } from '../../../actions/user'
+import { userSignup } from '../../../actions/user'
 
 class Signup extends React.Component {
 
@@ -19,6 +19,7 @@ class Signup extends React.Component {
             emailError: null,
             nameError: null,
             passwordError: null,
+            serverError: null,
             emailValue: '',
             nameValue: '',
             passwordValue: '',
@@ -74,47 +75,40 @@ class Signup extends React.Component {
             passwordError: null,
             loading: true
         })
-
         const formData = {
             email: this.state.emailValue,
             name: this.state.nameValue,
             password: this.state.passwordValue
         }
-        fetch('/api/profile', {
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            method: 'POST',
-            body: JSON.stringify(formData)
-        })
-        .then((response) => {
-            this.setState({loading:false})
-            return response.json()
-        })
-        .then((result) => {
-            if(result.status != 200) {
-                let msg = result.message.toLowerCase()
-                if(msg.includes('email')) {
-                    this.setState({
-                        emailError: result.message
+        return this.props.dispatch(userSignup(formData))
+    }
+
+    componentWillReceiveProps(props) {
+        this.setState({loading:false})
+        let error = props.user.error
+        if(error) {
+            let type = error.type
+            switch(type) {
+                case 'email':
+                    return this.setState({
+                        emailError: error.message
                     })
-                }
-                if(msg.includes('password')) {
-                    this.setState({
-                        passwordError: result.message
+                case 'password':
+                    return this.setState({
+                        passwordError: error.message
                     })
-                }
-            } else {
-                this.props.dispatch(login(result.user))
-                this.setState({
-                    profileCreated: true,
-                    uid: result.user.uid
-                })
+                default:
+                    return this.setState({
+                        serverError: error.message
+                    })
             }
-        })
-        .catch((err) => {
-            console.log('ERROR',err)
-        })
+        } else {
+            this.setState({
+                profileCreated: true,
+                uid: props.user.uid
+            })
+            return
+        }
     }
 
     render() {
@@ -160,4 +154,10 @@ class Signup extends React.Component {
     }
 }
 
-export default connect()(Signup)
+const mapStateToProps = state => {
+    return {
+        user: state.user
+    }
+}
+
+export default connect(mapStateToProps)(Signup)

@@ -17,6 +17,7 @@ class Login extends React.Component {
         this.state = {
             emailError: null,
             passwordError: null,
+            serverError: null,
             emailValue: '',
             passwordValue: '',
             authenticated: false,
@@ -59,47 +60,39 @@ class Login extends React.Component {
             passwordError: null,
             loading: true
         })
-
         const formData = {
             email: this.state.emailValue,
             password: this.state.passwordValue
         }
         return this.props.dispatch(userLogin(formData))
-        fetch('/api/profile/login', {
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            method: 'POST',
-            body: JSON.stringify(formData)
-        })
-        .then((response) => {
-            this.setState({loading:false})
-            return response.json()
-        })
-        .then((result) => {
-            if(result.status != 200) {
-                let msg = result.message.toLowerCase()
-                if(msg.includes('email')) {
-                    this.setState({
-                        emailError: result.message
+    }
+
+    componentWillReceiveProps(props) {
+        this.setState({loading:false})
+        let error = props.user.error
+        if(error) {
+            let type = error.type
+            switch(type) {
+                case 'email':
+                    return this.setState({
+                        emailError: error.message
                     })
-                }
-                if(msg.includes('password')) {
-                    this.setState({
-                        passwordError: 'This password is invalid'
+                case 'password':
+                    return this.setState({
+                        passwordError: error.message
                     })
-                }
-            } else {
-                this.props.dispatch(login(result.user))
-                this.setState({
-                    authenticated: true,
-                    uid: result.user.uid
-                })
+                default:
+                    return this.setState({
+                        serverError: error.message
+                    })
             }
-        })
-        .catch((err) => {
-            console.log('ERROR',err)
-        })
+        } else {
+            this.setState({
+                authenticated: true,
+                uid: props.user.uid
+            })
+            return
+        }
     }
 
     render() {
@@ -130,6 +123,7 @@ class Login extends React.Component {
                         value={this.state.passwordValue}
                         onChange={this.handleChangePassword} />
                     <label htmlFor='password' id='password-error-login'>{this.state.passwordError}</label>
+                    <label id='server-error-login'>{this.state.serverError}</label>
                     <button type="submit">LOGIN</button>
                 </form>
                 {/* <h1><Link to='/profile/user_id'>Login</Link></h1> */}
@@ -138,4 +132,10 @@ class Login extends React.Component {
     }
 }
 
-export default connect()(Login)
+const mapStateToProps = state => {
+    return {
+        user: state.user
+    }
+}
+
+export default connect(mapStateToProps)(Login)
