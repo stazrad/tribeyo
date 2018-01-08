@@ -6,8 +6,6 @@ import Sidebar from 'react-sidebar';
 // RESPONSIVE SIDEBAR //
 const mql = window.matchMedia(`(max-width: 800px)`)
 
-console.log(mql)
-
 class Header extends React.Component {
     constructor(props) {
         super(props);
@@ -69,16 +67,16 @@ class Header extends React.Component {
     render() {
         const sidebarContent = (
             <ul>
-                <li>
+                <li onClick={this.toggleSidebar}>
                     <Link to='/'>Home</Link>
                 </li>
-                <li>
+                <li onClick={this.toggleSidebar}>
                     <Link to='/how-it-works'>How It Works</Link>
                 </li>
-                <li>
+                <li onClick={this.toggleSidebar}>
                     <Link to='/plans'>Plans</Link>
                 </li>
-                <li>
+                <li onClick={this.toggleSidebar}>
                     <Link to='/signup'>Signup</Link>
                 </li>
             </ul>
@@ -92,12 +90,21 @@ class Header extends React.Component {
             </div>
         )
         const navRightResponsive = <div id='hamburger' onClick={this.toggleSidebar}>&#9776;</div>
+        const styles = {
+            sidebar: {
+                background: 'linear-gradient(#f2f2f2, #bfbfbf)',
+                width: '80%',
+                maxWidth: '500px'
+            }
+        }
 
         return (
-            <Sidebar sidebar={sidebarContent}
+            <Sidebar sidebarClassName='sidebar'
+                    sidebar={sidebarContent}
                     open={this.state.sidebarOpen}
                     onSetOpen={this.onSetSidebarOpen}
-                    pullRight>
+                    pullRight
+                    styles={styles} >
                 <nav>
                     <div id='logo-container'>
                         <Link to='/'>

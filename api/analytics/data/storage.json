@@ -1,3 +1,32 @@
 {
-    "usage": []
+    "usage": [
+        {
+            "id": "cjc6t4kpa0000zmop1x1ozb5i",
+            "date": "Mon Jan 08 2018 16:57:05 GMT-0600 (CST)",
+            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36",
+            "clientIp": "::1",
+            "method": "POST",
+            "url": "/api/profile/login",
+            "error": {
+                "code": "auth/user-not-found",
+                "message": "There is no user record corresponding to this identifier. The user may have been deleted."
+            },
+            "success": false,
+            "responseTime": 434
+        },
+        {
+            "id": "cjc6t8ziw0001zmopxsowxmis",
+            "date": "Mon Jan 08 2018 17:00:31 GMT-0600 (CST)",
+            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36",
+            "clientIp": "::1",
+            "method": "POST",
+            "url": "/api/profile/login",
+            "error": {
+                "code": "auth/user-not-found",
+                "message": "There is no user record corresponding to this identifier. The user may have been deleted."
+            },
+            "success": false,
+            "responseTime": 255
+        }
+    ]
 }

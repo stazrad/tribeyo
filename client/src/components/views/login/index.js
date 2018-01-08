@@ -32,12 +32,12 @@ class Login extends React.Component {
 
     handleChangeEmail(e) {
         let emailValue = e.target.value
-        this.setState({emailValue})
+        this.setState({emailValue, emailError: ''})
     }
 
     handleChangePassword(e) {
         let passwordValue = e.target.value
-        this.setState({passwordValue})
+        this.setState({passwordValue, passwordError: ''})
     }
 
     handleSubmit(e) {
@@ -68,6 +68,7 @@ class Login extends React.Component {
     }
 
     componentWillReceiveProps(props) {
+        console.log(props)
         this.setState({loading:false})
         let error = props.user.error
         if(error) {
@@ -113,6 +114,7 @@ class Login extends React.Component {
                         type='email'
                         name='email'
                         placeholder='email'
+                        className={this.state.emailError ? 'error-border' : null }
                         value={this.state.emailValue}
                         onChange={this.handleChangeEmail} />
                     <label htmlFor='email' id='email-error-login'>{this.state.emailError}</label>
@@ -120,13 +122,14 @@ class Login extends React.Component {
                         type='password'
                         name='password'
                         placeholder='password'
+                        className={this.state.passwordError ? 'error-border' : null }
                         value={this.state.passwordValue}
                         onChange={this.handleChangePassword} />
                     <label htmlFor='password' id='password-error-login'>{this.state.passwordError}</label>
                     <label id='server-error-login'>{this.state.serverError}</label>
                     <button type="submit">LOGIN</button>
                 </form>
-                {/* <h1><Link to='/profile/user_id'>Login</Link></h1> */}
+                <div className='below-button'>New user? <Link to='/signup'>Create an account here.</Link></div>
             </div>
         )
     }

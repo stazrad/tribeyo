@@ -36,17 +36,17 @@ class Signup extends React.Component {
 
     handleChangeEmail(e) {
         let emailValue = e.target.value
-        this.setState({emailValue})
+        this.setState({emailValue, emailError: ''})
     }
 
     handleChangeName(e) {
         let nameValue = e.target.value
-        this.setState({nameValue})
+        this.setState({nameValue, nameError: ''})
     }
 
     handleChangePassword(e) {
         let passwordValue = e.target.value
-        this.setState({passwordValue})
+        this.setState({passwordValue, passwordError: ''})
     }
 
     handleSubmit(e) {
@@ -129,6 +129,7 @@ class Signup extends React.Component {
                         type='text'
                         name='name'
                         placeholder='first name'
+                        className={this.state.nameError ? 'error-border' : null }
                         value={this.state.nameValue}
                         onChange={this.handleChangeName} />
                     <label htmlFor='name' id='name-error-signup'>{this.state.nameError}</label>
@@ -136,6 +137,7 @@ class Signup extends React.Component {
                         type='text'
                         name='email'
                         placeholder='email'
+                        className={this.state.emailError ? 'error-border' : null }
                         value={this.state.emailValue}
                         onChange={this.handleChangeEmail} />
                     <label htmlFor='email' id='email-error-signup'>{this.state.emailError}</label>
@@ -143,6 +145,7 @@ class Signup extends React.Component {
                         type='password'
                         name='password'
                         placeholder='password'
+                        className={this.state.passwordError ? 'error-border' : null }
                         value={this.state.passwordValue}
                         onChange={this.handleChangePassword} />
                     <label htmlFor='password' id='password-error-signup'>{this.state.passwordError}</label>

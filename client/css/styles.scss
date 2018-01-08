@@ -51,7 +51,7 @@ a:hover {
 }
 
 h1 {
-    color: #404548;
+    color: $alt-color;
     font-size: 45px;
     line-height: normal;
     text-align: left;
@@ -127,6 +127,7 @@ input {
     width: 92%;
     height: 20px;
     padding: 10px;
+    transition: all .2s;
 }
 input:placeholder {
     color: $neutral-color-on-white;
@@ -143,13 +144,16 @@ input:placeholder {
 :-moz-placeholder { /* Firefox 18- */
   color: $neutral-color-on-white;
 }
+.error-border {
+    border: 3px solid $primary-color;
+}
 
 label {
     font-size: 12px;
     position: absolute;
     width: 100%;
-    left: 12px;
-    color: red;
+    left: 0px;
+    color: $primary-color;
     line-height: 1;
 }
 
@@ -198,7 +202,7 @@ nav {
     margin-top: 22px;
     position: relative;
     left: 0px;
-    transition: all .6s
+    transition: all .6s;
 }
 #logo.hidden {
     left: -100px;
@@ -252,6 +256,19 @@ nav {
 }
 #hamburger:hover {
     color: $secondary-color;
+}
+
+.sidebar>ul {
+    list-style: none;
+}
+.sidebar>ul>li>a {
+    font-weight: 800;
+    font-size: 30px;
+    font-color: $alt-color;
+    transition: all .2s;
+}
+.sidebar>ul>li>a:hover {
+    color: $primary-color;
 }
 
 
