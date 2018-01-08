@@ -146,9 +146,9 @@ class Signup extends React.Component {
                         value={this.state.passwordValue}
                         onChange={this.handleChangePassword} />
                     <label htmlFor='password' id='password-error-signup'>{this.state.passwordError}</label>
-                    <button type="submit">SIGN UP</button>
+                    <button type='submit'>SIGN UP</button>
                 </form>
-                {/* <h1><Link to='/profile/user_id'>Login</Link></h1> */}
+                <div className='below-button'>Already have an account? <Link to='/login'>Login here.</Link></div>
             </div>
         )
     }

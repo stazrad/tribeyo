@@ -3,21 +3,26 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Sidebar from 'react-sidebar';
 
-// RESPONSIVE //
-const mql = window.matchMedia(`(min-width: 800px)`)
+// RESPONSIVE SIDEBAR //
+const mql = window.matchMedia(`(max-width: 800px)`)
+
+console.log(mql)
 
 class Header extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            sidebarOpen: false
+            sidebarOpen: false,
+            responsive: mql.matches,
+            mql
         }
 
         this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this)
         this.mouseEnter = this.mouseEnter.bind(this)
         this.mouseOut = this.mouseOut.bind(this)
         this.toggleSidebar = this.toggleSidebar.bind(this)
+        this.mediaQueryChanged = this.mediaQueryChanged.bind(this)
     }
 
     mouseEnter(e) {
@@ -48,8 +53,21 @@ class Header extends React.Component {
         this.setState({sidebarOpen: !this.state.sidebarOpen})
     }
 
+    componentWillMount() {
+        mql.addListener(this.mediaQueryChanged);
+        this.setState({mql, responsive: mql.matches});
+    }
+
+    componentWillUnmount() {
+        this.state.mql.removeListener(this.mediaQueryChanged);
+    }
+
+    mediaQueryChanged(change) {
+        this.setState({responsive: this.state.mql.matches});
+    }
+
     render() {
-        var sidebarContent = (
+        const sidebarContent = (
             <ul>
                 <li>
                     <Link to='/'>Home</Link>
@@ -65,6 +83,15 @@ class Header extends React.Component {
                 </li>
             </ul>
         )
+        const navRightFull = (
+            <div>
+                <span onClick={this.toggleSidebar} className='nav-button'>MENU</span>
+                <Link to='/login'>
+                    <span className='nav-button'>LOGIN</span>
+                </Link>
+            </div>
+        )
+        const navRightResponsive = <div id='hamburger' onClick={this.toggleSidebar}>&#9776;</div>
 
         return (
             <Sidebar sidebar={sidebarContent}
@@ -84,10 +111,9 @@ class Header extends React.Component {
                         </Link>
                     </div>
                     <div id='nav-right'>
-                        <span onClick={this.toggleSidebar} className='nav-button'>MENU</span>
-                        <Link to='/login'>
-                            <span className='nav-button'>LOGIN</span>
-                        </Link>
+                        {
+                            this.state.responsive ? navRightResponsive : navRightFull
+                        }
                     </div>
                 </nav>
             </Sidebar>
