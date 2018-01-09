@@ -108,6 +108,9 @@ button:hover {
 .below-button {
     font-size: 14px;
 }
+.below-button>a {
+    text-decoration: underline;
+}
 
 form {
     width: 40%;
@@ -151,6 +154,7 @@ input:placeholder {
 label {
     font-size: 12px;
     position: absolute;
+    line-height: 1.5 !important;
     width: 100%;
     left: 0px;
     color: $primary-color;
@@ -255,20 +259,31 @@ nav {
     transition: all .6s;
 }
 #hamburger:hover {
-    color: $secondary-color;
+    color: $secondary-color-on-alt;
 }
 
 .sidebar>ul {
     list-style: none;
+    padding-left: 8%;
+}
+.sidebar>ul>li.profile {
+    margin: 20px 0px;
 }
 .sidebar>ul>li>a {
-    font-weight: 800;
     font-size: 30px;
     font-color: $alt-color;
     transition: all .2s;
 }
 .sidebar>ul>li>a:hover {
     color: $primary-color;
+    border-bottom: 2px solid $primary-color;
+}
+
+.sidebar-logo {
+    width: 50%;
+    min-width: 140px;
+    max-width: 210px;
+    margin-bottom: 10%;
 }
 
 

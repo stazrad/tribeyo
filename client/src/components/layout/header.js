@@ -1,14 +1,15 @@
 // PACKAGES //
-import React from 'react';
-import { Link } from 'react-router-dom';
-import Sidebar from 'react-sidebar';
+import React from 'react'
+import { Link } from 'react-router-dom'
+import Sidebar from 'react-sidebar'
+import { connect } from 'react-redux'
 
 // RESPONSIVE SIDEBAR //
 const mql = window.matchMedia(`(max-width: 800px)`)
 
 class Header extends React.Component {
     constructor(props) {
-        super(props);
+        super(props)
 
         this.state = {
             sidebarOpen: false,
@@ -26,21 +27,21 @@ class Header extends React.Component {
     mouseEnter(e) {
         // this.setState({
         //     hiddenClass: null
-        // });
-        let src = e.target.src;
-        let hover = src.replace('white', 'alt');
-        e.target.src = hover;
+        // })
+        let src = e.target.src
+        let hover = src.replace('white', 'alt')
+        e.target.src = hover
     }
 
     mouseOut(e) {
-        let src = e.target.src;
-        let white = src.replace('alt', 'white');
-        e.target.src = white;
+        let src = e.target.src
+        let white = src.replace('alt', 'white')
+        e.target.src = white
         // setTimeout(() => {
         //     this.setState({
         //         hiddenClass: 'hidden'
-        //     });
-        // }, 1500);
+        //     })
+        // }, 1500)
     }
 
     onSetSidebarOpen(open) {
@@ -52,21 +53,29 @@ class Header extends React.Component {
     }
 
     componentWillMount() {
-        mql.addListener(this.mediaQueryChanged);
-        this.setState({mql, responsive: mql.matches});
+        mql.addListener(this.mediaQueryChanged)
+        this.setState({mql, responsive: mql.matches})
     }
 
     componentWillUnmount() {
-        this.state.mql.removeListener(this.mediaQueryChanged);
+        this.state.mql.removeListener(this.mediaQueryChanged)
     }
 
     mediaQueryChanged(change) {
-        this.setState({responsive: this.state.mql.matches});
+        this.setState({responsive: this.state.mql.matches})
     }
 
     render() {
         const sidebarContent = (
             <ul>
+                <img className='sidebar-logo' src='images/tribeyo_logo.png' />
+                {
+                    this.props.user.isLoggedIn ? (
+                        <li className='profile' onClick={this.toggleSidebar}>
+                            <Link to={`/profile/${this.props.user.uid}`}>Profile</Link>
+                        </li>
+                    ) : null
+                }
                 <li onClick={this.toggleSidebar}>
                     <Link to='/'>Home</Link>
                 </li>
@@ -76,9 +85,16 @@ class Header extends React.Component {
                 <li onClick={this.toggleSidebar}>
                     <Link to='/plans'>Plans</Link>
                 </li>
-                <li onClick={this.toggleSidebar}>
-                    <Link to='/signup'>Signup</Link>
-                </li>
+                {
+                    !this.props.user.isLoggedIn ? ([
+                        <li key='1' onClick={this.toggleSidebar}>
+                            <Link to='/signup'>Signup</Link>
+                        </li>,
+                        <li key='2' onClick={this.toggleSidebar}>
+                            <Link to='/login'>Login</Link>
+                        </li>
+                    ]) : null
+                }
             </ul>
         )
         const navRightFull = (
@@ -89,7 +105,7 @@ class Header extends React.Component {
                 </Link>
             </div>
         )
-        const navRightResponsive = <div id='hamburger' onClick={this.toggleSidebar}>&#9776;</div>
+        const navRightResponsive = <div id='hamburger' onClick={this.toggleSidebar}>&#9776</div>
         const styles = {
             sidebar: {
                 background: 'linear-gradient(#f2f2f2, #bfbfbf)',
@@ -126,6 +142,12 @@ class Header extends React.Component {
             </Sidebar>
         )
     }
-};
+}
 
-export default Header;
+const mapStateToProps = state => {
+    return {
+        user: state.user
+    }
+}
+
+export default connect(mapStateToProps)(Header)
