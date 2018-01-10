@@ -98,3 +98,24 @@ nav {
     max-width: 210px;
     margin-bottom: 10%;
 }
+
+.sidebar-exit {
+    cursor: pointer;
+    color: $alt-color;
+    position: absolute;
+    top: -18px;
+    right: 40px;
+    font-size: 80px;
+    margin-left: 50px;
+}
+
+// RESPONSIVE //
+@media (max-width: 800px) {
+    .sidebar {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    .sidebar-exit {
+        display: block;
+    }
+}

@@ -25,6 +25,7 @@ const userReducerDefaultState = {
     },
     uid: ''
 }
+
 const userReducer = (state = userReducerDefaultState, action) => {
     switch(action.type) {
         case 'LOGIN':

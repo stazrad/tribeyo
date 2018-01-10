@@ -21,8 +21,7 @@ class Login extends React.Component {
             emailValue: '',
             passwordValue: '',
             authenticated: false,
-            loading: false,
-            uid: null
+            loading: false
         }
 
         this.handleChangeEmail = this.handleChangeEmail.bind(this)
@@ -89,15 +88,14 @@ class Login extends React.Component {
             }
         } else {
             this.setState({
-                authenticated: true,
-                uid: props.user.uid
+                authenticated: true
             })
             return
         }
     }
 
     render() {
-        const id = this.state.uid
+        const id = this.props.user.uid
         const redirect = this.state.authenticated ? <Redirect to={`/profile/${id}`} /> : null
         const spinner = Loader(this.state.loading)
 
