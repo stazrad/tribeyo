@@ -1,0 +1,100 @@
+// nav bar styles
+nav {
+    background-color: $alt-color;
+    color: $white;
+    font-size: 20px;
+    height: 88px;
+    padding: 0px 10%;
+}
+
+.navbar-toggle {
+    width: unset;
+}
+
+#logo-container {
+    width: 150px;
+}
+#logo {
+    width: 100%;
+    margin-top: 22px;
+    position: relative;
+    left: 0px;
+    transition: all .6s;
+}
+#logo.hidden {
+    left: -100px;
+}
+#logo-hider {
+    position: absolute;
+    width: 300px;
+    height: 68px;
+    top: 14px;
+    left: -158px;
+    z-index: 1;
+    background: $alt-color;
+    box-shadow: 0px 0px 8px $alt-color;
+    -webkit-box-shadow: 0px 0px 8px $alt-color;
+    -moz-box-shadow: 0px 0px 8px $alt-color;
+}
+
+#nav-right {
+    float: right;
+    cursor: pointer;
+    color: #f2f2f2;
+    font-size: 15px;
+    font-weight: normal;
+    position: absolute;
+    top: 35px;
+    right: 0;
+    margin-right: 10%;
+}
+.nav-button {
+    color: $white;
+    font-weight: 400;
+    padding-left: 14px;
+    cursor: pointer;
+    transition: all .2s;
+}
+.nav-button:hover {
+    color: $secondary-color-on-alt;
+}
+#nav-right>div>span {
+    padding-left: 0px;
+    padding-right: 14px;
+    border-right: 2px solid white;
+}
+#hamburger {
+    color: $white;
+    font-size: 38px;
+    bottom: 42px;
+    margin-top: 22px;
+    position: relative;
+    transition: all .6s;
+}
+#hamburger:hover {
+    color: $secondary-color-on-alt;
+}
+
+.sidebar>ul {
+    list-style: none;
+    padding-left: 8%;
+}
+.sidebar>ul>li.profile {
+    margin: 20px 0px;
+}
+.sidebar>ul>li>a {
+    font-size: 30px;
+    font-color: $alt-color;
+    transition: all .2s;
+}
+.sidebar>ul>li>a:hover {
+    color: $primary-color;
+    border-bottom: 2px solid $primary-color;
+}
+
+.sidebar-logo {
+    width: 50%;
+    min-width: 140px;
+    max-width: 210px;
+    margin-bottom: 10%;
+}

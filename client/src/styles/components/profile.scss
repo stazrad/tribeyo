@@ -1,0 +1,60 @@
+// profile view styles
+#dashboard {
+    text-align: center;
+}
+
+#phone-number {
+    color: $primary-color;
+    // margin-left: 12px;
+    font-weight: 600;
+}
+
+#forwards-to {
+    color: $neutral-color-on-white;
+}
+
+#forwards-to-number {
+    color: $alt-color;
+    cursor: pointer;
+    margin-left: 12px;
+}
+#forwards-to-number:hover {
+    color: $secondary-color;
+}
+
+.call-to-action {
+    font-weight: bold;
+    color: $neutral-color-on-white;
+}
+
+button.subscribe {
+    display: block;
+    margin: auto;
+    width: 350px;
+    height: 48px;
+    margin-bottom: 40px;
+}
+
+button.edit-profile {
+    display: block;
+    margin: auto;
+    width: 200px;
+    margin-top: 180px;
+    margin-bottom: 22px;
+    font-size: 13px;
+    border: none;
+    background: $alt-color;
+    color: $white;
+}
+button.edit-profile:hover {
+    color: $secondary-color;
+}
+
+.contact-us {
+    text-decoration: underline;
+    margin-top: 40px;
+    font-size: 16px;
+}
+.contact-us:hover {
+    color: $secondary-color;
+}

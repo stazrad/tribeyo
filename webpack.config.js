@@ -16,7 +16,7 @@ module.exports = {
         // 'webpack-dev-server/client?http://127.0.0.1:9090/',
         'webpack/hot/only-dev-server',
         './client/src/index.js',
-        './client/css/styles.scss'
+        './client/src/styles/index.scss'
     ],
     output: {
         path: path.join(__dirname, 'client/build'),

@@ -1,0 +1,22 @@
+// App color config
+$primary-color: #e64545;
+$secondary-color: #90cfd5;
+$neutral-color: #f2f2f2;
+$alt-color: #404548;
+$secondary-color-on-alt: #8ad4db;
+$neutral-color-on-white: #757575;
+$black: black;
+$white: white;
+
+@import './main/index.scss';
+@import './main/responsive.scss';
+
+@import './components/header.scss';
+@import './components/home.scss';
+@import './components/how-it-works.scss';
+@import './components/login.scss';
+@import './components/not-found.scss';
+@import './components/plans.scss';
+@import './components/profile.scss';
+@import './components/signup.scss';
+@import './components/spinner.scss';

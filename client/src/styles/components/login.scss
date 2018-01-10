@@ -1,0 +1,27 @@
+// login view styles
+#login {
+    text-align: center;
+}
+
+.image-container {
+    width: 50%;
+    margin: auto;
+}
+
+.bubbles {
+    width: 100%;
+    max-width: 140px;
+    margin: auto;
+}
+
+#email-error-login {
+    top: 50px;
+}
+
+#password-error-login {
+    top: 128px;
+}
+
+#server-error-login {
+    top: 155px;
+}
