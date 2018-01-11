@@ -3,9 +3,6 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-// IMPORTS //
-import Sidebar from './sidebar'
-
 // RESPONSIVE SIDEBAR //
 const mql = window.matchMedia(`(max-width: 800px)`)
 
@@ -14,7 +11,6 @@ class Header extends React.Component {
         super(props)
 
         this.state = {
-            sidebarOpen: false,
             responsive: mql.matches,
             mql
         }
@@ -59,14 +55,14 @@ class Header extends React.Component {
 
     render() {
         const navRightFull = (
-            <div>
-                <span onClick={Sidebar.toggleSidebar} className='nav-button'>MENU</span>
+            <div className='nav-button-container'>
+                <span onClick={this.props.toggleSidebar} className='nav-button'>MENU</span>
                 <Link to='/login'>
                     <span className='nav-button'>LOGIN</span>
                 </Link>
             </div>
         )
-        const navRightResponsive = <div id='hamburger' onClick={Sidebar.toggleSidebar}>&#9776;</div>
+        const navRightResponsive = <div id='hamburger' onClick={this.props.toggleSidebar}>&#9776;</div>
 
         return (
             <nav>

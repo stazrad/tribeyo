@@ -1,13 +1,18 @@
 // PACKAGES //
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { default as ReactSidebar } from 'react-sidebar'
+import Sidebar from 'react-sidebar'
 import { connect } from 'react-redux'
+
+// COMPONENTS //
+import Header  from './header'
+import Main    from './main'
+import Footer  from './footer'
 
 // RESPONSIVE SIDEBAR //
 const mql = window.matchMedia(`(max-width: 800px)`)
 
-class Sidebar extends React.Component {
+class Layout extends React.Component {
     constructor(props) {
         super(props)
 
@@ -78,19 +83,22 @@ class Sidebar extends React.Component {
         )
         const styles = {
             sidebar: {
-                background: 'linear-gradient(#f2f2f2, #bfbfbf)',
+                background: 'linear-gradient(rgb(242, 242, 242), rgb(212, 212, 212))',
                 width: '80%',
                 maxWidth: '500px'
             }
         }
         return (
-            <ReactSidebar sidebarClassName='sidebar'
+            <Sidebar sidebarClassName='sidebar'
                     sidebar={sidebarContent}
                     open={this.state.sidebarOpen}
                     onSetOpen={this.onSetSidebarOpen}
                     pullRight
                     styles={styles}>
-            </ReactSidebar>
+                <Header toggleSidebar={this.toggleSidebar} />
+                <Main />
+                <Footer />
+            </Sidebar>
         )
     }
 }
@@ -101,4 +109,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(Sidebar)
+export default connect(mapStateToProps)(Layout)
