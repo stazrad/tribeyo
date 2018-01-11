@@ -1,3 +1,62 @@
 {
-    "usage": []
+    "usage": [
+        {
+            "id": "cjca0tay50000b3opodvsrdki",
+            "date": "Wed Jan 10 2018 22:55:34 GMT-0600 (CST)",
+            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36",
+            "clientIp": "::1",
+            "method": "POST",
+            "url": "/api/profile",
+            "error": {
+                "status": 409,
+                "message": "Password should be at least 6 characters"
+            },
+            "success": false,
+            "responseTime": 1107
+        },
+        {
+            "id": "cjca0tik90001b3oppjvb8wb8",
+            "date": "Wed Jan 10 2018 22:55:44 GMT-0600 (CST)",
+            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36",
+            "clientIp": "::1",
+            "method": "POST",
+            "url": "/api/profile",
+            "error": false,
+            "success": true,
+            "responseTime": 2981
+        },
+        {
+            "id": "cjca1qsak0002b3op8iy3dllk",
+            "date": "Wed Jan 10 2018 23:21:36 GMT-0600 (CST)",
+            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36",
+            "clientIp": "::1",
+            "method": "POST",
+            "url": "/api/profile/login",
+            "error": false,
+            "success": true,
+            "responseTime": 1605
+        },
+        {
+            "id": "cjca1rrg90003b3op1hyzc5rk",
+            "date": "Wed Jan 10 2018 23:22:22 GMT-0600 (CST)",
+            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36",
+            "clientIp": "::1",
+            "method": "POST",
+            "url": "/api/profile",
+            "error": false,
+            "success": true,
+            "responseTime": 2643
+        },
+        {
+            "id": "cjca1sglm0004b3opn1d81mle",
+            "date": "Wed Jan 10 2018 23:22:55 GMT-0600 (CST)",
+            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36",
+            "clientIp": "::1",
+            "method": "POST",
+            "url": "/api/profile/login",
+            "error": false,
+            "success": true,
+            "responseTime": 696
+        }
+    ]
 }

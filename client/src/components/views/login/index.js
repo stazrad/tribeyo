@@ -86,9 +86,14 @@ class Login extends React.Component {
                         serverError: error.message
                     })
             }
-        } else {
+        } else if(props.user.isLoggedIn){
             this.setState({
                 authenticated: true
+            })
+            return
+        } else {
+            this.setState({
+                authenticated: false
             })
             return
         }

@@ -1,6 +1,6 @@
 // PACKAGES //
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import Sidebar from 'react-sidebar'
 import { connect } from 'react-redux'
 
@@ -109,4 +109,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(Layout)
+export default withRouter(connect(mapStateToProps, {})(Layout))
