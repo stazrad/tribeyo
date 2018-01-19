@@ -58,7 +58,11 @@ class Layout extends React.Component {
                         <li className='profile' onClick={this.toggleSidebar}>
                             <Link to={`/profile/${this.props.user.uid}`}>Profile</Link>
                         </li>
-                    ) : null
+                    ) : (
+                        <li className='profile' onClick={this.toggleSidebar}>
+                            <Link to='/login'>Login</Link>
+                        </li>
+                    )
                 }
                 <li onClick={this.toggleSidebar}>
                     <Link to='/'>Home</Link>
@@ -70,14 +74,11 @@ class Layout extends React.Component {
                     <Link to='/plans'>Plans</Link>
                 </li>
                 {
-                    !this.props.user.isLoggedIn ? ([
-                        <li key='1' onClick={this.toggleSidebar}>
+                    !this.props.user.isLoggedIn ? (
+                        <li onClick={this.toggleSidebar}>
                             <Link to='/signup'>Signup</Link>
-                        </li>,
-                        <li key='2' onClick={this.toggleSidebar}>
-                            <Link to='/login'>Login</Link>
                         </li>
-                    ]) : null
+                    ) : null
                 }
             </ul>
         )

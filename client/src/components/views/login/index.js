@@ -129,7 +129,7 @@ class Login extends React.Component {
                         value={this.state.passwordValue}
                         onChange={this.handleChangePassword} />
                     <label htmlFor='password' id='password-error-login'>{this.state.passwordError}</label>
-                    <label id='server-error-login'>{this.state.serverError}</label>
+                    <label className='server-error' id='server-error-login'>{this.state.serverError}</label>
                     <button type="submit">LOGIN</button>
                 </form>
                 <div className='below-button'>New user? <Link to='/signup'>Create an account here.</Link></div>

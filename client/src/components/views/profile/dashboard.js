@@ -1,41 +1,45 @@
 // PACKAGES //
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react'
+import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 class Dashboard extends React.Component {
 
-    constructor() {
-        super();
-        this.state = {
-            number: {
-                purchasedNumber: {
-                    displayNumber: '(636) 878-9999'
-                },
-                forwardToNumber: {
-                    displayNumber: '(909) 877-1991'
-                }
-            }
-        }
+    constructor(props) {
+        super(props)
     }
 
     render() {
-        let callToAction = 'SUBSCRIBE TO GET YOUR NUMBER';
-        let subscribeButton = (<button className='subscribe'>SUSBSCRIBE NOW</button>);
+        const subscribeButton = <button className='subscribe'>SUBSCRIBE NOW</button>
+        const { subscription } = this.props.user.stripe
+        const { number } = this.props.user.twilio
+        const isSubscribed = (
+            <div>
+                <h2>YOUR TRIBEYO NUMBER:</h2>
+                <h2 id='phone-number'>{number.purchasedNumber.displayNumber}</h2>
+                <h3 id='forwards-to'>Forwards to:
+                    <span id='forwards-to-number'>{number.forwardToNumber.displayNumber}</span>
+                </h3>
+            </div>
+        )
+        const isNotSubscribed = (
+            <div>
+                <h2 className='call-to-action'>SUBSCRIBE TO GET YOUR NUMBER</h2>
+                <button className='alt'>
+                    <Link to='/plans'>View Subscription Plans</Link>
+                </button>
+                <button className='subscribe'>SUBSCRIBE NOW</button>
+            </div>
+        )
 
         return (
             <div id='dashboard'>
-                {/* <h1>Dashboard: {this.props.match.params.id}</h1> */}
-                <h2>YOUR TRIBEYO NUMBER:</h2>
-                <h2 id='phone-number'>{this.state.number.purchasedNumber.displayNumber}</h2>
-                <h3 id='forwards-to'>Forwards to:
-                    <span id='forwards-to-number'>{this.state.number.forwardToNumber.displayNumber}</span>
-                </h3>
-                <h2 className='call-to-action'>{!this.state.number ? callToAction : null}</h2>
-                {!this.state.number ? subscribeButton : null}
+                <h1>Dashboard</h1>
+                {subscription ? isSubscribed : isNotSubscribed}
                 <button className='edit-profile'>EDIT PROFILE</button>
-                <div className="contact">
+                <div className='contact'>
                     Have questions?&nbsp;
-                    <Link to="/how-it-works" className='contact-us'>
+                    <Link to='/how-it-works' className='contact-us'>
                         Contact us.
                     </Link>
                 </div>
@@ -44,4 +48,10 @@ class Dashboard extends React.Component {
     }
 }
 
-export default Dashboard;
+const mapStateToProps = state => {
+    return {
+        user: state.user
+    }
+}
+
+export default connect(mapStateToProps)(Dashboard)
