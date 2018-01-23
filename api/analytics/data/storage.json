@@ -1,15 +1,15 @@
 {
     "usage": [
         {
-            "id": "cjclizqpw000074opgpctsvbc",
-            "date": "Fri Jan 19 2018 00:09:56 GMT-0600 (CST)",
+            "id": "cjcr8ckr500001eopcbvz7ce6",
+            "date": "Mon Jan 22 2018 23:58:36 GMT-0600 (CST)",
             "browser": "PostmanRuntime/6.4.1",
             "clientIp": "::1",
             "method": "GET",
-            "url": "/api/areaCode/303",
+            "url": "/api/areaCode/636",
             "error": false,
-            "success": false,
-            "responseTime": null
+            "success": true,
+            "responseTime": 309
         }
     ]
 }

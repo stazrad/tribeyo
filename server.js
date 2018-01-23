@@ -33,8 +33,9 @@ var incomingCall  = require('./api/routes/incomingCall'),
     profile       = require('./api/routes/profile')
 
 // REST API //
-app.get('/api/profile/:id/queryUserInfo', profile.queryUserInfo)
 app.get('/api/areaCode/:areaCode', lookup.areaCode)
+app.get('/api/autocomplete/:input', lookup.autocomplete)
+app.get('/api/profile/:id/queryUserInfo', profile.queryUserInfo)
 app.get('/api/validate/:number', lookup.validate)
 app.post('/api/profile', profile.create)
 app.post('/api/profile/login', profile.login)
