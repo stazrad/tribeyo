@@ -10,12 +10,12 @@ class Dashboard extends React.Component {
     }
 
     render() {
-        const subscribeButton = <button className='subscribe'>SUBSCRIBE NOW</button>
+        const subscribeButton = <button className='subscribe'>Subscribe Now</button>
         const { subscription } = this.props.user.stripe
         const { number } = this.props.user.twilio
         const isSubscribed = (
             <div>
-                <h2>YOUR TRIBEYO NUMBER:</h2>
+                <h2>Your Tribeyo Number:</h2>
                 <h2 id='phone-number'>{number.purchasedNumber.displayNumber}</h2>
                 <h3 id='forwards-to'>Forwards to:
                     <span id='forwards-to-number'>{number.forwardToNumber.displayNumber}</span>
@@ -24,11 +24,11 @@ class Dashboard extends React.Component {
         )
         const isNotSubscribed = (
             <div>
-                <h2 className='call-to-action'>SUBSCRIBE TO GET YOUR NUMBER</h2>
+                <h2 className='call-to-action'>Subscribe to Get Your Number</h2>
                 <button className='alt'>
                     <Link to='/plans'>View Subscription Plans</Link>
                 </button>
-                <button className='subscribe'>SUBSCRIBE NOW</button>
+                <button className='subscribe'>Subscribe Now</button>
             </div>
         )
 
@@ -36,7 +36,7 @@ class Dashboard extends React.Component {
             <div id='dashboard'>
                 <h1>Dashboard</h1>
                 {subscription ? isSubscribed : isNotSubscribed}
-                <button className='edit-profile'>EDIT PROFILE</button>
+                <button className='edit-profile'>Edit Profile</button>
                 <div className='contact'>
                     Have questions?&nbsp;
                     <Link to='/how-it-works' className='contact-us'>

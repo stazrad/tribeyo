@@ -1,5 +1,5 @@
 // PACKAGES //
-const accountSid     = process.env.ACCOUNT_SID,
+const accountSid   = process.env.ACCOUNT_SID,
     authToken      = process.env.AUTH_TOKEN,
     twilio         = require('twilio')(accountSid, authToken),
     AreaCodes      = require('areacodes'),
@@ -12,7 +12,7 @@ const updateAnalytics = require('../analytics/updateData')
 
 // GET /api/areaCode/:areaCode
 exports.areaCode = (req, res) => {
-    const areaCode = req.params.areaCode
+    const { areaCode } = req.params
     if(!areaCode || areaCode.length != 3) {
         var error = {
             status: 400,
@@ -21,7 +21,7 @@ exports.areaCode = (req, res) => {
         updateAnalytics(400, req.reqId, error)
         return res.status(400).json(error)
     }
-    areaCodes.get(areaCode, (err, { city, state} = {}) => {
+    areaCodes.get(areaCode, (err, { city, state } = {}) => {
         const capitalize = (string, multiple) => {
             if(multiple) {
                 let res = ''
@@ -53,7 +53,7 @@ exports.areaCode = (req, res) => {
 
 // GET /api/autocomplete/:input
 exports.autocomplete = (req, res) => {
-    const input = req.params.input
+    const { input } = req.params
     if(!input) {
         const error = {
             status: 400,
@@ -67,17 +67,15 @@ exports.autocomplete = (req, res) => {
     fetch(url)
         .then(result => result.json())
         .then(({ predictions }) => {
-            const placeId = predictions[0].place_id
-            return fetch(`https://maps.googleapis.com/maps/api/place/details/json?placeid=${placeId}&key=${key}`)
+            return predictions.map(({ description }) => description)
         })
-        .then(result => result.json())
         .then(result => {
             return res.status(200).json(result)
         })
-        .catch(err => {
+        .catch(({ message }) => {
             const error = {
                 status: 500,
-                message: err.message
+                message
             }
             updateAnalytics(500, req.reqId, error)
             return res.status(500).json(error)
@@ -96,21 +94,21 @@ exports.validate = (req, res) => {
         return res.status(400).json(error)
     }
     const key = process.env.NUMVERIFY_KEY
-	const url = 'http://apilayer.net/api/validate?access_key=' + key + '&number=' + number
+	const url = `http://apilayer.net/api/validate?access_key=${key}&number=${number}`
 	fetch(url)
 		.then(result => result.json())
-		.then(result => {
+		.then(({ line_type: type, valid }) => {
             const response = {
-                type: result.line_type,
-                valid: result.valid
+                type,
+                valid
             }
             updateAnalytics(200, req.reqId)
             return res.status(200).json(response)
         })
-        .catch(err => {
+        .catch(({ message }) => {
             const error = {
                 status: 500,
-                message: err.message
+                message
             }
             updateAnalytics(500, req.reqId, error)
             return res.status(500).json(error)

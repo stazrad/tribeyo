@@ -67,7 +67,6 @@ class Login extends React.Component {
     }
 
     componentWillReceiveProps(props) {
-        console.log(props)
         this.setState({loading:false})
         let error = props.user.error
         if(error) {

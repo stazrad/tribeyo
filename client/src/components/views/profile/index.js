@@ -1,22 +1,20 @@
 // PACKAGES //
-import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import React from 'react'
 
 // COMPONENTS //
-import Dashboard from './dashboard';
-import Login     from '../login';
+import CitySearch from './citySearch'
+import Dashboard  from './dashboard'
+import Login      from '../login'
 
 class Profile extends React.Component {
     render() {
         return (
             <div>
-                <Switch>
-                    <Route exact path='/profile' component={Login}/>
-                    <Route path='/profile/:id' component={Dashboard}/>
-                </Switch>
+                <CitySearch />
+                <Dashboard />
             </div>
         )
     }
 }
 
-export default Profile;
+export default Profile

@@ -7,7 +7,7 @@ var express       = require('express'),
 
 // VIEW ENGINE //
 app.set('view engine', 'html')
-app.engine('html', function(path, option) {
+app.engine('html', (path, option) => {
     fs.readFile(path, 'utf-8')
 })
 
@@ -49,6 +49,6 @@ app.use(serveSPA)
 
 // LISTEN ON PORT //
 var port = process.env.PORT
-app.listen(port, function() {
+app.listen(port, () => {
     console.log('Server is listening on port: ' + port)
 })

@@ -1,4 +1,4 @@
-// PACKAGES//
+// PACKAGES //
 var accountSid     = process.env.ACCOUNT_SID,
     authToken      = process.env.AUTH_TOKEN,
     twilio         = require('twilio')(accountSid, authToken),
@@ -26,8 +26,9 @@ var db = admin.database()
 var updateAnalytics = require('../analytics/updateData')
 
 // POST /api/profile
-exports.create = function(req, res) {
-    if(!req.body.password || !req.body.email) {
+exports.create = (req, res) => {
+    const { email, name, password } = req.body
+    if(!email || !name || !password) {
         var error = {
             status: 400,
             message: 'Include password & email!'
@@ -35,14 +36,11 @@ exports.create = function(req, res) {
         updateAnalytics(400, req.reqId, error)
         return res.status(400).json(error)
     }
-    var email    = req.body.email,
-        name     = req.body.name,
-        password = req.body.password
     firebase.auth().createUserWithEmailAndPassword(email, password)
-        .then(function(result) {
-            return createTwilioAndStripeAccounts(result.uid)
+        .then(({ uid }) => {
+            return createTwilioAndStripeAccounts(uid)
         })
-        .catch(function(err) {
+        .catch(err => {
             var error = {
                 status: 409,
                 message: err.message
@@ -52,9 +50,9 @@ exports.create = function(req, res) {
         })
 
     // instantiate a new user object
-    var user = {
-        name: name,
-        email: email,
+    const user = {
+        name,
+        email,
         emailVerified: false,
         twilio: {
             accountSid: '',
@@ -78,38 +76,41 @@ exports.create = function(req, res) {
         uid: ''
     }
     function createTwilioAndStripeAccounts(uid) {
-        var usersRef = db.ref().child('users/' + uid)
+        var usersRef = db.ref().child(`users/${uid}`)
         // update user object in Firebase
-        var setStripeId         = db.ref().child('users/'+uid+'/stripe/id'),
-            setTwilioAuthToken  = db.ref().child('users/'+uid+'/twilio/authToken'),
-            setTwilioAccountSid = db.ref().child('users/'+uid+'/twilio/accountSid'),
-            setUid              = db.ref().child('users/'+uid+'/uid')
+        var setStripeId         = db.ref().child(`users/${uid}/stripe/id`),
+            setTwilioAuthToken  = db.ref().child(`users/${uid}/twilio/authToken`),
+            setTwilioAccountSid = db.ref().child(`users/${uid}/twilio/accountSid`),
+            setUid              = db.ref().child(`users/${uid}/uid`)
         usersRef.set(user)
-            .then(function() {
+            .then(() => {
                 setUid.set(uid)
                 return stripe.customers.create()
             })
-            .then(function(customer) {
-                setStripeId.set(customer.id)
+            .then(({ id }) => {
+                setStripeId.set(id)
                 return twilio.api.accounts.create({friendlyName: name})
             })
-            .then(function(account) {
-                setTwilioAuthToken.set(account.authToken)
-                setTwilioAccountSid.set(account.sid)
+            .then(({ authToken, sid }) => {
+                setTwilioAuthToken.set(authToken)
+                setTwilioAccountSid.set(sid)
                 return usersRef.once('value')
             })
-            .then(function(snapshot){
+            .then(snapshot => {
                 return snapshot.exportVal()
             })
-            .then(function(user) {
-                var response = {
+            .then(user => {
+                delete user.twilio.authToken
+                delete user.twilio.accountSid
+                delete user.stripe.id
+                const response = {
                     status: 200,
-                    user: user
+                    user
                 }
                 updateAnalytics(200, req.reqId)
     			return res.status(200).json(response)
             })
-            .catch(function(err) {
+            .catch(err => {
                 updateAnalytics(500, req.reqId, err)
                 return res.status(500).send(err)
             })
@@ -117,26 +118,36 @@ exports.create = function(req, res) {
 }
 
 // POST /api/profile/login
-exports.login = function(req, res) {
-    var email = req.body.email
-    var password = req.body.password
+exports.login = (req, res) => {
+    const { email, password } = req.body
+    if(!email || !password) {
+        var error = {
+            status: 400,
+            message: 'Include password & email!'
+        }
+        updateAnalytics(400, req.reqId, error)
+        return res.status(400).json(error)
+    }
     firebase.auth().signInWithEmailAndPassword(email, password)
-        .then(function(result) {
-            db.ref().child('users/'+result.uid+'/emailVerified').set(result.emailVerified)
-            return db.ref().child('users/' + result.uid).once('value')
+        .then(({ emailVerified, uid }) => {
+            db.ref().child(`users/${uid}/emailVerified`).set(emailVerified)
+            return db.ref().child(`users/${uid}`).once('value')
         })
-        .then(function(snapshot){
+        .then(snapshot => {
             return snapshot.exportVal()
         })
-        .then(function(user) {
+        .then(user => {
+            delete user.twilio.authToken
+            delete user.twilio.accountSid
+            delete user.stripe.id
             var response = {
                 status: 200,
-                user: user
+                user
             }
             updateAnalytics(200, req.reqId)
             return res.status(200).json(response)
         })
-        .catch(function(err) {
+        .catch(err => {
             updateAnalytics(500, req.reqId, err)
             return res.status(500).send(err)
         })

@@ -1,15 +1,15 @@
 {
     "usage": [
         {
-            "id": "cjcr8ckr500001eopcbvz7ce6",
-            "date": "Mon Jan 22 2018 23:58:36 GMT-0600 (CST)",
+            "id": "cjcu2wtoq0000csopdiqmnoag",
+            "date": "Wed Jan 24 2018 23:49:41 GMT-0600 (CST)",
             "browser": "PostmanRuntime/6.4.1",
             "clientIp": "::1",
             "method": "GET",
-            "url": "/api/areaCode/636",
+            "url": "/api/autocomplete/stcharles",
             "error": false,
-            "success": true,
-            "responseTime": 309
+            "success": false,
+            "responseTime": null
         }
     ]
 }
