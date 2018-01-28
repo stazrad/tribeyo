@@ -2,6 +2,7 @@
 import React from 'react'
 import { Link, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
+import _ from 'lodash';
 
 // COMPONENTS //
 import Loader from '../../layout/partials/loader'
@@ -16,20 +17,28 @@ class CitySearch extends React.Component {
 
         this.state = {
             cityValue: '',
-            loading: false
+            loading: false,
+            searchError: false
         }
 
-        this.handleChangeCitySearch = this.handleChangeCitySearch.bind(this)
+        this.onChange = this.onChange.bind(this)
+        this.onSearch = _.debounce(this.onSearch, 300)
     }
 
-    handleChangeCitySearch(e) {
-        const cityValue = e.target.value
+    onChange(e) {
+        const { value: cityValue } = e.target
         this.setState({cityValue})
-        return this.props.dispatch(autocomplete(cityValue))
+        this.onSearch(cityValue)
+    }
+
+    onSearch(cityValue) {
+        const { dispatch } = this.props
+        dispatch(autocomplete(cityValue))
     }
 
     componentWillReceiveProps(props) {
-        console.log(props.predictions)
+        const { predictions } = props
+        this.setState({searchError: !predictions.length && !!this.state.cityValue})
     }
 
     render() {
@@ -41,16 +50,25 @@ class CitySearch extends React.Component {
                 <div className='image-container'>
                     <img className='bubbles' src="/images/tribeyo_mark_chat_bubbles.png" />
                 </div>
-                <h3>Type city</h3>
+                <h2>Search by City</h2>
                 <form>
                     <input
                         type='text'
                         name='city'
-                        placeholder='type city'
-                        className={this.state.emailError ? 'error-border' : null }
+                        placeholder='start typing city name'
+                        className={this.state.searchError ? 'error-border' : null }
                         value={this.state.cityValue}
-                        onChange={this.handleChangeCitySearch} />
+                        onChange={this.onChange} />
                 </form>
+                <h3>Select One:</h3>
+                <ul>
+                    {
+                        this.props.predictions.map((city, i) => (
+                            <li key={i}
+                                className='prediction'>{city}</li>
+                        ))
+                    }
+                </ul>
 
             </div>
         )
@@ -59,7 +77,7 @@ class CitySearch extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        predictions: state.predictions
+        predictions: state.search.predictions
     }
 }
 

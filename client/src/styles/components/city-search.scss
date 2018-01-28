@@ -1,0 +1,19 @@
+// city search styles
+#city-search {
+    text-align: center;
+}
+
+.prediction {
+    background: $neutral-color;
+    color: $black;
+    width: 40%;
+    margin: auto;
+    margin-bottom: 10px;
+    border-radius: 2px;
+    padding: 10px;
+    transition: all .2s;
+}
+.prediction:hover {
+    background: $secondary-color-on-alt;
+    cursor: pointer;
+}

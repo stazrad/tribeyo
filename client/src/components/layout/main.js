@@ -3,8 +3,9 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 // COMPONENTS //
+import CitySearch from '../views/profile/citySearch'
 import Home       from '../views/home';
-import HowItWorks from '../views/HowItWorks';
+import HowItWorks from '../views/howItWorks';
 import Login      from '../views/login';
 import NotFound   from '../views/notFound';
 import Plans      from '../views/plans';
@@ -22,6 +23,7 @@ class Main extends React.Component {
                     <Route path='/plans' component={Plans} />
                     <Route path='/profile/:id' component={Profile} />
                     <Route path='/signup' component={Signup} />
+                    <Route path='/test' component={CitySearch} />
                     <Route component={NotFound} />
                 </Switch>
             </main>

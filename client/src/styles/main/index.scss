@@ -152,6 +152,11 @@ label {
     line-height: 1;
 }
 
+ul {
+    list-style-type: none;
+    -webkit-padding-start: 0px;
+}
+
 .spinner {
     display: block;
     position: absolute;

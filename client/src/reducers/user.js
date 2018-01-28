@@ -5,8 +5,6 @@ const userReducerDefaultState = {
     email: '',
     emailVerified: false,
     twilio: {
-        accountSid: '',
-        authToken: '',
         number: {
             areaCode: '',
             forwardToNumber: {
@@ -20,7 +18,6 @@ const userReducerDefaultState = {
         }
     },
     stripe: {
-        id: '',
         subscription: ''
     },
     uid: ''
