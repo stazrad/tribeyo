@@ -8,7 +8,7 @@ import _ from 'lodash';
 import Loader from '../../layout/partials/loader'
 
 // ACTIONS //
-import { autocomplete } from '../../../actions/search'
+import { autocomplete, searchByCity } from '../../../actions/search'
 
 class CitySearch extends React.Component {
 
@@ -16,19 +16,34 @@ class CitySearch extends React.Component {
         super(props)
 
         this.state = {
+            areaCode: undefined,
             cityValue: '',
             loading: false,
-            searchError: false
+            predictions: false,
+            searchError: false,
+            selected: false
         }
 
         this.onChange = this.onChange.bind(this)
+        this.onFocus = this.onFocus.bind(this)
         this.onSearch = _.debounce(this.onSearch, 300)
+        this.onSelect = this.onSelect.bind(this)
     }
 
     onChange(e) {
         const { value: cityValue } = e.target
-        this.setState({cityValue})
+        this.setState({
+            areaCode: undefined,
+            cityValue
+        })
         this.onSearch(cityValue)
+    }
+
+    onFocus() {
+        this.setState({
+            areaCode: undefined,
+            selected: false
+        })
     }
 
     onSearch(cityValue) {
@@ -36,13 +51,46 @@ class CitySearch extends React.Component {
         dispatch(autocomplete(cityValue))
     }
 
+    onSelect({ target }) {
+        const { dispatch } = this.props
+        const cityValue = target.innerText
+        this.setState({
+            cityValue,
+            predictions: false,
+            selected: true
+        })
+        dispatch(searchByCity(cityValue))
+    }
+
     componentWillReceiveProps(props) {
-        const { predictions } = props
-        this.setState({searchError: !predictions.length && !!this.state.cityValue})
+        const { areaCode, predictions } = props
+        this.setState({
+            areaCode,
+            predictions: !!predictions.length,
+            searchError: !predictions.length && !this.state.cityValue
+        })
     }
 
     render() {
         const spinner = Loader(this.state.loading)
+        const inputClass = this.state.searchError ? 'error-border' : null || this.state.selected ? 'selected' : null
+        const predictionsDropdown = [
+            <h3 key={0}>Select One:</h3>,
+            <ul key={1}>
+                {
+                    this.props.predictions.map((city, i) => (
+                        <li key={i}
+                            className='prediction'
+                            onClick={this.onSelect}>{city}
+                        </li>
+                    ))
+                }
+            </ul>
+        ]
+        const areaCode = [
+            <h2 key={0}>Area Code:</h2>,
+            <div key={1} className='area-code'>{this.state.areaCode}</div>
+        ]
 
         return (
             <div id='city-search'>
@@ -50,26 +98,18 @@ class CitySearch extends React.Component {
                 <div className='image-container'>
                     <img className='bubbles' src="/images/tribeyo_mark_chat_bubbles.png" />
                 </div>
-                <h2>Search by City</h2>
-                <form>
+                {this.state.areaCode ? areaCode : <h2>Search by City</h2>}
+                <form onSubmit={(e) => e.preventDefault()}>
                     <input
                         type='text'
                         name='city'
                         placeholder='start typing city name'
-                        className={this.state.searchError ? 'error-border' : null }
+                        className={inputClass}
                         value={this.state.cityValue}
-                        onChange={this.onChange} />
+                        onChange={this.onChange}
+                        onFocus={this.onFocus} />
                 </form>
-                <h3>Select One:</h3>
-                <ul>
-                    {
-                        this.props.predictions.map((city, i) => (
-                            <li key={i}
-                                className='prediction'>{city}</li>
-                        ))
-                    }
-                </ul>
-
+                {this.state.predictions ? predictionsDropdown : null}
             </div>
         )
     }
@@ -77,6 +117,7 @@ class CitySearch extends React.Component {
 
 const mapStateToProps = state => {
     return {
+        areaCode: state.search.areaCode,
         predictions: state.search.predictions
     }
 }

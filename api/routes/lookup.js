@@ -82,6 +82,20 @@ exports.autocomplete = (req, res) => {
         })
 }
 
+// GET /api/searchByCity/:city
+exports.searchByCity = (req, res) => {
+    const { city } = req.params
+    if(!city) {
+        const error = {
+            status: 400,
+            message: 'INCLUDE CITY'
+        }
+        updateAnalytics(400, req.reqId, error)
+        return res.status(400).json(error)
+    }
+    return res.status(200).json('615')
+}
+
 // GET /api/validate/:number
 exports.validate = (req, res) => {
     const number = '+1' + req.params.number

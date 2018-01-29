@@ -36,6 +36,7 @@ var incomingCall  = require('./api/routes/incomingCall'),
 app.get('/api/areaCode/:areaCode', lookup.areaCode)
 app.get('/api/autocomplete/:input', lookup.autocomplete)
 app.get('/api/profile/:id/queryUserInfo', profile.queryUserInfo)
+app.get('/api/searchByCity/:city', lookup.searchByCity)
 app.get('/api/validate/:number', lookup.validate)
 app.post('/api/profile', profile.create)
 app.post('/api/profile/login', profile.login)
