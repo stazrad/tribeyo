@@ -2,15 +2,16 @@
 import React from 'react'
 
 // COMPONENTS //
+import Checkout   from './checkout'
 import CitySearch from './citySearch'
 import Dashboard  from './dashboard'
-import Login      from '../login'
 
 class Profile extends React.Component {
     render() {
         return (
             <div>
                 <CitySearch />
+                <Checkout />
                 <Dashboard />
             </div>
         )

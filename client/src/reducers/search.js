@@ -13,8 +13,7 @@ const searchReducer = (state = searchReducerDefaultState, { areaCode, prediction
         case 'SEARCH_BY_CITY':
             return {
                 ...state,
-                areaCode,
-                predictions: []
+                areaCode
             }
         default:
             return state

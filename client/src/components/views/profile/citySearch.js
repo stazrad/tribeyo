@@ -18,6 +18,7 @@ class CitySearch extends React.Component {
         this.state = {
             areaCode: undefined,
             cityValue: '',
+            focused: false,
             loading: false,
             predictions: false,
             searchError: false,
@@ -42,6 +43,7 @@ class CitySearch extends React.Component {
     onFocus() {
         this.setState({
             areaCode: undefined,
+            focused: true,
             selected: false
         })
     }
@@ -56,10 +58,15 @@ class CitySearch extends React.Component {
         const cityValue = target.innerText
         this.setState({
             cityValue,
+            focused: false,
             predictions: false,
             selected: true
         })
         dispatch(searchByCity(cityValue))
+    }
+
+    toCheckout() {
+        console.log('SHOW CART')
     }
 
     componentWillReceiveProps(props) {
@@ -91,6 +98,9 @@ class CitySearch extends React.Component {
             <h2 key={0}>Area Code:</h2>,
             <div key={1} className='area-code'>{this.state.areaCode}</div>
         ]
+        const toCheckout = (
+            <button className='alt' onClick={this.toCheckout}>Purchase number in this area</button>
+        )
 
         return (
             <div id='city-search'>
@@ -103,13 +113,15 @@ class CitySearch extends React.Component {
                     <input
                         type='text'
                         name='city'
-                        placeholder='start typing city name'
+                        placeholder={this.state.focused ? '' : 'start typing city name'}
+                        onBlur={() => this.setState({focused:false})}
                         className={inputClass}
                         value={this.state.cityValue}
                         onChange={this.onChange}
                         onFocus={this.onFocus} />
                 </form>
-                {this.state.predictions ? predictionsDropdown : null}
+                {this.state.predictions && !this.state.areaCode ? predictionsDropdown : null}
+                {this.state.areaCode ? toCheckout : null}
             </div>
         )
     }

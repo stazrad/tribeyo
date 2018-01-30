@@ -63,7 +63,7 @@ exports.autocomplete = (req, res) => {
         return res.status(400).json(error)
     }
     const key = process.env.GOOGLE_KEY
-	const url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${input}&key=${key}&types=(cities)`
+	const url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${input}&key=${key}&types=(cities)&components=country:us`
     fetch(url)
         .then(result => result.json())
         .then(({ predictions }) => {
@@ -93,7 +93,8 @@ exports.searchByCity = (req, res) => {
         updateAnalytics(400, req.reqId, error)
         return res.status(400).json(error)
     }
-    return res.status(200).json('615')
+    const response = Math.floor(Math.random()*(999-100+1)+100).toString()
+    return res.status(200).json(response)
 }
 
 // GET /api/validate/:number

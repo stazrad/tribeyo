@@ -20,7 +20,7 @@ export const autocomplete = input => {
             .then(predictions => {
                 return dispatch({
                     type: 'AUTOCOMPLETE',
-                    predictions
+                    predictions: predictions.map(str => str.replace(', United States', ''))
                 })
             })
             .catch(err => {
@@ -45,7 +45,7 @@ export const searchByCity = input => {
             .then(areaCode => {
                 return dispatch({
                     type: 'SEARCH_BY_CITY',
-                    areaCode
+                    areaCode: `(${areaCode})`
                 })
             })
             .catch(err => {
