@@ -35,7 +35,7 @@ class Checkout extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        areaCode: state.search.areaCode
+        areaCode: state.search.areaCode.display
     }
 }
 

@@ -1,14 +1,16 @@
-// PACKAGES //
-var accountSid     = process.env.ACCOUNT_SID,
-    authToken      = process.env.AUTH_TOKEN,
-    twilio         = require('twilio')(accountSid, authToken),
-    firebase       = require('firebase'),
-    admin          = require('firebase-admin'),
-    stripe         = require('stripe')(process.env.STRIPE_TEST),
-    request        = require('request-json')
+// IMPORTS //
+const accountSid = process.env.ACCOUNT_SID
+const authToken = process.env.AUTH_TOKEN
+const twilio = require('twilio')(accountSid, authToken)
+const firebase = require('firebase')
+const admin = require('firebase-admin')
+const stripe = require('stripe')(process.env.STRIPE_TEST)
+const request = require('request-json')
+const User = require('../schema/user')
+const updateAnalytics = require('../analytics/updateData')
 
 // FIREBASE INIT //
-var serviceAccount = require('../../serviceAccountKey.json')
+const serviceAccount = require('../../serviceAccountKey.json')
 firebase.initializeApp({
     apiKey: process.env.FIREBASE_KEY,
     authDomain: process.env.FIREBASE_AUTH_DOMAIN,
@@ -20,14 +22,12 @@ admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
     databaseURL: process.env.FIREBASE_DB_URL
 })
-var db = admin.database()
-
-// IMPORTS //
-var updateAnalytics = require('../analytics/updateData')
+const db = admin.database()
 
 // POST /api/profile
 exports.create = (req, res) => {
     const { email, name, password } = req.body
+
     if(!email || !name || !password) {
         var error = {
             status: 400,
@@ -50,31 +50,8 @@ exports.create = (req, res) => {
         })
 
     // instantiate a new user object
-    const user = {
-        name,
-        email,
-        emailVerified: false,
-        twilio: {
-            accountSid: '',
-            authToken: '',
-            number: {
-                areaCode: '',
-                forwardToNumber: {
-                    displayNumber: '',
-                    number: ''
-                },
-                purchasedNumber: {
-                    displayNumber: '',
-                    number: ''
-                }
-            }
-        },
-        stripe: {
-            id: '',
-            subscription: ''
-        },
-        uid: ''
-    }
+    const user = new User({name, password})
+
     function createTwilioAndStripeAccounts(uid) {
         var usersRef = db.ref().child(`users/${uid}`)
         // update user object in Firebase
@@ -96,9 +73,7 @@ exports.create = (req, res) => {
                 setTwilioAccountSid.set(sid)
                 return usersRef.once('value')
             })
-            .then(snapshot => {
-                return snapshot.exportVal()
-            })
+            .then(snapshot => snapshot.exportVal())
             .then(user => {
                 delete user.twilio.authToken
                 delete user.twilio.accountSid

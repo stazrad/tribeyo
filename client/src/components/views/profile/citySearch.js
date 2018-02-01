@@ -8,7 +8,7 @@ import _ from 'lodash';
 import Loader from '../../layout/partials/loader'
 
 // ACTIONS //
-import { autocomplete, searchByCity } from '../../../actions/search'
+import { autocomplete, searchByCity } from 'actions/search'
 
 class CitySearch extends React.Component {
 
@@ -25,6 +25,7 @@ class CitySearch extends React.Component {
             selected: false
         }
 
+        this.onBlur = this.onBlur.bind(this)
         this.onChange = this.onChange.bind(this)
         this.onFocus = this.onFocus.bind(this)
         this.onSearch = _.debounce(this.onSearch, 300)
@@ -45,6 +46,13 @@ class CitySearch extends React.Component {
             areaCode: undefined,
             focused: true,
             selected: false
+        })
+    }
+
+    onBlur() {
+        this.setState({
+            focused:false,
+            searchError: !!this.state.cityValue
         })
     }
 
@@ -70,9 +78,10 @@ class CitySearch extends React.Component {
     }
 
     componentWillReceiveProps(props) {
+        console.log(props.areaCode)
         const { areaCode, predictions } = props
         this.setState({
-            areaCode,
+            areaCode: areaCode,
             predictions: !!predictions.length,
             searchError: !predictions.length && !this.state.cityValue
         })
@@ -95,11 +104,11 @@ class CitySearch extends React.Component {
             </ul>
         ]
         const areaCode = [
-            <h2 key={0}>Area Code:</h2>,
+            <h4 key={0}>Area Code:</h4>,
             <div key={1} className='area-code'>{this.state.areaCode}</div>
         ]
         const toCheckout = (
-            <button className='alt' onClick={this.toCheckout}>Purchase number in this area</button>
+            <button onClick={this.toCheckout}>Purchase number in this area</button>
         )
 
         return (
@@ -114,7 +123,7 @@ class CitySearch extends React.Component {
                         type='text'
                         name='city'
                         placeholder={this.state.focused ? '' : 'start typing city name'}
-                        onBlur={() => this.setState({focused:false})}
+                        onBlur={this.onBlur}
                         className={inputClass}
                         value={this.state.cityValue}
                         onChange={this.onChange}
@@ -129,7 +138,7 @@ class CitySearch extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        areaCode: state.search.areaCode,
+        areaCode: state.search.areaCode.display,
         predictions: state.search.predictions
     }
 }

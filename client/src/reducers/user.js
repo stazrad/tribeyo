@@ -6,7 +6,10 @@ const userReducerDefaultState = {
     emailVerified: false,
     twilio: {
         number: {
-            areaCode: '',
+            area: {
+                code: '',
+                display: ''
+            },
             forwardToNumber: {
                 displayNumber: '',
                 number: ''

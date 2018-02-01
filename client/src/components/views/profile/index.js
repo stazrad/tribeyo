@@ -1,5 +1,6 @@
 // PACKAGES //
 import React from 'react'
+import { connect } from 'react-redux'
 
 // COMPONENTS //
 import Checkout   from './checkout'
@@ -18,4 +19,10 @@ class Profile extends React.Component {
     }
 }
 
-export default Profile
+const mapStateToProps = state => {
+    return {
+        user: state.user
+    }
+}
+
+export default connect(mapStateToProps)(Profile)

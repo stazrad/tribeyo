@@ -23,13 +23,12 @@ input {
     text-align: center;
 }
 input.selected {
-    background: #89d3da;
-    color: $white;
-    border: none;
+    // color: $neutral-color-on-white:;
+    // border: $neutral-color-on-white: solid 3px;
 }
 
 .area-code {
-    color: $primary-color;
+    color: $alt-color;
     font-weight: 600;
     font-size: 35px;
     letter-spacing: 4px;

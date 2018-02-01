@@ -93,7 +93,11 @@ exports.searchByCity = (req, res) => {
         updateAnalytics(400, req.reqId, error)
         return res.status(400).json(error)
     }
-    const response = Math.floor(Math.random()*(999-100+1)+100).toString()
+    const areaCode =  Math.floor(Math.random()*(999-100+1)+100).toString()
+    const response = {
+        code: areaCode,
+        display: `(${areaCode})`
+    }
     return res.status(200).json(response)
 }
 

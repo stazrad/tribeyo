@@ -1,5 +1,8 @@
 const searchReducerDefaultState = {
-    areaCode: undefined,
+    areaCode: {
+        code: '',
+        display: ''
+    },
     predictions: []
 }
 
