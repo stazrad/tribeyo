@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import _ from 'lodash';
 
 // COMPONENTS //
-import Loader from '../../layout/partials/loader'
+import Loader from 'components/layout/partials/loader'
 
 // ACTIONS //
 import { autocomplete, searchByCity } from 'actions/search'

@@ -4,10 +4,10 @@ import { Link, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 // COMPONENTS //
-import Loader from '../../layout/partials/loader'
+import Loader from 'components/layout/partials/loader'
 
 // ACTIONS //
-import { userLogin } from '../../../actions/user'
+import { userLogin } from 'actions/user'
 
 class Login extends React.Component {
 

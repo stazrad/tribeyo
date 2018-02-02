@@ -5,10 +5,10 @@ import { connect } from 'react-redux'
 import fetch from 'isomorphic-fetch'
 
 // COMPONENTS //
-import Loader from '../../layout/partials/loader'
+import Loader from 'components/layout/partials/loader'
 
 // ACTIONS //
-import { userSignup } from '../../../actions/user'
+import { userSignup } from 'actions/user'
 
 class Signup extends React.Component {
 
