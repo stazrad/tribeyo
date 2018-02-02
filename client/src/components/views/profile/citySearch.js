@@ -9,6 +9,7 @@ import Loader from '../../layout/partials/loader'
 
 // ACTIONS //
 import { autocomplete, searchByCity } from 'actions/search'
+import { checkoutView, searchView } from 'actions/views'
 
 class CitySearch extends React.Component {
 
@@ -30,6 +31,7 @@ class CitySearch extends React.Component {
         this.onFocus = this.onFocus.bind(this)
         this.onSearch = _.debounce(this.onSearch, 300)
         this.onSelect = this.onSelect.bind(this)
+        this.toCheckout = this.toCheckout.bind(this)
     }
 
     onChange(e) {
@@ -74,11 +76,12 @@ class CitySearch extends React.Component {
     }
 
     toCheckout() {
-        console.log('SHOW CART')
+        const { dispatch } = this.props
+        dispatch(searchView(false))
+        dispatch(checkoutView(true))
     }
 
     componentWillReceiveProps(props) {
-        console.log(props.areaCode)
         const { areaCode, predictions } = props
         this.setState({
             areaCode: areaCode,

@@ -8,12 +8,18 @@ import CitySearch from './citySearch'
 import Dashboard  from './dashboard'
 
 class Profile extends React.Component {
+    constructor(props) {
+        super(props)
+    }
+
     render() {
+        const { checkoutView, searchView } = this.props
+
         return (
             <div>
-                <CitySearch />
-                <Checkout />
-                <Dashboard />
+                {!searchView && !checkoutView ? <Dashboard /> : null}
+                {searchView ? <CitySearch /> : null}
+                {checkoutView ? <Checkout /> : null}
             </div>
         )
     }
@@ -21,7 +27,8 @@ class Profile extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        user: state.user
+        checkoutView: state.views.checkout,
+        searchView: state.views.search
     }
 }
 

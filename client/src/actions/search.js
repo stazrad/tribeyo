@@ -43,7 +43,6 @@ export const searchByCity = input => {
         fetch(`/api/searchByCity/${input}`, init)
             .then(response => response.json())
             .then(areaCode => {
-                console.log(areaCode)
                 return dispatch({
                     type: 'SEARCH_BY_CITY',
                     areaCode

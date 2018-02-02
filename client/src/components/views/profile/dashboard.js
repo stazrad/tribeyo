@@ -3,10 +3,20 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
+// ACTIONS //
+import { searchView } from 'actions/views'
+
 class Dashboard extends React.Component {
 
     constructor(props) {
         super(props)
+
+        this.onSubscribe = this.onSubscribe.bind(this)
+    }
+
+    onSubscribe() {
+        const { dispatch } = this.props
+        dispatch(searchView(true))
     }
 
     render() {
@@ -28,7 +38,7 @@ class Dashboard extends React.Component {
                 <button className='alt'>
                     <Link to='/plans'>View Subscription Plans</Link>
                 </button>
-                <button className='subscribe'>Subscribe Now</button>
+                <button onClick={this.onSubscribe} className='subscribe'>Subscribe Now</button>
             </div>
         )
 

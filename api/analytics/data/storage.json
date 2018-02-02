@@ -1,136 +1,136 @@
 {
     "usage": [
         {
-            "id": "cjd3xln6z0000xlopweaaoep8",
-            "date": "Wed Jan 31 2018 21:18:43 GMT-0600 (CST)",
+            "id": "cjd5elt4z0000d4op0s1t5swi",
+            "date": "Thu Feb 01 2018 22:02:31 GMT-0600 (CST)",
             "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
             "clientIp": "::1",
             "method": "POST",
             "url": "/api/profile/login",
             "error": false,
             "success": true,
-            "responseTime": 1528
+            "responseTime": 874
         },
         {
-            "id": "cjd3xlu4o0001xlop1x5ejkde",
-            "date": "Wed Jan 31 2018 21:18:52 GMT-0600 (CST)",
-            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
-            "clientIp": "::1",
-            "method": "GET",
-            "url": "/api/autocomplete/ho",
-            "error": false,
-            "success": false,
-            "responseTime": null
-        },
-        {
-            "id": "cjd3xlv3v0002xlopm7ke4vfk",
-            "date": "Wed Jan 31 2018 21:18:54 GMT-0600 (CST)",
-            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
-            "clientIp": "::1",
-            "method": "GET",
-            "url": "/api/searchByCity/Houston,%20TX",
-            "error": false,
-            "success": false,
-            "responseTime": null
-        },
-        {
-            "id": "cjd3xmvde0003xlopuc2lxeha",
-            "date": "Wed Jan 31 2018 21:19:41 GMT-0600 (CST)",
-            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
-            "clientIp": "::1",
-            "method": "GET",
-            "url": "/api/autocomplete/no",
-            "error": false,
-            "success": false,
-            "responseTime": null
-        },
-        {
-            "id": "cjd3xnjb90004xloprjtn9jqz",
-            "date": "Wed Jan 31 2018 21:20:12 GMT-0600 (CST)",
-            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
-            "clientIp": "::1",
-            "method": "GET",
-            "url": "/api/autocomplete/ge",
-            "error": false,
-            "success": false,
-            "responseTime": null
-        },
-        {
-            "id": "cjd3xol0x0005xlopjhckvia4",
-            "date": "Wed Jan 31 2018 21:21:01 GMT-0600 (CST)",
-            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
-            "clientIp": "::1",
-            "method": "GET",
-            "url": "/api/autocomplete/hoo",
-            "error": false,
-            "success": false,
-            "responseTime": null
-        },
-        {
-            "id": "cjd3xqdx10006xlop4frojmba",
-            "date": "Wed Jan 31 2018 21:22:25 GMT-0600 (CST)",
-            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
-            "clientIp": "::1",
-            "method": "GET",
-            "url": "/api/autocomplete/yo",
-            "error": false,
-            "success": false,
-            "responseTime": null
-        },
-        {
-            "id": "cjd3xqgrw0007xlopvj1lb8gl",
-            "date": "Wed Jan 31 2018 21:22:28 GMT-0600 (CST)",
-            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
-            "clientIp": "::1",
-            "method": "GET",
-            "url": "/api/searchByCity/York,%20PA",
-            "error": false,
-            "success": false,
-            "responseTime": null
-        },
-        {
-            "id": "cjd3y9wut0008xlopup8jffzk",
-            "date": "Wed Jan 31 2018 21:37:36 GMT-0600 (CST)",
-            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
-            "clientIp": "::1",
-            "method": "GET",
-            "url": "/api/autocomplete/ho",
-            "error": false,
-            "success": false,
-            "responseTime": null
-        },
-        {
-            "id": "cjd3y9y9q0009xlop44u1x28k",
-            "date": "Wed Jan 31 2018 21:37:37 GMT-0600 (CST)",
-            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
-            "clientIp": "::1",
-            "method": "GET",
-            "url": "/api/searchByCity/Hoffman%20Estates,%20IL",
-            "error": false,
-            "success": false,
-            "responseTime": null
-        },
-        {
-            "id": "cjd3ye2gk000axlopun4397ad",
-            "date": "Wed Jan 31 2018 21:40:50 GMT-0600 (CST)",
+            "id": "cjd5erb6k0001d4opx55wrxjz",
+            "date": "Thu Feb 01 2018 22:06:47 GMT-0600 (CST)",
             "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
             "clientIp": "::1",
             "method": "POST",
             "url": "/api/profile/login",
             "error": false,
             "success": true,
-            "responseTime": 768
+            "responseTime": 1544
         },
         {
-            "id": "cjd3yforo000bxlop8qgrrs8p",
-            "date": "Wed Jan 31 2018 21:42:05 GMT-0600 (CST)",
+            "id": "cjd5et6zq0002d4opvl9ua688",
+            "date": "Thu Feb 01 2018 22:08:15 GMT-0600 (CST)",
             "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
             "clientIp": "::1",
             "method": "POST",
             "url": "/api/profile/login",
             "error": false,
             "success": true,
-            "responseTime": 1393
+            "responseTime": 1399
+        },
+        {
+            "id": "cjd5euzru0003d4opd0rnqdw9",
+            "date": "Thu Feb 01 2018 22:09:39 GMT-0600 (CST)",
+            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
+            "clientIp": "::1",
+            "method": "POST",
+            "url": "/api/profile/login",
+            "error": false,
+            "success": true,
+            "responseTime": 1331
+        },
+        {
+            "id": "cjd5eyzfq0004d4opznyh3i2c",
+            "date": "Thu Feb 01 2018 22:12:45 GMT-0600 (CST)",
+            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
+            "clientIp": "::1",
+            "method": "POST",
+            "url": "/api/profile/login",
+            "error": false,
+            "success": true,
+            "responseTime": 1513
+        },
+        {
+            "id": "cjd5ezc870005d4oppkztggdk",
+            "date": "Thu Feb 01 2018 22:13:02 GMT-0600 (CST)",
+            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
+            "clientIp": "::1",
+            "method": "GET",
+            "url": "/api/autocomplete/hono",
+            "error": false,
+            "success": false,
+            "responseTime": null
+        },
+        {
+            "id": "cjd5ezd2j0006d4op6rfvgxb3",
+            "date": "Thu Feb 01 2018 22:13:03 GMT-0600 (CST)",
+            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
+            "clientIp": "::1",
+            "method": "GET",
+            "url": "/api/searchByCity/Honolulu,%20HI",
+            "error": false,
+            "success": false,
+            "responseTime": null
+        },
+        {
+            "id": "cjd5f23wn0007d4opovnvjahh",
+            "date": "Thu Feb 01 2018 22:15:11 GMT-0600 (CST)",
+            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
+            "clientIp": "::1",
+            "method": "POST",
+            "url": "/api/profile/login",
+            "error": false,
+            "success": true,
+            "responseTime": 1313
+        },
+        {
+            "id": "cjd5f368j0008d4op69m0ajey",
+            "date": "Thu Feb 01 2018 22:16:01 GMT-0600 (CST)",
+            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
+            "clientIp": "::1",
+            "method": "POST",
+            "url": "/api/profile/login",
+            "error": false,
+            "success": true,
+            "responseTime": 956
+        },
+        {
+            "id": "cjd5f39jp0009d4opq975qqwy",
+            "date": "Thu Feb 01 2018 22:16:05 GMT-0600 (CST)",
+            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
+            "clientIp": "::1",
+            "method": "GET",
+            "url": "/api/autocomplete/b",
+            "error": false,
+            "success": false,
+            "responseTime": null
+        },
+        {
+            "id": "cjd5f3b1y000ad4op2ok1hohc",
+            "date": "Thu Feb 01 2018 22:16:07 GMT-0600 (CST)",
+            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
+            "clientIp": "::1",
+            "method": "GET",
+            "url": "/api/autocomplete/branson",
+            "error": false,
+            "success": false,
+            "responseTime": null
+        },
+        {
+            "id": "cjd5f3car000bd4op4v5r9xk9",
+            "date": "Thu Feb 01 2018 22:16:09 GMT-0600 (CST)",
+            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
+            "clientIp": "::1",
+            "method": "GET",
+            "url": "/api/searchByCity/Branson,%20MO",
+            "error": false,
+            "success": false,
+            "responseTime": null
         }
     ]
 }
