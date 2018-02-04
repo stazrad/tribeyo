@@ -1,28 +1,3 @@
 {
-    "usage": [
-        {
-            "id": "cjd8b29dd00005oopvtldjcig",
-            "date": "Sat Feb 03 2018 22:46:38 GMT-0600 (CST)",
-            "browser": "PostmanRuntime/6.4.1",
-            "clientIp": "::1",
-            "method": "POST",
-            "url": "/api/profile/HECzEoYMT6cmzKB2AtySzFsX7Kg1/subscribe",
-            "error": {
-                "type": "StripeInvalidRequestError",
-                "stack": "Error: You cannot use a Stripe token more than once: tok_1BremdBbBk85FWGnlgi9xqlz.\n    at Constructor._Error (/Users/jakewebb/Desktop/tribeyo/node_modules/stripe/lib/Error.js:12:17)\n    at Constructor (/Users/jakewebb/Desktop/tribeyo/node_modules/stripe/lib/utils.js:97:13)\n    at new Constructor (/Users/jakewebb/Desktop/tribeyo/node_modules/stripe/lib/utils.js:97:13)\n    at Function.StripeError.generate (/Users/jakewebb/Desktop/tribeyo/node_modules/stripe/lib/Error.js:56:14)\n    at IncomingMessage.<anonymous> (/Users/jakewebb/Desktop/tribeyo/node_modules/stripe/lib/StripeResource.js:156:39)\n    at IncomingMessage.emit (events.js:164:20)\n    at endReadableNT (_stream_readable.js:1054:12)\n    at _combinedTickCallback (internal/process/next_tick.js:138:11)\n    at process._tickCallback (internal/process/next_tick.js:180:9)",
-                "rawType": "invalid_request_error",
-                "message": "You cannot use a Stripe token more than once: tok_1BremdBbBk85FWGnlgi9xqlz.",
-                "raw": {
-                    "type": "invalid_request_error",
-                    "message": "You cannot use a Stripe token more than once: tok_1BremdBbBk85FWGnlgi9xqlz.",
-                    "statusCode": 400,
-                    "requestId": "req_Y2PhCVlBoqttQn"
-                },
-                "requestId": "req_Y2PhCVlBoqttQn",
-                "statusCode": 400
-            },
-            "success": false,
-            "responseTime": 1451
-        }
-    ]
+    "usage": []
 }

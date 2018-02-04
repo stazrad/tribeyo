@@ -29,14 +29,31 @@ class Checkout extends React.Component {
 
     onSubmit(e) {
         e.preventDefault()
-        // this.setState({loading:true})
+        this.setState({loading:true})
         stripe.createToken(this.state.card)
             .then(token => {
-                console.log(token)
-                return fetch(`/api/profile/${this.props.uid}/subscribe`)
+                const body = {
+                    areaCode: this.props.areaCode.code,
+                    token: token.id
+                }
+                const config = {
+                    method: 'POST',
+                    headers: new Headers({
+                        'Content-Type': 'application/json'
+                    }),
+                    body: JSON.stringify(body)
+                }
+                return fetch(`/api/profile/${this.props.uid}/subscribe`, config)
+            })
+            .then(res => {
+                this.setState({loading: false})
+                console.log(res)
             })
             .catch(({ message: cardError }) => {
-                this.setState({cardError})
+                this.setState({
+                    cardError,
+                    loading: false
+                })
             })
     }
 
@@ -64,7 +81,7 @@ class Checkout extends React.Component {
             <div id='checkout'>
                 <h1>Checkout</h1>
                 <div>
-                    <span className='area-code'>{this.props.areaCode} XXX-XXX</span>
+                    <span className='area-code'>{this.props.areaCode.display} XXX-XXX</span>
                 </div>
                 <form onSubmit={this.onSubmit} id='payment-form'>
                     <div className='form-row'>
@@ -81,7 +98,8 @@ class Checkout extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        areaCode: state.search.areaCode.display,
+        areaCode: state.search.areaCode,
+        forwardToNumber: state.user.twilio.forwardToNumber,
         uid: 'tits'//state.user.uid
     }
 }

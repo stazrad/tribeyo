@@ -2,28 +2,14 @@
 const accountSid = process.env.ACCOUNT_SID
 const authToken = process.env.AUTH_TOKEN
 const twilio = require('twilio')(accountSid, authToken)
-const firebase = require('firebase')
-const admin = require('firebase-admin')
-const stripe = require('stripe')(process.env.STRIPE_SECRET_TEST)
 const request = require('request-json')
 const User = require('../schema/user')
 const updateAnalytics = require('../analytics/updateData')
 const displayFormat = require('../../utils/format')
-
-// FIREBASE INIT //
-const serviceAccount = require('../../serviceAccountKey.json')
-firebase.initializeApp({
-    apiKey: process.env.FIREBASE_KEY,
-    authDomain: process.env.FIREBASE_AUTH_DOMAIN,
-    databaseURL: process.env.FIREBASE_DB_URL,
-    storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
-    messagingSenderId: process.env.FIREBASE_SENDER_ID
-})
-admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    databaseURL: process.env.FIREBASE_DB_URL
-})
-const db = admin.database()
+const firebase = require('../firebase').default
+const db = require('../firebase').db
+const stripe = require('../stripe')
+const twilioAction = require('../twilio')
 
 // POST /api/profile
 exports.create = (req, res) => {
@@ -37,6 +23,7 @@ exports.create = (req, res) => {
         updateAnalytics(400, req.reqId, error)
         return res.status(400).json(error)
     }
+
     firebase.auth().createUserWithEmailAndPassword(email, password)
         .then(({ uid }) => {
             return createTwilioAndStripeAccounts(uid)
@@ -51,19 +38,19 @@ exports.create = (req, res) => {
         })
 
     // instantiate a new user object
-    const user = new User({name, password})
+    const user = new User({name, email})
 
     function createTwilioAndStripeAccounts(uid) {
-        var usersRef = db.ref().child(`users/${uid}`)
-        // update user object in Firebase
-        var setStripeId         = db.ref().child(`users/${uid}/stripe/id`),
-            setTwilioAuthToken  = db.ref().child(`users/${uid}/twilio/authToken`),
-            setTwilioAccountSid = db.ref().child(`users/${uid}/twilio/accountSid`),
-            setUid              = db.ref().child(`users/${uid}/uid`)
-        usersRef.set(user)
+        const userRef             = db.ref().child(`users/${uid}`)
+        const setStripeId         = db.ref().child(`users/${uid}/stripe/id`)
+        const setTwilioAuthToken  = db.ref().child(`users/${uid}/twilio/authToken`)
+        const setTwilioAccountSid = db.ref().child(`users/${uid}/twilio/accountSid`)
+        const setUid              = db.ref().child(`users/${uid}/uid`)
+
+        userRef.set(user)
             .then(() => {
                 setUid.set(uid)
-                return stripe.customers.create()
+                return stripe.createCustomer()
             })
             .then(({ id }) => {
                 setStripeId.set(id)
@@ -72,7 +59,7 @@ exports.create = (req, res) => {
             .then(({ authToken, sid }) => {
                 setTwilioAuthToken.set(authToken)
                 setTwilioAccountSid.set(sid)
-                return usersRef.once('value')
+                return userRef.once('value')
             })
             .then(snapshot => snapshot.exportVal())
             .then(user => {
@@ -212,8 +199,7 @@ exports.purchaseNumber = (req, res) => {
 
 // POST /api/profile/:id/subscribe
 exports.subscribe = (req, res) => {
-    const { chargeAmount, token } = req.body
-
+    const { areaCode, chargeAmount, token } = req.body
     if (!token) {
         const error = {
             status: 400,
@@ -234,23 +220,22 @@ exports.subscribe = (req, res) => {
         .then(stripeId => {
             const config = {
                 customer: stripeId,
-                source: token.id,
+                source: token,
                 plan: 'monthlyTwilioNumber',
             }
-            return stripe.subscriptions.create(config)
+            return stripe.createSubscription()
         })
         .then(({ amount, id, plan }) => {
-            const config = {
+            const subConfig = {
                 id,
                 plan,
                 subscribed: true
             }
+            stripeSubscription.set(subConfig)
+            const numConfig = {
 
-            stripeSubscription.set(config)
-
-            console.log('made it')
-
-            //return fetch(`http://${req.headers.host}/api/profile/${id}/purchaseNumber`)
+            }
+            return twilioAction.purchaseNumber(numConfig)
         })
         .catch(err => {
             updateAnalytics(500, req.reqId, err)
@@ -296,7 +281,7 @@ exports.stripeCharge = function(req, res) {
     // })
 
     var subscribe = function(id) {
-        stripe.subscriptions.create({
+        stripe.createSubscription({
             customer: id,
             source: token,
             plan: 'monthlyTwilioNumber',
@@ -328,7 +313,7 @@ exports.stripeCharge = function(req, res) {
 
 
     var singleCharge = function() {
-        stripe.charges.create({
+        stripe.createCharge({
             amount: 200,
             currency: 'usd',
             source: token
@@ -381,7 +366,7 @@ exports.twilioUsage = function(req, res) {
 
         var createInvoiceItem = function() {
             for(var i = 0; i < users.length; i++){
-                stripe.invoiceItems.create({
+                stripe.createInvoiceItem({
                     customer: users[i].id,
                     amount: users[i].amount,
                     currency: 'usd',
