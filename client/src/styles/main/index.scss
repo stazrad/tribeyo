@@ -126,7 +126,7 @@ input {
     outline: none;
     font-size: 16px;
     margin: auto;
-    margin-bottom: 32px;
+    margin-top: 16px;
     width: 92%;
     height: 20px;
     padding: 10px;
@@ -153,11 +153,9 @@ input:placeholder {
 
 label {
     font-size: 12px;
-    position: absolute;
     width: 100%;
     left: 0px;
     color: $primary-color;
-    line-height: 1;
 }
 
 ul {

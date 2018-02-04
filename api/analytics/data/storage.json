@@ -1,136 +1,28 @@
 {
     "usage": [
         {
-            "id": "cjd5elt4z0000d4op0s1t5swi",
-            "date": "Thu Feb 01 2018 22:02:31 GMT-0600 (CST)",
-            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
+            "id": "cjd8b29dd00005oopvtldjcig",
+            "date": "Sat Feb 03 2018 22:46:38 GMT-0600 (CST)",
+            "browser": "PostmanRuntime/6.4.1",
             "clientIp": "::1",
             "method": "POST",
-            "url": "/api/profile/login",
-            "error": false,
-            "success": true,
-            "responseTime": 874
-        },
-        {
-            "id": "cjd5erb6k0001d4opx55wrxjz",
-            "date": "Thu Feb 01 2018 22:06:47 GMT-0600 (CST)",
-            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
-            "clientIp": "::1",
-            "method": "POST",
-            "url": "/api/profile/login",
-            "error": false,
-            "success": true,
-            "responseTime": 1544
-        },
-        {
-            "id": "cjd5et6zq0002d4opvl9ua688",
-            "date": "Thu Feb 01 2018 22:08:15 GMT-0600 (CST)",
-            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
-            "clientIp": "::1",
-            "method": "POST",
-            "url": "/api/profile/login",
-            "error": false,
-            "success": true,
-            "responseTime": 1399
-        },
-        {
-            "id": "cjd5euzru0003d4opd0rnqdw9",
-            "date": "Thu Feb 01 2018 22:09:39 GMT-0600 (CST)",
-            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
-            "clientIp": "::1",
-            "method": "POST",
-            "url": "/api/profile/login",
-            "error": false,
-            "success": true,
-            "responseTime": 1331
-        },
-        {
-            "id": "cjd5eyzfq0004d4opznyh3i2c",
-            "date": "Thu Feb 01 2018 22:12:45 GMT-0600 (CST)",
-            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
-            "clientIp": "::1",
-            "method": "POST",
-            "url": "/api/profile/login",
-            "error": false,
-            "success": true,
-            "responseTime": 1513
-        },
-        {
-            "id": "cjd5ezc870005d4oppkztggdk",
-            "date": "Thu Feb 01 2018 22:13:02 GMT-0600 (CST)",
-            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
-            "clientIp": "::1",
-            "method": "GET",
-            "url": "/api/autocomplete/hono",
-            "error": false,
+            "url": "/api/profile/HECzEoYMT6cmzKB2AtySzFsX7Kg1/subscribe",
+            "error": {
+                "type": "StripeInvalidRequestError",
+                "stack": "Error: You cannot use a Stripe token more than once: tok_1BremdBbBk85FWGnlgi9xqlz.\n    at Constructor._Error (/Users/jakewebb/Desktop/tribeyo/node_modules/stripe/lib/Error.js:12:17)\n    at Constructor (/Users/jakewebb/Desktop/tribeyo/node_modules/stripe/lib/utils.js:97:13)\n    at new Constructor (/Users/jakewebb/Desktop/tribeyo/node_modules/stripe/lib/utils.js:97:13)\n    at Function.StripeError.generate (/Users/jakewebb/Desktop/tribeyo/node_modules/stripe/lib/Error.js:56:14)\n    at IncomingMessage.<anonymous> (/Users/jakewebb/Desktop/tribeyo/node_modules/stripe/lib/StripeResource.js:156:39)\n    at IncomingMessage.emit (events.js:164:20)\n    at endReadableNT (_stream_readable.js:1054:12)\n    at _combinedTickCallback (internal/process/next_tick.js:138:11)\n    at process._tickCallback (internal/process/next_tick.js:180:9)",
+                "rawType": "invalid_request_error",
+                "message": "You cannot use a Stripe token more than once: tok_1BremdBbBk85FWGnlgi9xqlz.",
+                "raw": {
+                    "type": "invalid_request_error",
+                    "message": "You cannot use a Stripe token more than once: tok_1BremdBbBk85FWGnlgi9xqlz.",
+                    "statusCode": 400,
+                    "requestId": "req_Y2PhCVlBoqttQn"
+                },
+                "requestId": "req_Y2PhCVlBoqttQn",
+                "statusCode": 400
+            },
             "success": false,
-            "responseTime": null
-        },
-        {
-            "id": "cjd5ezd2j0006d4op6rfvgxb3",
-            "date": "Thu Feb 01 2018 22:13:03 GMT-0600 (CST)",
-            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
-            "clientIp": "::1",
-            "method": "GET",
-            "url": "/api/searchByCity/Honolulu,%20HI",
-            "error": false,
-            "success": false,
-            "responseTime": null
-        },
-        {
-            "id": "cjd5f23wn0007d4opovnvjahh",
-            "date": "Thu Feb 01 2018 22:15:11 GMT-0600 (CST)",
-            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
-            "clientIp": "::1",
-            "method": "POST",
-            "url": "/api/profile/login",
-            "error": false,
-            "success": true,
-            "responseTime": 1313
-        },
-        {
-            "id": "cjd5f368j0008d4op69m0ajey",
-            "date": "Thu Feb 01 2018 22:16:01 GMT-0600 (CST)",
-            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
-            "clientIp": "::1",
-            "method": "POST",
-            "url": "/api/profile/login",
-            "error": false,
-            "success": true,
-            "responseTime": 956
-        },
-        {
-            "id": "cjd5f39jp0009d4opq975qqwy",
-            "date": "Thu Feb 01 2018 22:16:05 GMT-0600 (CST)",
-            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
-            "clientIp": "::1",
-            "method": "GET",
-            "url": "/api/autocomplete/b",
-            "error": false,
-            "success": false,
-            "responseTime": null
-        },
-        {
-            "id": "cjd5f3b1y000ad4op2ok1hohc",
-            "date": "Thu Feb 01 2018 22:16:07 GMT-0600 (CST)",
-            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
-            "clientIp": "::1",
-            "method": "GET",
-            "url": "/api/autocomplete/branson",
-            "error": false,
-            "success": false,
-            "responseTime": null
-        },
-        {
-            "id": "cjd5f3car000bd4op4v5r9xk9",
-            "date": "Thu Feb 01 2018 22:16:09 GMT-0600 (CST)",
-            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
-            "clientIp": "::1",
-            "method": "GET",
-            "url": "/api/searchByCity/Branson,%20MO",
-            "error": false,
-            "success": false,
-            "responseTime": null
+            "responseTime": 1451
         }
     ]
 }

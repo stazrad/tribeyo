@@ -42,6 +42,7 @@ app.post('/api/profile', profile.create)
 app.post('/api/profile/login', profile.login)
 app.post('/api/profile/:id/charge', profile.stripeCharge)
 app.post('/api/profile/:id/purchaseNumber', profile.purchaseNumber)
+app.post('/api/profile/:id/subscribe', profile.subscribe)
 app.post('/api/profile/:id/unsubscribe', profile.unsubscribe)
 app.post('/api/voice/:id', incomingCall.forward)
 

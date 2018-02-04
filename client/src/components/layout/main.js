@@ -3,7 +3,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 // COMPONENTS //
-import CitySearch from '../views/profile/citySearch'
+import Checkout from '../views/profile/checkout'
 import Home       from '../views/home';
 import HowItWorks from '../views/howItWorks';
 import Login      from '../views/login';
@@ -23,7 +23,7 @@ class Main extends React.Component {
                     <Route path='/plans' component={Plans} />
                     <Route path='/profile/:id' component={Profile} />
                     <Route path='/signup' component={Signup} />
-                    <Route path='/test' component={CitySearch} />
+                    <Route path='/test' component={Checkout} />
                     <Route component={NotFound} />
                 </Switch>
             </main>

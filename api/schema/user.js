@@ -12,18 +12,23 @@ module.exports = function User({ name, email }) {
                     display: ''
                 },
                 forwardToNumber: {
-                    displayNumber: '',
+                    display: '',
                     number: ''
                 },
                 purchasedNumber: {
-                    displayNumber: '',
+                    display: '',
                     number: ''
                 }
             }
         },
         stripe: {
             id: '',
-            subscription: ''
+            subscription: {
+                id: '',
+                amount: '',
+                plan: '',
+                subscribed: false
+            }
         },
         uid: ''
     }

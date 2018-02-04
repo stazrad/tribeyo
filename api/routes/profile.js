@@ -4,10 +4,11 @@ const authToken = process.env.AUTH_TOKEN
 const twilio = require('twilio')(accountSid, authToken)
 const firebase = require('firebase')
 const admin = require('firebase-admin')
-const stripe = require('stripe')(process.env.STRIPE_TEST)
+const stripe = require('stripe')(process.env.STRIPE_SECRET_TEST)
 const request = require('request-json')
 const User = require('../schema/user')
 const updateAnalytics = require('../analytics/updateData')
+const displayFormat = require('../../utils/format')
 
 // FIREBASE INIT //
 const serviceAccount = require('../../serviceAccountKey.json')
@@ -28,8 +29,8 @@ const db = admin.database()
 exports.create = (req, res) => {
     const { email, name, password } = req.body
 
-    if(!email || !name || !password) {
-        var error = {
+    if (!email || !name || !password) {
+        const error = {
             status: 400,
             message: 'Include password & email!'
         }
@@ -95,8 +96,9 @@ exports.create = (req, res) => {
 // POST /api/profile/login
 exports.login = (req, res) => {
     const { email, password } = req.body
-    if(!email || !password) {
-        var error = {
+
+    if (!email || !password) {
+        const error = {
             status: 400,
             message: 'Include password & email!'
         }
@@ -129,67 +131,130 @@ exports.login = (req, res) => {
 }
 
 // POST /api/profile/:id/purchaseNumber
-exports.purchaseNumber = function(req, res) {
-    if(!req.body.areaCode || !req.body.forwardToNumber) {
-		updateAnalytics(400, req.reqId, 'INCLUDE AREA CODE & FORWARD TO NUMBER')
-		return res.status(400).send('INCLUDE AREA CODE & FORWARD TO NUMBER')
+exports.purchaseNumber = (req, res) => {
+    const { areaCode, forwardToNumber } = req.body
+
+    if (!areaCode || !forwardToNumber) {
+        const error = {
+            status: 400,
+            message: 'Include area code & forward to number!'
+        }
+        updateAnalytics(400, req.reqId, error)
+        return res.status(400).json(error)
 	}
-    var areaCode        = req.body.areaCode,
-        forwardToNumber = req.body.forwardToNumber,
-        id              = req.params.id,
-        ref             = db.ref().child('users/'+id)
+    const { id } = req.params
+    const ref = db.ref().child(`users/${id}`)
     // instantiate variables updated by promises
-    var client,
+    let client,
         clientAuth,
         clientSid,
-        foundUser
-    // look up user by id in Firebase
+        user
+
     ref.once('value')
-        .then(function(snapshot){
-            foundUser  = snapshot.exportVal()
-            clientAuth = foundUser.twilio.authToken
-            clientSid  = foundUser.twilio.accountSid
+        .then(snapshot => {
+            user  = snapshot.exportVal()
+            clientAuth = user.twilio.authToken
+            clientSid  = user.twilio.accountSid
             client = require('twilio')(clientSid, clientAuth)
-            return client.availablePhoneNumbers('US').local.list({areaCode: areaCode})
+            return client.availablePhoneNumbers('US').local.list({areaCode})
         })
-        .then(function(data){
-            var number = data.availablePhoneNumbers[0]
-            var numberConfig = {
-                phoneNumber: number.phone_number,
+        .then(data => {
+            const number = data.availablePhoneNumbers[0]
+            const numberConfig = {
                 accountSid: clientSid,
-                voiceUrl: 'http://www.tribeyo.com/api/voice/' +  foundUser.uid,
+                phoneNumber: number.phone_number,
+                friendlyName: user.name,
+                voiceMethod: 'POST',
+                voiceUrl: 'https://www.tribeyo.com/api/voice/' +  user.uid,
+                voiceFallbackMethod: 'POST',
                 voiceFallbackUrl: 'http://twimlets.com/forward?PhoneNumber=' + forwardToNumber,
-                smsUrl: 'http://www.tribeyo.com/api/message/' +  foundUser.uid,
-                voiceMethod: "POST",
-                voiceFallbackMethod: "POST",
-                smsMethod: "POST",
-                friendlyName: foundUser.name
+                smsMethod: 'POST',
+                smsUrl: 'https://www.tribeyo.com/api/message/' +  user.uid
             }
             return client.incomingPhoneNumbers.create(numberConfig)
         })
-        .then(function(purchasedNumber) {
+        .then(purchasedNumber => {
+            const number = {
+                number: {
+                    areaCode: {
+                        code: areaCode,
+                        display: format.displayAreaCode(areaCode)
+                    },
+                    forwardToNumber: {
+                        display: format.displayNumber(forwardToNumber),
+                        number: format.intNumber(forwardToNumber)
+                    },
+                    purchasedNumber: {
+                        display: format.displayNumber(purchasedNumber),
+                        number: format.intNumber(purchaseNumber)
+                    }
+                }
+            }
+
             // update user info in Firebase
-            db.ref().child('users/'+id+'/twilio/number/areaCode').set(areaCode)
-            db.ref().child('users/'+id+'/twilio/number/purchasedNumber/number').set(purchasedNumber.phoneNumber)
+            db.ref().child(`users/${id}/twilio/number`).set(number)
             // transfer number to user Twilio account
-            var transferNumber = twilio.accounts(accountSid).incomingPhoneNumbers(purchasedNumber.sid)
+            const transferNumber = twilio.accounts(accountSid).incomingPhoneNumbers(purchasedNumber.sid)
             transferNumber.update({accountSid: clientSid})
 
-            var response = {
-                status: 200,
+            const response = {
                 message: 'Successfully purchased number forwarded to: ' + forwardToNumber,
                 purchasedNumber: purchasedNumber.phoneNumber
             }
             updateAnalytics(200, req.reqId)
 			return res.status(200).json(response)
         })
-        .catch(function(err) {
-            var error = {
-                status: 409,
-                message: err.message
+        .catch(err => {
+            updateAnalytics(409, req.reqId, err)
+    		return res.status(409).json(err)
+        })
+}
+
+// POST /api/profile/:id/subscribe
+exports.subscribe = (req, res) => {
+    const { chargeAmount, token } = req.body
+
+    if (!token) {
+        const error = {
+            status: 400,
+            message: 'Missing token!'
+        }
+        updateAnalytics(400, req.reqId, error)
+        return res.status(400).json(error)
+	}
+    const { id } = req.params
+    const stripeSubscription = db.ref().child(`users/${id}/stripe/subscription`)
+    const ref = db.ref().child(`users/${id}`)
+
+    ref.once('value')
+        .then(snapshot => {
+            user  = snapshot.exportVal()
+            return user.stripe.id
+        })
+        .then(stripeId => {
+            const config = {
+                customer: stripeId,
+                source: token.id,
+                plan: 'monthlyTwilioNumber',
             }
-            updateAnalytics(409, req.reqId, error)
-    		return res.status(409).json(error)
+            return stripe.subscriptions.create(config)
+        })
+        .then(({ amount, id, plan }) => {
+            const config = {
+                id,
+                plan,
+                subscribed: true
+            }
+
+            stripeSubscription.set(config)
+
+            console.log('made it')
+
+            //return fetch(`http://${req.headers.host}/api/profile/${id}/purchaseNumber`)
+        })
+        .catch(err => {
+            updateAnalytics(500, req.reqId, err)
+    		return res.status(500).json(err)
         })
 }
 
@@ -219,10 +284,10 @@ exports.stripeCharge = function(req, res) {
 
     // //instantiate Stripe subscription plan
     // stripe.plans.create({
-    //     name: "Monthly Twilio Number",
-    //     id: "monthlyTwilioNumber",
-    //     interval: "month",
-    //     currency: "usd",
+    //     name: 'Monthly Twilio Number',
+    //     id: 'monthlyTwilioNumber',
+    //     interval: 'month',
+    //     currency: 'usd',
     //     amount: 200,
     // }, function(err, plan) {
     //     console.log('Stripe plan created!')
@@ -234,7 +299,7 @@ exports.stripeCharge = function(req, res) {
         stripe.subscriptions.create({
             customer: id,
             source: token,
-            plan: "monthlyTwilioNumber",
+            plan: 'monthlyTwilioNumber',
         }, function(err, subscription) {
             setSubscriptionPlan.set(subscription.plan.id)
             setSubscriptionId.set(subscription.id)
@@ -265,7 +330,7 @@ exports.stripeCharge = function(req, res) {
     var singleCharge = function() {
         stripe.charges.create({
             amount: 200,
-            currency: "usd",
+            currency: 'usd',
             source: token
         }, function(err, charge){
             // if(err & err.type === 'StripeCardError'){

@@ -111,7 +111,7 @@ class CitySearch extends React.Component {
             <div key={1} className='area-code'>{this.state.areaCode}</div>
         ]
         const toCheckout = (
-            <button onClick={this.toCheckout}>Purchase number in this area</button>
+            <button onClick={this.toCheckout}>Proceed to checkout</button>
         )
 
         return (

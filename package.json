@@ -27,8 +27,8 @@
   "scripts": {
     "build": "webpack -p",
     "watch": "webpack --watch",
-    "start": "node server.js",
-    "dev": "nodemon server.js --ignore api/analytics/data --ignore client",
+    "start": "ENV=production node server.js",
+    "dev": "ENV=development nodemon server.js --ignore api/analytics/data --ignore client",
     "dev-w": "webpack-dev-server --inline --hot --history-api-fallback"
   },
   "dependencies": {
