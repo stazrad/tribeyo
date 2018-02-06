@@ -31,13 +31,13 @@ class Checkout extends React.Component {
         e.preventDefault()
         this.setState({loading:true})
         stripe.createToken(this.state.card)
-            .then(token => {
+            .then(({ token }) => {
                 const body = {
                     areaCode: this.props.areaCode.code,
                     token: token.id
                 }
                 const config = {
-                    method: 'POST',
+                    method: 'post',
                     headers: new Headers({
                         'Content-Type': 'application/json'
                     }),
@@ -47,7 +47,7 @@ class Checkout extends React.Component {
             })
             .then(res => {
                 this.setState({loading: false})
-                console.log(res)
+                if (res.status !== 200) throw new Error(res)
             })
             .catch(({ message: cardError }) => {
                 this.setState({
@@ -97,10 +97,11 @@ class Checkout extends React.Component {
 }
 
 const mapStateToProps = state => {
+    state.search.areaCode.code = '314' // remove
     return {
         areaCode: state.search.areaCode,
         forwardToNumber: state.user.twilio.forwardToNumber,
-        uid: 'tits'//state.user.uid
+        uid: 'JV9QtIIhfjNl4QruASVJTA9ay1v1'//state.user.uid
     }
 }
 

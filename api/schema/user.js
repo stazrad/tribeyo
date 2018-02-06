@@ -18,7 +18,8 @@ module.exports = function User({ name, email }) {
                 purchasedNumber: {
                     display: '',
                     number: ''
-                }
+                },
+                sid: ''
             }
         },
         stripe: {

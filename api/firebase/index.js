@@ -1,6 +1,7 @@
 // IMPORTS //
 const firebase = require('firebase')
 const admin = require('firebase-admin')
+const displayFormat = require('../../utils/format')
 
 // FIREBASE INIT //
 const serviceAccount = require('./serviceAccountKey.json')
@@ -18,6 +19,52 @@ admin.initializeApp({
     databaseURL: process.env.FIREBASE_DB_URL
 })
 
-exports.db = admin.database()
+const db = admin.database()
 
-exports.default = firebase
+exports.addNumber = (id, purchasedNumber) => {
+    return (
+        this.getUserById(id)
+            .then(user => {
+                const number = {
+                    number: {
+                        areaCode: {
+                            code: areaCode,
+                            display: format.displayAreaCode(areaCode)
+                        },
+                        forwardToNumber: {
+                            display: format.displayNumber(forwardToNumber),
+                            number: format.intNumber(forwardToNumber)
+                        },
+                        purchasedNumber: {
+                            display: format.displayNumber(purchasedNumber),
+                            number: format.intNumber(purchaseNumber)
+                        }
+                    }
+                }
+                // update user info in Firebase
+                db.ref().child(`users/${id}/twilio/number`).set(number)
+            })
+    )
+}
+
+exports.getUserById = (id) => {
+    const ref = db.ref().child(`users/${id}`)
+
+    return (
+        ref.once('value')
+            .then(snapshot => {
+                const user = snapshot.exportVal()
+                if (!user) throw new Error('User not found!')
+                return user
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    )
+}
+
+exports.setStripeSubscription = (config) => {
+    const ref = db.ref().child(`users/${config.id}/stripe/subscription`)
+
+    return ref.set(config)
+}

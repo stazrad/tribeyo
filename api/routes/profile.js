@@ -1,15 +1,12 @@
 // IMPORTS //
-const accountSid = process.env.ACCOUNT_SID
-const authToken = process.env.AUTH_TOKEN
-const twilio = require('twilio')(accountSid, authToken)
 const request = require('request-json')
 const User = require('../schema/user')
 const updateAnalytics = require('../analytics/updateData')
 const displayFormat = require('../../utils/format')
-const firebase = require('../firebase').default
+const firebase = require('../firebase')
 const db = require('../firebase').db
 const stripe = require('../stripe')
-const twilioAction = require('../twilio')
+const twilio = require('../twilio')
 
 // POST /api/profile
 exports.create = (req, res) => {
@@ -200,6 +197,8 @@ exports.purchaseNumber = (req, res) => {
 // POST /api/profile/:id/subscribe
 exports.subscribe = (req, res) => {
     const { areaCode, chargeAmount, token } = req.body
+    const { id } = req.params
+
     if (!token) {
         const error = {
             status: 400,
@@ -208,34 +207,42 @@ exports.subscribe = (req, res) => {
         updateAnalytics(400, req.reqId, error)
         return res.status(400).json(error)
 	}
-    const { id } = req.params
-    const stripeSubscription = db.ref().child(`users/${id}/stripe/subscription`)
-    const ref = db.ref().child(`users/${id}`)
 
-    ref.once('value')
-        .then(snapshot => {
-            user  = snapshot.exportVal()
-            return user.stripe.id
-        })
+    firebase.getUserById(id)
+        .then(user => user.stripe.id)
         .then(stripeId => {
             const config = {
                 customer: stripeId,
                 source: token,
-                plan: 'monthlyTwilioNumber',
+                plan: 'monthlyTwilioNumber'
             }
-            return stripe.createSubscription()
+            return stripe.createSubscription(config)
         })
-        .then(({ amount, id, plan }) => {
-            const subConfig = {
+        .then(({ amount, plan, subscriptionId }) => {
+            const config = {
+                amount,
                 id,
                 plan,
-                subscribed: true
+                subscribed: true,
+                subscriptionId
             }
-            stripeSubscription.set(subConfig)
-            const numConfig = {
-
+            return firebase.setStripeSubscription(config)
+        })
+        .then(() => {
+            const config = {
+                areaCode,
+                id
             }
-            return twilioAction.purchaseNumber(numConfig)
+            return twilio.purchaseNumber(config)
+        })
+        .then(purchasedNumber => {
+            console.log('purchasedNumber',purchasedNumber)
+            const config = {
+                areaCode,
+                id,
+                purchasedNumber
+            }
+            return firebase.addNumber(config)
         })
         .catch(err => {
             updateAnalytics(500, req.reqId, err)

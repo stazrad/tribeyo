@@ -4,70 +4,72 @@ const authToken = process.env.AUTH_TOKEN
 const twilio = require('twilio')(accountSid, authToken)
 const firebase = require('../firebase')
 
-exports.purchaseNumber = ({ areaCode, id }) => {
-    const ref = firebase.db.ref().child(`users/${id}`)
+exports.forwardToNumber = ({ id, number }) => {
     // instantiate variables updated by promises
-    let client,
-        clientAuth,
-        clientSid,
-        user
+    let client
+    let user
 
-    ref.once('value')
-        .then(snapshot => {
-            user  = snapshot.exportVal()
-            clientAuth = user.twilio.authToken
-            clientSid  = user.twilio.accountSid
-            client = require('twilio')(clientSid, clientAuth)
-            return client.availablePhoneNumbers('US').local.list({areaCode})
-        })
-        .then(data => {
-            const number = data.availablePhoneNumbers[0]
-            const numberConfig = {
-                accountSid: clientSid,
-                phoneNumber: number.phone_number,
-                friendlyName: user.name,
-                voiceMethod: 'POST',
-                voiceUrl: 'https://www.tribeyo.com/api/voice/' +  user.uid,
-                voiceFallbackMethod: 'POST',
-                voiceFallbackUrl: 'http://twimlets.com/forward?PhoneNumber=' + forwardToNumber,
-                smsMethod: 'POST',
-                smsUrl: 'https://www.tribeyo.com/api/message/' +  user.uid
-            }
-            return client.incomingPhoneNumbers.create(numberConfig)
-        })
-        .then(purchasedNumber => {
-            const number = {
-                number: {
-                    areaCode: {
-                        code: areaCode,
-                        display: format.displayAreaCode(areaCode)
-                    },
-                    forwardToNumber: {
-                        display: format.displayNumber(forwardToNumber),
-                        number: format.intNumber(forwardToNumber)
-                    },
-                    purchasedNumber: {
-                        display: format.displayNumber(purchasedNumber),
-                        number: format.intNumber(purchaseNumber)
-                    }
+    return (
+        firebase.getUserById(id)
+            .then(user => {
+                user = user
+                const numberSid = user.twilio.number.sid
+                const clientAuth = user.twilio.authToken
+                const clientSid  = user.twilio.accountSid
+                client = require('twilio')(clientSid, clientAuth)
+                return client.incomingPhoneNumbers()
+            })
+            .then(data => {
+                data.update({
+                    voiceMethod: 'POST',
+                    voiceUrl: 'https://www.tribeyo.com/api/voice/' +  user.uid,
+                    voiceFallbackMethod: 'POST',
+                    voiceFallbackUrl: 'http://twimlets.com/forward?PhoneNumber=' + number,
+                    smsMethod: 'POST',
+                    smsUrl: 'https://www.tribeyo.com/api/message/' +  user.uid
+                })
+                return client.incomingPhoneNumbers.create(numberConfig)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    )
+}
+
+
+exports.purchaseNumber = ({ areaCode, id }) => {
+    // instantiate ref variable updated by promises
+    const ref = {}
+
+    return (
+        firebase.getUserById(id)
+            .then(user => {
+                ref.user = user
+                const clientSid = ref.clientSid = user.twilio.accountSid
+                const clientAuth = user.twilio.authToken
+                const client = ref.client = require('twilio')(clientSid, clientAuth)
+                return client.availablePhoneNumbers('US').local.list({areaCode})
+            })
+            .then(options => {
+                const number = options[0]
+                const { clientSid, user } = ref
+                console.log(user.twilio)
+                const numberConfig = {
+                    accountSid: clientSid,
+                    phoneNumber: number.phone_number,
+                    friendlyName: user.name,
+                    voiceMethod: 'POST',
+                    voiceUrl: 'https://www.tribeyo.com/api/voice/' +  user.uid,
+                    voiceFallbackMethod: 'POST',
+                    voiceFallbackUrl: 'http://twimlets.com/forward?PhoneNumber=' + user.twilio.number.forwardToNumber.number,
+                    smsMethod: 'POST',
+                    smsUrl: 'https://www.tribeyo.com/api/message/' +  user.uid
                 }
-            }
-
-            // update user info in Firebase
-            firebase.db.ref().child(`users/${id}/twilio/number`).set(number)
-            // transfer number to user Twilio account
-            const transferNumber = twilio.accounts(accountSid).incomingPhoneNumbers(purchasedNumber.sid)
-            transferNumber.update({accountSid: clientSid})
-
-            const response = {
-                message: 'Successfully purchased number forwarded to: ' + forwardToNumber,
-                purchasedNumber: purchasedNumber.phoneNumber
-            }
-            updateAnalytics(200, req.reqId)
-			return res.status(200).json(response)
-        })
-        .catch(err => {
-            updateAnalytics(409, req.reqId, err)
-    		return res.status(409).json(err)
-        })
+                throw 'WHOOPS'
+                return client.incomingPhoneNumbers.create(numberConfig)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    )
 }
