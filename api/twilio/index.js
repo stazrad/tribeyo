@@ -4,6 +4,12 @@ const authToken = process.env.AUTH_TOKEN
 const twilio = require('twilio')(accountSid, authToken)
 const firebase = require('../firebase')
 
+exports.createUser = ({ name }) => (
+    twilio.api.accounts.create({friendlyName: name})
+        .then(({ authToken, sid }) => ({authToken, sid}))
+        .catch(err => console.log(err))
+)
+
 exports.forwardToNumber = ({ id, number }) => {
     // instantiate variables updated by promises
     let client
@@ -30,9 +36,7 @@ exports.forwardToNumber = ({ id, number }) => {
                 })
                 return client.incomingPhoneNumbers.create(numberConfig)
             })
-            .catch(err => {
-                console.log(err)
-            })
+            .catch(err => console.log(err))
     )
 }
 

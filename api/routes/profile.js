@@ -1,6 +1,5 @@
 // IMPORTS //
 const request = require('request-json')
-const User = require('../schema/user')
 const updateAnalytics = require('../analytics/updateData')
 const displayFormat = require('../../utils/format')
 const firebase = require('../firebase')
@@ -15,17 +14,27 @@ exports.create = (req, res) => {
     if (!email || !name || !password) {
         const error = {
             status: 400,
-            message: 'Include password & email!'
+            message: 'Include name, password & email!'
         }
         updateAnalytics(400, req.reqId, error)
         return res.status(400).json(error)
     }
+    let id
 
-    firebase.auth().createUserWithEmailAndPassword(email, password)
-        .then(({ uid }) => {
-            return createTwilioAndStripeAccounts(uid)
+    firebase.createUser({email, password})
+        .then(uid => {
+            id = uid
+            const createStripe = stripe.createUser()
+            const createTwilio = twilio.createUser({name})
+            return Promise.all([createTwilio])
+        })
+        .then(result => {
+            console.log(id)
+            console.log('made it!',result)
+            return firebase.setUser(id, result)
         })
         .catch(err => {
+            console.log(err)
             var error = {
                 status: 409,
                 message: err.message
@@ -47,7 +56,7 @@ exports.create = (req, res) => {
         userRef.set(user)
             .then(() => {
                 setUid.set(uid)
-                return stripe.createCustomer()
+                return stripe.createUser()
             })
             .then(({ id }) => {
                 setStripeId.set(id)

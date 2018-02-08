@@ -2,6 +2,7 @@
 const firebase = require('firebase')
 const admin = require('firebase-admin')
 const displayFormat = require('../../utils/format')
+const User = require('../schema/user').default
 
 // FIREBASE INIT //
 const serviceAccount = require('./serviceAccountKey.json')
@@ -47,6 +48,12 @@ exports.addNumber = (id, purchasedNumber) => {
     )
 }
 
+exports.createUser = ({ email, password }) => (
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+        .then(({ uid }) => uid)
+        .catch(err => console.log(err))
+)
+
 exports.getUserById = (id) => {
     const ref = db.ref().child(`users/${id}`)
 
@@ -67,4 +74,9 @@ exports.setStripeSubscription = (config) => {
     const ref = db.ref().child(`users/${config.id}/stripe/subscription`)
 
     return ref.set(config)
+}
+
+exports.setUser = (id, config) => {
+    // instantiate a new user object
+    console.log(User)
 }
