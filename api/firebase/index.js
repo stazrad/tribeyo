@@ -45,6 +45,7 @@ exports.addNumber = (uid, purchasedNumber) => {
                 // update user info in Firebase
                 db.ref().child(`users/${uid}/twilio/number`).set(number)
             })
+            .catch(err => console.log(err))
     )
 }
 
@@ -64,11 +65,16 @@ exports.getUserById = (uid) => {
                 if (!user) throw new Error('User not found!')
                 return user
             })
-            .catch(err => {
-                console.log(err)
-            })
+            .catch(err => console.log(err))
     )
 }
+
+exports.loginEmail = (email, password) => (
+    firebase.auth().signInWithEmailAndPassword(email, password)
+        .then(({ uid }) => db.ref().child(`users/${uid}`).once('value'))
+        .then(snapshot => snapshot.exportVal())
+        .catch(err => console.log(err))
+)
 
 exports.setStripeSubscription = (config) => {
     const ref = db.ref().child(`users/${config.id}/stripe/subscription`)
@@ -100,6 +106,7 @@ exports.storeUser = (uid, config) => {
         uid
     }
     ref.set(user)
+        .catch(err => console.log(err))
 
     return user
 }

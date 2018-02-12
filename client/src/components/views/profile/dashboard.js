@@ -21,7 +21,7 @@ class Dashboard extends React.Component {
 
     render() {
         const subscribeButton = <button className='subscribe'>Subscribe Now</button>
-        const { subscription } = this.props.user.stripe
+        const { subscription } = this.props.user.stripe.subscription.subscribed
         const { number } = this.props.user.twilio
         const isSubscribed = (
             <div>

@@ -64,14 +64,7 @@ exports.login = (req, res) => {
         updateAnalytics(400, req.reqId, error)
         return res.status(400).json(error)
     }
-    firebase.auth().signInWithEmailAndPassword(email, password)
-        .then(({ emailVerified, uid }) => {
-            db.ref().child(`users/${uid}/emailVerified`).set(emailVerified)
-            return db.ref().child(`users/${uid}`).once('value')
-        })
-        .then(snapshot => {
-            return snapshot.exportVal()
-        })
+    firebase.loginEmail(email, password)
         .then(user => {
             delete user.twilio.authToken
             delete user.twilio.accountSid
