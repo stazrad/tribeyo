@@ -3,7 +3,6 @@ const request = require('request-json')
 const updateAnalytics = require('../analytics/updateData')
 const displayFormat = require('../../utils/format')
 const firebase = require('../firebase')
-const db = require('../firebase').db
 const stripe = require('../stripe')
 const twilio = require('../twilio')
 
@@ -22,16 +21,25 @@ exports.create = (req, res) => {
     let id
 
     firebase.createUser({email, password})
-        .then(uid => {
-            id = uid
-            const createStripe = stripe.createUser()
+        .then(userId => {
+            id = userId
+            const createStripe = stripe.createUser({description: name, email})
             const createTwilio = twilio.createUser({name})
-            return Promise.all([createTwilio])
+            return Promise.all([createStripe, createTwilio])
         })
         .then(result => {
-            console.log(id)
-            console.log('made it!',result)
-            return firebase.setUser(id, result)
+            return firebase.storeUser(id, result)
+        })
+        .then(user => {
+            delete user.twilio.authToken
+            delete user.twilio.accountSid
+            delete user.stripe.id
+            const response = {
+                status: 200,
+                user
+            }
+            updateAnalytics(200, req.reqId)
+            return res.status(200).json(response)
         })
         .catch(err => {
             console.log(err)
@@ -42,48 +50,6 @@ exports.create = (req, res) => {
             updateAnalytics(409, req.reqId, error)
     		return res.status(409).json(error)
         })
-
-    // instantiate a new user object
-    const user = new User({name, email})
-
-    function createTwilioAndStripeAccounts(uid) {
-        const userRef             = db.ref().child(`users/${uid}`)
-        const setStripeId         = db.ref().child(`users/${uid}/stripe/id`)
-        const setTwilioAuthToken  = db.ref().child(`users/${uid}/twilio/authToken`)
-        const setTwilioAccountSid = db.ref().child(`users/${uid}/twilio/accountSid`)
-        const setUid              = db.ref().child(`users/${uid}/uid`)
-
-        userRef.set(user)
-            .then(() => {
-                setUid.set(uid)
-                return stripe.createUser()
-            })
-            .then(({ id }) => {
-                setStripeId.set(id)
-                return twilio.api.accounts.create({friendlyName: name})
-            })
-            .then(({ authToken, sid }) => {
-                setTwilioAuthToken.set(authToken)
-                setTwilioAccountSid.set(sid)
-                return userRef.once('value')
-            })
-            .then(snapshot => snapshot.exportVal())
-            .then(user => {
-                delete user.twilio.authToken
-                delete user.twilio.accountSid
-                delete user.stripe.id
-                const response = {
-                    status: 200,
-                    user
-                }
-                updateAnalytics(200, req.reqId)
-    			return res.status(200).json(response)
-            })
-            .catch(err => {
-                updateAnalytics(500, req.reqId, err)
-                return res.status(500).send(err)
-            })
-    }
 }
 
 // POST /api/profile/login

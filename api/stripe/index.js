@@ -23,4 +23,10 @@ exports.createSubscription = (config) => (
 
 exports.createUser = (config) => (
     stripe.customers.create(config)
+        .then(result => {
+            return result
+        })
+        .catch(err => {
+            console.log(err)
+        })
 )

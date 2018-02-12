@@ -22,9 +22,9 @@ admin.initializeApp({
 
 const db = admin.database()
 
-exports.addNumber = (id, purchasedNumber) => {
+exports.addNumber = (uid, purchasedNumber) => {
     return (
-        this.getUserById(id)
+        this.getUserById(uid)
             .then(user => {
                 const number = {
                     number: {
@@ -43,7 +43,7 @@ exports.addNumber = (id, purchasedNumber) => {
                     }
                 }
                 // update user info in Firebase
-                db.ref().child(`users/${id}/twilio/number`).set(number)
+                db.ref().child(`users/${uid}/twilio/number`).set(number)
             })
     )
 }
@@ -54,8 +54,8 @@ exports.createUser = ({ email, password }) => (
         .catch(err => console.log(err))
 )
 
-exports.getUserById = (id) => {
-    const ref = db.ref().child(`users/${id}`)
+exports.getUserById = (uid) => {
+    const ref = db.ref().child(`users/${uid}`)
 
     return (
         ref.once('value')
@@ -76,7 +76,30 @@ exports.setStripeSubscription = (config) => {
     return ref.set(config)
 }
 
-exports.setUser = (id, config) => {
-    // instantiate a new user object
-    console.log(User)
+exports.storeUser = (uid, config) => {
+    const ref = db.ref().child(`users/${uid}`)
+    const {
+        description: name,
+        email,
+        id
+    } = config[0]
+    const { authToken, sid: accountSid } = config[1]
+    const user = {
+        ...User,
+        email,
+        name,
+        twilio: {
+            ...User.twilio,
+            accountSid,
+            authToken
+        },
+        stripe: {
+            ...User.stripe,
+            id
+        },
+        uid
+    }
+    ref.set(user)
+
+    return user
 }
