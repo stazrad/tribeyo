@@ -1,11 +1,11 @@
 // PACKAGES //
-const accountSid   = process.env.ACCOUNT_SID,
-    authToken      = process.env.AUTH_TOKEN,
-    twilio         = require('twilio')(accountSid, authToken),
-    AreaCodes      = require('areacodes'),
-    areaCodes      = new AreaCodes(),
-	promisify	   = require('es6-promisify'),
-    fetch          = require('isomorphic-fetch')
+const accountSid = process.env.ACCOUNT_SID
+const authToken = process.env.AUTH_TOKEN
+const twilio = require('twilio')(accountSid, authToken)
+const AreaCodes = require('areacodes')
+const areaCodes = new AreaCodes()
+const promisify = require('es6-promisify')
+const fetch = require('isomorphic-fetch')
 
 // IMPORTS //
 const updateAnalytics = require('../analytics/updateData')

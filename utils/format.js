@@ -1,6 +1,4 @@
-exports.displayAreaCode = areaCode => {
-    return `(${areaCode})`
-}
+exports.displayAreaCode = areaCode => `(${areaCode})`
 
 exports.displayNumber = num => {
     const areaCode = num.substr(0,3)
@@ -9,6 +7,4 @@ exports.displayNumber = num => {
     return number
 }
 
-exports.intNumber = number => {
-    return `+1${number})`
-}
+exports.internationalNumber = number => `+1${number}`

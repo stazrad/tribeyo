@@ -16,9 +16,7 @@ exports.createSubscription = (config) => (
             }
             return result
         })
-        .catch(err => {
-            console.log(err)
-        })
+        .catch(err => console.log(err))
 )
 
 exports.createUser = (config) => (
@@ -26,7 +24,7 @@ exports.createUser = (config) => (
         .then(result => {
             return result
         })
-        .catch(err => {
-            console.log(err)
-        })
+        .catch(err => console.log(err))
 )
+
+exports.unsubscribe = (subscriptionId) => stripe.subscriptions.del(subscriptionId)

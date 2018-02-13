@@ -35,10 +35,10 @@ class Dashboard extends React.Component {
         const isNotSubscribed = (
             <div>
                 <h2 className='call-to-action'>Subscribe to Get Your Number</h2>
+                <button onClick={this.onSubscribe} className='subscribe'>Subscribe Now</button>
                 <button className='alt'>
                     <Link to='/plans'>View Subscription Plans</Link>
                 </button>
-                <button onClick={this.onSubscribe} className='subscribe'>Subscribe Now</button>
             </div>
         )
 
@@ -46,7 +46,7 @@ class Dashboard extends React.Component {
             <div id='dashboard'>
                 <h1>Dashboard</h1>
                 {subscription ? isSubscribed : isNotSubscribed}
-                <button className='edit-profile'>Edit Profile</button>
+                {/* <button className='edit-profile'>Edit Profile</button> */}
                 <div className='contact'>
                     Have questions?&nbsp;
                     <Link to='/how-it-works' className='contact-us'>

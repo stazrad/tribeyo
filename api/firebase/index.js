@@ -71,15 +71,18 @@ exports.getUserById = (uid) => {
 
 exports.loginEmail = (email, password) => (
     firebase.auth().signInWithEmailAndPassword(email, password)
-        .then(({ uid }) => db.ref().child(`users/${uid}`).once('value'))
-        .then(snapshot => snapshot.exportVal())
+        .then(({ uid }) => this.getUserById(uid))
         .catch(err => console.log(err))
 )
 
 exports.setStripeSubscription = (config) => {
     const ref = db.ref().child(`users/${config.id}/stripe/subscription`)
 
-    return ref.set(config)
+    return (
+        ref.set(config)
+            .then(() => true)
+            .catch(err => console.log(err))
+    )
 }
 
 exports.storeUser = (uid, config) => {

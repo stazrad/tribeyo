@@ -10,37 +10,6 @@ exports.createUser = ({ name }) => (
         .catch(err => console.log(err))
 )
 
-exports.forwardToNumber = ({ id, number }) => {
-    // instantiate variables updated by promises
-    let client
-    let user
-
-    return (
-        firebase.getUserById(id)
-            .then(user => {
-                user = user
-                const numberSid = user.twilio.number.sid
-                const clientAuth = user.twilio.authToken
-                const clientSid  = user.twilio.accountSid
-                client = require('twilio')(clientSid, clientAuth)
-                return client.incomingPhoneNumbers()
-            })
-            .then(data => {
-                data.update({
-                    voiceMethod: 'POST',
-                    voiceUrl: 'https://www.tribeyo.com/api/voice/' +  user.uid,
-                    voiceFallbackMethod: 'POST',
-                    voiceFallbackUrl: 'http://twimlets.com/forward?PhoneNumber=' + number,
-                    smsMethod: 'POST',
-                    smsUrl: 'https://www.tribeyo.com/api/message/' +  user.uid
-                })
-                return client.incomingPhoneNumbers.create(numberConfig)
-            })
-            .catch(err => console.log(err))
-    )
-}
-
-
 exports.purchaseNumber = ({ areaCode, id }) => {
     // instantiate ref variable updated by promises
     const ref = {}
@@ -75,5 +44,35 @@ exports.purchaseNumber = ({ areaCode, id }) => {
             .catch(err => {
                 console.log(err)
             })
+    )
+}
+
+exports.setupNumber = ({ forwardToNumber, id }) => {
+    // instantiate variables updated by promises
+    let client
+    let user
+
+    return (
+        firebase.getUserById(id)
+            .then(foundUser => {
+                user = foundUser
+                const numberSid = user.twilio.number.sid
+                const clientAuth = user.twilio.authToken
+                const clientSid  = user.twilio.accountSid
+                client = require('twilio')(clientSid, clientAuth)
+                return client.incomingPhoneNumbers()
+            })
+            .then(data => {
+                data.update({
+                    voiceMethod: 'POST',
+                    voiceUrl: `https://www.tribeyo.com/api/voice/${user.uid}`,
+                    voiceFallbackMethod: 'POST',
+                    voiceFallbackUrl: `http://twimlets.com/forward?PhoneNumber=${forwardToNumber}`,
+                    smsMethod: 'POST',
+                    smsUrl: `https://www.tribeyo.com/api/message/${user.uid}`
+                })
+                return client.incomingPhoneNumbers.create(numberConfig)
+            })
+            .catch(err => console.log(err))
     )
 }
