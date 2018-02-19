@@ -21,26 +21,28 @@ exports.areaCode = (req, res) => {
         updateAnalytics(400, req.reqId, error)
         return res.status(400).json(error)
     }
-    areaCodes.get(areaCode, (err, { city, state } = {}) => {
-        const capitalize = (string, multiple) => {
-            if(multiple) {
-                let res = ''
-                const words = string.split(' ')
-                const extract = words.forEach(word => {
-                    res += capitalize(word) + ' '
-                })
-                return res.substring(0, res.length - 1)
-            } else {
-                return string.charAt(0).toUpperCase() + string.slice(1)
-            }
-        }
-        if(err) {
+    areaCodes.get(areaCode, (err, result) => {
+        if(err || !result.state) {
             const error = {
                 status: 500,
-                message: capitalize(err.message)
+                message: 'INVALID AREA CODE'
             }
             updateAnalytics(500, req.reqId, error)
             return res.status(500).json(error)
+        }
+
+        const { city, state } = result
+        const capitalize = (string, multiple) => {
+            if(multiple) {
+                let newString = ''
+                const words = string.split(' ')
+                const extract = words.forEach(word => {
+                    newString += capitalize(word) + ' '
+                })
+                return newString.substring(0, newString.length - 1)
+            } else {
+                return string.charAt(0).toUpperCase() + string.slice(1)
+            }
         }
         const response = {
             city: capitalize(city, true),
