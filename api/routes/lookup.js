@@ -6,6 +6,7 @@ const AreaCodes = require('areacodes')
 const areaCodes = new AreaCodes()
 const promisify = require('es6-promisify')
 const fetch = require('isomorphic-fetch')
+const osmosis = require('osmosis')
 
 // IMPORTS //
 const updateAnalytics = require('../analytics/updateData')
@@ -95,6 +96,17 @@ exports.searchByCity = (req, res) => {
         updateAnalytics(400, req.reqId, error)
         return res.status(400).json(error)
     }
+    osmosis
+        .get('https://www.allareacodes.com/area-code-lookup/')
+        .submit(`#lookup > form`, {q: 'Saint Louis, MO'})
+        .then((context, data) => {
+            console.log(context)
+        })
+        .data(data => {
+            console.log('here',data)
+        })
+        .log(console.log)
+
     const areaCode =  Math.floor(Math.random()*(999-100+1)+100).toString()
     const response = {
         code: areaCode,
@@ -105,7 +117,7 @@ exports.searchByCity = (req, res) => {
 
 // GET /api/validate/:number
 exports.validate = (req, res) => {
-    const number = '+1' + req.params.number
+    const number = `+1${req.params.number}`
     if(!number || number.length != 12) {
         const error = {
             status: 400,

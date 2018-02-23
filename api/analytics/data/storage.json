@@ -1,3 +1,15 @@
 {
-    "usage": []
+    "usage": [
+        {
+            "id": "cjdzie7fj0000xsopc6gu87uu",
+            "date": "Thu Feb 22 2018 23:41:40 GMT-0600 (CST)",
+            "browser": "PostmanRuntime/7.1.1",
+            "clientIp": "::1",
+            "method": "GET",
+            "url": "/api/searchByCity/st+louis",
+            "error": false,
+            "success": false,
+            "responseTime": null
+        }
+    ]
 }
