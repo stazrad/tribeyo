@@ -1,4 +1,4 @@
-const searchReducerDefaultState = {
+const defaultState = {
     areaCode: {
         code: '',
         display: ''
@@ -6,7 +6,7 @@ const searchReducerDefaultState = {
     predictions: []
 }
 
-const searchReducer = (state = searchReducerDefaultState, { areaCode, predictions, type }) => {
+const searchReducer = (state = defaultState, { areaCode, predictions, type }) => {
     switch(type) {
         case 'AUTOCOMPLETE':
             return {

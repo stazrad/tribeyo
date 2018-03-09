@@ -1,9 +1,9 @@
-const viewsReducerDefaultState = {
+const defaultState = {
     checkout: false,
     search: false
 }
 
-const viewsReducer = (state = viewsReducerDefaultState, { checkout, search, type }) => {
+const viewsReducer = (state = defaultState, { checkout, search, type }) => {
     switch(type) {
         case 'CHECKOUT_VIEW':
             return {

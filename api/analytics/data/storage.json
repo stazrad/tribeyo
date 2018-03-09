@@ -1,12 +1,122 @@
 {
     "usage": [
         {
-            "id": "cjdzie7fj0000xsopc6gu87uu",
-            "date": "Thu Feb 22 2018 23:41:40 GMT-0600 (CST)",
-            "browser": "PostmanRuntime/7.1.1",
+            "id": "cjejeza400000x8opq9yyx4e1",
+            "date": "Thu Mar 08 2018 22:01:28 GMT-0600 (CST)",
+            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
+            "clientIp": "::1",
+            "method": "POST",
+            "url": "/api/profile/login",
+            "error": {},
+            "success": false,
+            "responseTime": 1951
+        },
+        {
+            "id": "cjejf06le0001x8opxean6eax",
+            "date": "Thu Mar 08 2018 22:02:10 GMT-0600 (CST)",
+            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
+            "clientIp": "::1",
+            "method": "POST",
+            "url": "/api/profile",
+            "error": false,
+            "success": true,
+            "responseTime": 2689
+        },
+        {
+            "id": "cjejf0ud00002x8opmdt3v23t",
+            "date": "Thu Mar 08 2018 22:02:41 GMT-0600 (CST)",
+            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
             "clientIp": "::1",
             "method": "GET",
-            "url": "/api/searchByCity/st+louis",
+            "url": "/api/autocomplete/geo",
+            "error": false,
+            "success": false,
+            "responseTime": null
+        },
+        {
+            "id": "cjejf0uw80003x8op387xnabl",
+            "date": "Thu Mar 08 2018 22:02:42 GMT-0600 (CST)",
+            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
+            "clientIp": "::1",
+            "method": "GET",
+            "url": "/api/autocomplete/geor",
+            "error": false,
+            "success": false,
+            "responseTime": null
+        },
+        {
+            "id": "cjejf0vjj0004x8opwb5h5bzy",
+            "date": "Thu Mar 08 2018 22:02:42 GMT-0600 (CST)",
+            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
+            "clientIp": "::1",
+            "method": "GET",
+            "url": "/api/autocomplete/georg",
+            "error": false,
+            "success": false,
+            "responseTime": null
+        },
+        {
+            "id": "cjejf0yjh0005x8opjz39yn6b",
+            "date": "Thu Mar 08 2018 22:02:46 GMT-0600 (CST)",
+            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
+            "clientIp": "::1",
+            "method": "GET",
+            "url": "/api/searchByCity/Georgetown,%20TX,%20USA",
+            "error": false,
+            "success": false,
+            "responseTime": null
+        },
+        {
+            "id": "cjejf2m7p0006x8opjfrqr8i1",
+            "date": "Thu Mar 08 2018 22:04:04 GMT-0600 (CST)",
+            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
+            "clientIp": "::1",
+            "method": "POST",
+            "url": "/api/profile/JV9QtIIhfjNl4QruASVJTA9ay1v1/subscribe",
+            "error": {},
+            "success": false,
+            "responseTime": 257
+        },
+        {
+            "id": "cjejf3tdr0007x8opw0wfrwl6",
+            "date": "Thu Mar 08 2018 22:05:00 GMT-0600 (CST)",
+            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
+            "clientIp": "::1",
+            "method": "POST",
+            "url": "/api/profile/login",
+            "error": false,
+            "success": true,
+            "responseTime": 1820
+        },
+        {
+            "id": "cjejf7b0m0008x8ophjnrlonx",
+            "date": "Thu Mar 08 2018 22:07:42 GMT-0600 (CST)",
+            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
+            "clientIp": "::1",
+            "method": "POST",
+            "url": "/api/profile/login",
+            "error": false,
+            "success": true,
+            "responseTime": 1614
+        },
+        {
+            "id": "cjejf7n680009x8op28suvhsi",
+            "date": "Thu Mar 08 2018 22:07:58 GMT-0600 (CST)",
+            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
+            "clientIp": "::1",
+            "method": "GET",
+            "url": "/api/autocomplete/fra",
+            "error": false,
+            "success": false,
+            "responseTime": null
+        },
+        {
+            "id": "cjejf7yjx000ax8opd20lzzzk",
+            "date": "Thu Mar 08 2018 22:08:13 GMT-0600 (CST)",
+            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
+            "clientIp": "::1",
+            "method": "GET",
+            "url": "/api/searchByCity/Franklin,%20TN,%20USA",
             "error": false,
             "success": false,
             "responseTime": null

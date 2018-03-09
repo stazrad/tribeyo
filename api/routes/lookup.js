@@ -96,9 +96,9 @@ exports.searchByCity = (req, res) => {
         updateAnalytics(400, req.reqId, error)
         return res.status(400).json(error)
     }
+    const zipcode = '90210'
     osmosis
-        .get('https://www.allareacodes.com/area-code-lookup/')
-        .submit(`#lookup > form`, {q: 'Saint Louis, MO'})
+        .get(`https://www.getzips.com/cgi-bin/ziplook.exe?Zip=${zipcode}`)
         .then((context, data) => {
             console.log(context)
         })

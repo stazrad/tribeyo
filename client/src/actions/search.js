@@ -33,8 +33,8 @@ export const autocomplete = input => {
     }
 }
 
-export const searchByCity = input => {
-    return (dispatch) => {
+export const searchByCity = input => (
+    dispatch => {
         const init = {
             headers: {
                 'Content-Type': 'application/json'
@@ -56,4 +56,4 @@ export const searchByCity = input => {
                 console.log(err)
             })
     }
-}
+)

@@ -16,8 +16,8 @@ const signupError = error => ({
     error
 })
 
-export const userLogin = formData => {
-    return (dispatch) => {
+export const userLogin = formData => (
+    dispatch => {
         const init = {
             headers: {
                 'Content-Type': 'application/json'
@@ -26,39 +26,39 @@ export const userLogin = formData => {
             body: JSON.stringify(formData)
         }
         fetch('/api/profile/login', init)
-            .then(response => response.json())
-            .then((result) => {
-                if(result.status != 200) {
-                    let msg = result.message.toLowerCase()
-                    let error = {}
-                    if(msg.includes('email')) {
+            .then(res => res.json())
+            .then(res => {
+                if (res.status != 200) {
+                    const msg = res.msg.toLowerCase()
+                    const error = {}
+                    if (msg.includes('email')) {
                         error.type = 'email'
-                        error.message = result.message
-                    } else if(msg.includes('password')) {
+                        error.msg = res.msg
+                    } else if (msg.includes('password')) {
                         error.type = 'password'
-                        error.message = 'This password is invalid'
+                        error.msg = 'This password is invalid'
                     } else {
                         error.type = 'server'
-                        error.message = result.message
+                        error.msg = res.msg
                     }
 
                     return dispatch(loginError(error))
                 } else {
-                    return dispatch(login(result.user))
+                    return dispatch(login(res.user))
                 }
             })
             .catch(err => {
-                let error = {
+                const error = {
                     type: 'server',
-                    message: 'Oops! Something went wrong...try again.'
+                    msg: 'Oops! Something went wrong...try again.'
                 }
                 return dispatch(loginError(error))
             })
     }
-}
+)
 
-export const userSignup = formData => {
-    return (dispatch) => {
+export const userSignup = formData => (
+    dispatch => {
         const init = {
             headers: {
                 'Content-Type': 'application/json'
@@ -67,35 +67,33 @@ export const userSignup = formData => {
             body: JSON.stringify(formData)
         }
         fetch('/api/profile', init)
-            .then((response) => {
-                return response.json()
-            })
-            .then((result) => {
-                if(result.status != 200) {
-                    let msg = result.message.toLowerCase()
-                    let error = {}
-                    if(msg.includes('email')) {
+            .then(res => res.json())
+            .then(res => {
+                if (res.status != 200) {
+                    const msg = res.msg.toLowerCase()
+                    const error = {}
+                    if (msg.includes('email')) {
                         error.type = 'email'
-                        error.message = result.message
-                    } else if(msg.includes('password')) {
+                        error.msg = res.msg
+                    } else if (msg.includes('password')) {
                         error.type = 'password'
-                        error.message = result.message
+                        error.msg = res.msg
                     } else {
                         error.type = 'server'
-                        error.message = result.message
+                        error.msg = res.msg
                     }
 
                     return dispatch(signupError(error))
                 } else {
-                    return dispatch(login(result.user))
+                    return dispatch(login(res.user))
                 }
             })
-            .catch((err) => {
-                let error = {
+            .catch(err => {
+                const error = {
                     type: 'server',
-                    message: 'Oops! Something went wrong...try again.'
+                    msg: 'Oops! Something went wrong...try again.'
                 }
                 return dispatch(signupError(error))
             })
     }
-}
+)

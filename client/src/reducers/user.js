@@ -1,4 +1,4 @@
-const userReducerDefaultState = {
+const defaultState = {
     isLoggedIn: false,
     error: false,
     name: '',
@@ -26,7 +26,7 @@ const userReducerDefaultState = {
     uid: ''
 }
 
-const userReducer = (state = userReducerDefaultState, action) => {
+const userReducer = (state = defaultState, action) => {
     switch(action.type) {
         case 'LOGIN':
             return {
@@ -38,7 +38,7 @@ const userReducer = (state = userReducerDefaultState, action) => {
         case 'LOGIN_ERROR':
             return {
                 isLoggedIn: false,
-                error: action.error
+                error: action.error // FIXME need forced typing here (boolean -> string?)
             }
         case 'LOGOUT':
             return {

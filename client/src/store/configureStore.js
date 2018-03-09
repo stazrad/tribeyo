@@ -1,21 +1,20 @@
-// PACKAGES //
-import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
+// packages
+import { applyMiddleware, combineReducers, compose, createStore } from 'redux'
 import thunk from 'redux-thunk'
 
-// REDUCERS //
-import viewsReducer from 'reducers/views'
-import searchReducer from 'reducers/search'
-import userReducer from 'reducers/user'
+// imports
+import views from 'reducers/views'
+import search from 'reducers/search'
+import user from 'reducers/user'
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose()
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose() // FIXME remove devtools in production env
 
-export default () => {
-    const store = createStore(
+export default () => (
+    createStore(
         combineReducers({
-            views: viewsReducer,
-            search: searchReducer,
-            user: userReducer
+            search,
+            user,
+            views
         }), composeEnhancers(applyMiddleware(thunk))
     )
-    return store
-}
+)
