@@ -1,15 +1,13 @@
-// PACKAGES //
+// packages
 import React from 'react'
 import { Link, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-// COMPONENTS //
+// imports
 import Loader from 'components/layout/partials/loader'
-
-// ACTIONS //
 import { autocomplete, searchByCity } from 'actions/search'
 
-// STRIPE //
+// stripe api
 const stripe = Stripe('pk_test_EWFz9MTb5qG8TyFpIp2016II')
 const elements = stripe.elements()
 
