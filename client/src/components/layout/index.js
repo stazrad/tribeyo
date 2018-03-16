@@ -1,4 +1,4 @@
-// PACKAGES //
+// packages
 import React from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import Sidebar from 'react-sidebar'

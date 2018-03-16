@@ -1,4 +1,4 @@
-// PACKAGES //
+// packages
 import React from 'react'
 import { render } from 'react-dom'
 import { BrowserRouter, browserHistory } from 'react-router-dom'

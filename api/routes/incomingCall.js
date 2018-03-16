@@ -1,11 +1,11 @@
-// PACKAGES //
+// packages
 var accountSid     = process.env.ACCOUNT_SID,
     authToken      = process.env.AUTH_TOKEN,
     twilio         = require('twilio')(accountSid, authToken),
     firebase       = require('firebase'),
     admin          = require('firebase-admin');
 
-// IMPORTS //
+// imports
 var updateAnalytics = require('../analytics/updateData');
 
 // POST /api/voice/:id

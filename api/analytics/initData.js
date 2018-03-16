@@ -1,7 +1,7 @@
-// PACKAGES //
+// packages
 var fs = require('fs');
 
-// IMPORTS //
+// imports
 var schema = require('./data/storage-schema.json');
 
 (function initData() {

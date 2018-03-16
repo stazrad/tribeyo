@@ -1,10 +1,10 @@
-// PACKAGES //
+// packages
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-// RESPONSIVE SIDEBAR //
-const mql = window.matchMedia(`(max-width: 800px)`)
+// responsive sidebar
+const mql = window.matchMedia('(max-width: 800px)')
 
 class Header extends React.Component {
     constructor(props) {
@@ -14,13 +14,9 @@ class Header extends React.Component {
             responsive: mql.matches,
             mql
         }
-
-        this.mouseEnter = this.mouseEnter.bind(this)
-        this.mouseOut = this.mouseOut.bind(this)
-        this.mediaQueryChanged = this.mediaQueryChanged.bind(this)
     }
 
-    mouseEnter(e) {
+    mouseEnter = (e) => {
         // this.setState({
         //     hiddenClass: null
         // })
@@ -29,7 +25,7 @@ class Header extends React.Component {
         e.target.src = hover
     }
 
-    mouseOut(e) {
+    mouseOut = (e) => {
         let src = e.target.src
         let white = src.replace('alt', 'white')
         e.target.src = white
@@ -49,7 +45,7 @@ class Header extends React.Component {
         this.state.mql.removeListener(this.mediaQueryChanged)
     }
 
-    mediaQueryChanged(change) {
+    mediaQueryChanged = (change) => {
         this.setState({responsive: this.state.mql.matches})
     }
 

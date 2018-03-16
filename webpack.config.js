@@ -1,4 +1,4 @@
-// PACKAGES //
+// packages
 var webpack           = require('webpack'),
     path              = require('path'),
     ExtractTextPlugin = require('extract-text-webpack-plugin');

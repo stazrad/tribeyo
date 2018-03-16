@@ -1,4 +1,4 @@
-// IMPORTS //
+// imports
 var updateAnalytics = require('../analytics/updateData')
 
 module.exports = function(req, res, next) {

@@ -1,4 +1,4 @@
-// PACKAGES //
+// packages
 import fetch from 'isomorphic-fetch'
 
 export const autocomplete = input => {

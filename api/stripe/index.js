@@ -1,4 +1,4 @@
-// IMPORTS //
+// imports
 const stripe = require('stripe')(process.env.STRIPE_SECRET_TEST)
 const firebase = require('../firebase')
 

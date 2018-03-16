@@ -1,16 +1,14 @@
 import React from 'react'
 
-const Loader = (loading) => {
-    if(loading) {
-        return  (
+const Loader = loading => (
+    loading
+    ?   (
             <div>
                 <img className='spinner' src='/images/spinner.svg' />
                 <div className='spinner-background'></div>
             </div>
         )
-    } else {
-        return null
-    }
-}
+    : null
+)
 
 export default Loader

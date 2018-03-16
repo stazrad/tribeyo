@@ -1,4 +1,4 @@
-// IMPORTS //
+// imports
 const request = require('request-json')
 const updateAnalytics = require('../analytics/updateData')
 const displayFormat = require('../../utils/format')

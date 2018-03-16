@@ -1,8 +1,8 @@
-// PACKAGES //
+// packages
 var cuid      = require('cuid'),
     requestIp = require('request-ip');
 
-// IMPORTS //
+// imports
 var pushData = require('../analytics/pushData');
 
 module.exports = function(req, res, next) {
