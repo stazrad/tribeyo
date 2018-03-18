@@ -10,7 +10,7 @@ class Home extends React.Component {
                     <h1>A cheaper way to <span>reconnect</span></h1>
                     <p className='blurb'>Tribeyo is a communcation app for people that are tired of paying long distance fees.</p>
                     <Link to='/signup'>
-                        <button>GET STARTED</button>
+                        <button>Get Started</button>
                     </Link>
                 </div>
                 <div className='image-block'>
