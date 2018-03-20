@@ -10,12 +10,12 @@ export const autocomplete = input => {
         })
     }
     return (dispatch) => {
-        const init = {
+        const config = {
             headers: {
                 'Content-Type': 'application/json'
             }
         }
-        fetch(`/api/autocomplete/${input}`, init)
+        fetch(`/api/autocomplete/${input}`, config)
             .then(response => response.json())
             .then(predictions => {
                 return dispatch({
@@ -35,12 +35,12 @@ export const autocomplete = input => {
 
 export const searchByCity = input => (
     dispatch => {
-        const init = {
+        const config = {
             headers: {
                 'Content-Type': 'application/json'
             }
         }
-        fetch(`/api/searchByCity/${input}`, init)
+        fetch(`/api/searchByCity/${input}`, config)
             .then(response => response.json())
             .then(areaCode => {
                 return dispatch({

@@ -2,7 +2,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-// COMPONENTS //
+// components
 import Checkout   from './checkout'
 import CitySearch from './citySearch'
 import Dashboard  from './dashboard'

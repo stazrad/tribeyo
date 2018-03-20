@@ -1,3 +1,48 @@
 {
-    "usage": []
+    "usage": [
+        {
+            "id": "cjez366520000f7op3c9l6xr9",
+            "date": "Mon Mar 19 2018 22:15:13 GMT-0500 (CDT)",
+            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.162 Safari/537.36",
+            "clientIp": "::1",
+            "method": "POST",
+            "url": "/api/profile/login",
+            "error": false,
+            "success": true,
+            "responseTime": 1199
+        },
+        {
+            "id": "cjez38hky0001f7opg0bxdt0a",
+            "date": "Mon Mar 19 2018 22:17:01 GMT-0500 (CDT)",
+            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.162 Safari/537.36",
+            "clientIp": "::1",
+            "method": "POST",
+            "url": "/api/profile/login",
+            "error": {},
+            "success": false,
+            "responseTime": 942
+        },
+        {
+            "id": "cjez3aj7t0002f7opf0lp4wl3",
+            "date": "Mon Mar 19 2018 22:18:37 GMT-0500 (CDT)",
+            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.162 Safari/537.36",
+            "clientIp": "::1",
+            "method": "POST",
+            "url": "/api/profile/login",
+            "error": {},
+            "success": false,
+            "responseTime": 278
+        },
+        {
+            "id": "cjez3b8g00003f7opsxxoqfkn",
+            "date": "Mon Mar 19 2018 22:19:09 GMT-0500 (CDT)",
+            "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.162 Safari/537.36",
+            "clientIp": "::1",
+            "method": "POST",
+            "url": "/api/profile/login",
+            "error": {},
+            "success": false,
+            "responseTime": 1034
+        }
+    ]
 }

@@ -1,7 +1,7 @@
 // packages
 import React from 'react'
 
-// COMPONENTS //
+// components
 import Layout  from './layout'
 
 class App extends React.Component {

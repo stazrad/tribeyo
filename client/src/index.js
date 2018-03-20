@@ -4,11 +4,11 @@ import { render } from 'react-dom'
 import { BrowserRouter, browserHistory } from 'react-router-dom'
 import { Provider } from 'react-redux'
 
-// STORE //
+// store
 import configureStore from './store/configureStore'
 const store = configureStore()
 
-// COMPONENTS //
+// components
 import App from './components/app'
 
 const reactApp = (

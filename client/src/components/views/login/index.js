@@ -3,10 +3,10 @@ import React from 'react'
 import { Link, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-// COMPONENTS //
-import Loader from 'components/layout/partials/loader'
+// components
+import { Loader } from 'components/styled'
 
-// ACTIONS //
+// actions
 import { userLogin } from 'actions/user'
 
 class Login extends React.Component {
@@ -23,23 +23,19 @@ class Login extends React.Component {
             authenticated: false,
             loading: false
         }
-
-        this.handleChangeEmail = this.handleChangeEmail.bind(this)
-        this.handleChangePassword = this.handleChangePassword.bind(this)
-        this.handleSubmit = this.handleSubmit.bind(this)
     }
 
-    handleChangeEmail(e) {
+    handleChangeEmail = e => {
         let emailValue = e.target.value
         this.setState({emailValue, emailError: ''})
     }
 
-    handleChangePassword(e) {
+    handleChangePassword = e => {
         let passwordValue = e.target.value
         this.setState({passwordValue, passwordError: ''})
     }
 
-    handleSubmit(e) {
+    handleSubmit = e => {
         e.preventDefault()
         if(!this.state.emailValue || !this.state.passwordValue) {
             if(!this.state.emailValue) {
@@ -101,16 +97,15 @@ class Login extends React.Component {
     render() {
         const id = this.props.user.uid
         const redirect = this.state.authenticated ? <Redirect to={`/profile/${id}`} /> : null
-        const spinner = Loader(this.state.loading)
 
         return (
             <div id='login'>
                 {redirect}
-                {spinner}
+                <Loader loading={this.state.loading} />
                 <div className='image-container'>
                     <img className='bubbles' src="/images/tribeyo_mark_chat_bubbles.png" />
                 </div>
-                <h3>LOGIN WITH YOUR EMAIL</h3>
+                <h3>Login with your email</h3>
                 <form onSubmit={this.handleSubmit}>
                     <input
                         type='email'

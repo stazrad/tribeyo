@@ -2,7 +2,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-// COMPONENTS //
+// components
 import Checkout from '../views/profile/checkout'
 import Home       from '../views/home';
 import HowItWorks from '../views/howItWorks';

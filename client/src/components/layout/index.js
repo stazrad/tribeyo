@@ -4,7 +4,7 @@ import { Link, withRouter } from 'react-router-dom'
 import Sidebar from 'react-sidebar'
 import { connect } from 'react-redux'
 
-// COMPONENTS //
+// components
 import Header  from './header'
 import Main    from './main'
 import Footer  from './footer'

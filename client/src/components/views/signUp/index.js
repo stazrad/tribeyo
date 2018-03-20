@@ -4,10 +4,10 @@ import { Link, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import fetch from 'isomorphic-fetch'
 
-// COMPONENTS //
+// components
 import Loader from 'components/layout/partials/loader'
 
-// ACTIONS //
+// actions
 import { userSignup } from 'actions/user'
 
 class Signup extends React.Component {

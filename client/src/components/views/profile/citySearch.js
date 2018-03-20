@@ -4,10 +4,10 @@ import { Link, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import _ from 'lodash';
 
-// COMPONENTS //
+// components
 import Loader from 'components/layout/partials/loader'
 
-// ACTIONS //
+// actions
 import { autocomplete, searchByCity } from 'actions/search'
 import { checkoutView, searchView } from 'actions/views'
 
