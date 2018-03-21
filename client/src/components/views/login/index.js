@@ -4,7 +4,7 @@ import { Link, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 // components
-import { Loader } from 'components/styled'
+import { Input, Loader } from 'components/styled'
 
 // actions
 import { userLogin } from 'actions/user'
@@ -107,19 +107,19 @@ class Login extends React.Component {
                 </div>
                 <h3>Login with your email</h3>
                 <form onSubmit={this.handleSubmit}>
-                    <input
+                    <Input
                         type='email'
                         name='email'
                         placeholder='email'
-                        className={this.state.emailError ? 'error-border' : null }
+                        error={this.state.emailError}
                         value={this.state.emailValue}
                         onChange={this.handleChangeEmail} />
                     <label htmlFor='email' id='email-error-login'>{this.state.emailError}</label>
-                    <input
+                    <Input
                         type='password'
                         name='password'
                         placeholder='password'
-                        className={this.state.passwordError ? 'error-border' : null }
+                        error={this.state.passwordError}
                         value={this.state.passwordValue}
                         onChange={this.handleChangePassword} />
                     <label htmlFor='password' id='password-error-login'>{this.state.passwordError}</label>

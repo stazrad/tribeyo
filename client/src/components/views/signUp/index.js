@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import fetch from 'isomorphic-fetch'
 
 // components
-import Loader from 'components/layout/partials/loader'
+import { Input, Loader } from 'components/styled'
 
 // actions
 import { userSignup } from 'actions/user'
@@ -114,42 +114,41 @@ class Signup extends React.Component {
     render() {
         const id = this.state.uid
         const redirect = this.state.profileCreated ? <Redirect to={`/profile/${id}`} /> : null
-        const spinner = Loader(this.state.loading)
 
         return (
             <div id='sign-up'>
                 {redirect}
-                {spinner}
+                <Loader loading={this.state.loading} />
                 <div className='image-container'>
                     <img className='bubbles' src="/images/tribeyo_mark_chat_bubbles.png" />
                 </div>
                 <h3>SIGN UP WITH YOUR EMAIL</h3>
                 <form onSubmit={this.handleSubmit}>
-                    <input
+                    <Input
                         type='text'
                         name='name'
                         placeholder='first name'
-                        className={this.state.nameError ? 'error-border' : null }
+                        error={this.state.nameError}
                         value={this.state.nameValue}
                         onChange={this.handleChangeName} />
                     <label htmlFor='name' id='name-error-signup'>{this.state.nameError}</label>
-                    <input
+                    <Input
                         type='text'
                         name='email'
                         placeholder='email'
-                        className={this.state.emailError ? 'error-border' : null }
+                        error={this.state.emailError}
                         value={this.state.emailValue}
                         onChange={this.handleChangeEmail} />
                     <label htmlFor='email' id='email-error-signup'>{this.state.emailError}</label>
-                    <input
+                    <Input
                         type='password'
                         name='password'
                         placeholder='password'
-                        className={this.state.passwordError ? 'error-border' : null }
+                        error={this.state.passwordError}
                         value={this.state.passwordValue}
                         onChange={this.handleChangePassword} />
                     <label htmlFor='password' id='password-error-signup'>{this.state.passwordError}</label>
-                    <button type='submit'>SIGN UP</button>
+                    <button type='submit'>Sign Up</button>
                 </form>
                 <div className='below-button'>Already have an account? <Link to='/login'>Login here.</Link></div>
             </div>
