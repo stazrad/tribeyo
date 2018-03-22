@@ -36,14 +36,15 @@ class Login extends React.Component {
     }
 
     handleSubmit = e => {
+        const { emailValue, passwordError } = this.state
         e.preventDefault()
-        if(!this.state.emailValue || !this.state.passwordValue) {
-            if(!this.state.emailValue) {
+        if(!emailValue || !passwordValue) {
+            if(!emailValue) {
                 this.setState({
                     emailError: 'Please enter a valid email'
                 })
             }
-            if(!this.state.passwordValue) {
+            if(!passwordValue) {
                 this.setState({
                     passwordError: 'Please enter your password'
                 })
@@ -56,8 +57,8 @@ class Login extends React.Component {
             loading: true
         })
         const formData = {
-            email: this.state.emailValue,
-            password: this.state.passwordValue
+            email: emailValue,
+            password: passwordValue
         }
         return this.props.dispatch(userLogin(formData))
     }

@@ -4,9 +4,10 @@ export const Input = styled.input`
     display: block;
     border-radius: 5px;
     color: ${props => props.theme.alt};
-    border: 3px solid ${props => props.error
-        ? props.theme.error
-        : props.theme.neutral};
+    border: 3px solid
+        ${props => props.error
+            ? props.theme.error
+            : props.theme.neutral};
     outline: none;
     font-size: 16px;
     margin: auto;
