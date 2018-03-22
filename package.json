@@ -1,5 +1,5 @@
 {
-  "name": "tribeyoWebApp",
+  "name": "tribeyo",
   "license": "MIT",
   "version": "1.0.0",
   "description": "A cheaper way to reconnect",
@@ -30,8 +30,9 @@
     "build": "webpack -p",
     "watch": "webpack --watch",
     "start": "ENV=production node server.js",
-    "dev": "ENV=development nodemon server.js --ignore api/analytics/data --ignore client",
-    "dev-w": "webpack-dev-server --inline --hot --history-api-fallback"
+    "dev": "npm run prettier && ENV=development nodemon server.js --ignore api/analytics/data --ignore client",
+    "dev-w": "webpack-dev-server --inline --hot --history-api-fallback",
+    "prettier": "prettier --single-quote --no-semi --jsx-bracket-same-line --write ./client/src/**/**/**/**/*.js"
   },
   "dependencies": {
     "areacodes": "^0.1.2",
