@@ -32,7 +32,7 @@
     "start": "ENV=production node server.js",
     "dev": "npm run prettier && ENV=development nodemon server.js --ignore api/analytics/data --ignore client",
     "dev-w": "webpack-dev-server --inline --hot --history-api-fallback",
-    "prettier": "prettier --single-quote --no-semi --jsx-bracket-same-line --write ./client/src/**/**/**/**/*.js"
+    "prettier": "prettier --single-quote --no-semi --jsx-bracket-same-line --use-tabs --write ./client/src/**/**/**/**/*.js"
   },
   "dependencies": {
     "areacodes": "^0.1.2",
