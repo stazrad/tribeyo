@@ -25,17 +25,17 @@ class Login extends React.Component {
 	}
 
 	handleChangeEmail = e => {
-		let emailValue = e.target.value
+		const emailValue = e.target.value
 		this.setState({ emailValue, emailError: '' })
 	}
 
 	handleChangePassword = e => {
-		let passwordValue = e.target.value
+		const passwordValue = e.target.value
 		this.setState({ passwordValue, passwordError: '' })
 	}
 
 	handleSubmit = e => {
-		const { emailValue, passwordError } = this.state
+		const { emailValue, passwordError, passwordValue } = this.state
 		e.preventDefault()
 		if (!emailValue || !passwordValue) {
 			if (!emailValue) {
@@ -95,15 +95,24 @@ class Login extends React.Component {
 	}
 
 	render() {
+        const {
+            authenticated,
+            emailError,
+            emailValue,
+            loading,
+            passwordError,
+            passwordValue,
+            serverError
+        } = this.state
 		const id = this.props.user.uid
-		const redirect = this.state.authenticated ? (
+		const redirect = authenticated ? (
 			<Redirect to={`/profile/${id}`} />
 		) : null
 
 		return (
 			<div id="login">
 				{redirect}
-				<Loader loading={this.state.loading} />
+				<Loader loading={loading} />
 				<div className="image-container">
 					<img
 						className="bubbles"
@@ -116,26 +125,26 @@ class Login extends React.Component {
 						type="email"
 						name="email"
 						placeholder="email"
-						error={this.state.emailError}
-						value={this.state.emailValue}
+						error={emailError}
+						value={emailValue}
 						onChange={this.handleChangeEmail}
 					/>
 					<label htmlFor="email" id="email-error-login">
-						{this.state.emailError}
+						{emailError}
 					</label>
 					<Input
 						type="password"
 						name="password"
 						placeholder="password"
-						error={this.state.passwordError}
-						value={this.state.passwordValue}
+						error={passwordError}
+						value={passwordValue}
 						onChange={this.handleChangePassword}
 					/>
 					<label htmlFor="password" id="password-error-login">
-						{this.state.passwordError}
+						{passwordError}
 					</label>
 					<label className="server-error" id="server-error-login">
-						{this.state.serverError}
+						{serverError}
 					</label>
 					<button type="submit">LOGIN</button>
 				</form>

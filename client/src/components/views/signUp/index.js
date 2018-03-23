@@ -111,15 +111,24 @@ class Signup extends React.Component {
 	}
 
 	render() {
-		const id = this.state.uid
+		const {
+            emailError,
+            emailValue,
+            loading,
+            nameError,
+            nameValue,
+            passwordError,
+            passwordValue,
+            uid
+        } = this.state
 		const redirect = this.state.profileCreated ? (
-			<Redirect to={`/profile/${id}`} />
+			<Redirect to={`/profile/${uid}`} />
 		) : null
 
 		return (
 			<div id="sign-up">
 				{redirect}
-				<Loader loading={this.state.loading} />
+				<Loader loading={loading} />
                 <div className="image-container">
 					<img
 						className="bubbles"
@@ -131,31 +140,31 @@ class Signup extends React.Component {
 						type="text"
 						name="name"
 						placeholder="first name"
-						error={this.state.nameError}
-						value={this.state.nameValue}
+						error={nameError}
+						value={nameValue}
 						onChange={this.handleChangeName} />
 					<label htmlFor="name" id="name-error-signup">
-						{this.state.nameError}
+						{nameError}
 					</label>
 					<Input
 						type="text"
 						name="email"
 						placeholder="email"
-						error={this.state.emailError}
-						value={this.state.emailValue}
+						error={emailError}
+						value={emailValue}
 						onChange={this.handleChangeEmail} />
 					<label htmlFor="email" id="email-error-signup">
-						{this.state.emailError}
+						{emailError}
 					</label>
 					<Input
 						type="password"
 						name="password"
 						placeholder="password"
-						error={this.state.passwordError}
-						value={this.state.passwordValue}
+						error={passwordError}
+						value={passwordValue}
 						onChange={this.handleChangePassword} />
 					<label htmlFor="password">
-						{this.state.passwordError}
+						{passwordError}
 					</label>
 					<button type="submit">Sign Up</button>
 				</form>
