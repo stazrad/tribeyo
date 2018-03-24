@@ -4,7 +4,7 @@ const admin = require('firebase-admin')
 const displayFormat = require('../../utils/format')
 const User = require('../schema/user').default
 
-// FIREBASE INIT //
+// Firebase init
 const serviceAccount = require('./serviceAccountKey.json')
 
 firebase.initializeApp({

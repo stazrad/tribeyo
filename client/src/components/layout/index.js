@@ -5,9 +5,9 @@ import Sidebar from 'react-sidebar'
 import { connect } from 'react-redux'
 
 // components
-import Header from './header'
-import Main from './main'
-import Footer from './footer'
+import Header from './Header'
+import Main from './Main'
+import Footer from './Footer'
 
 // responsive sidebar
 const mql = window.matchMedia('(max-width: 800px)')

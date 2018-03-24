@@ -6,7 +6,7 @@ import { Provider } from 'react-redux'
 import { ThemeProvider } from 'styled-components'
 
 // store
-import configureStore from 'store/configureStore'
+import configureStore from 'store'
 const store = configureStore()
 
 // imports
