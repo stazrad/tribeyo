@@ -3,14 +3,14 @@ import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 
 // components
-import Checkout from '../views/profile/checkout'
-import Home from '../views/home'
-import HowItWorks from '../views/howItWorks'
-import Login from '../views/login'
-import NotFound from '../views/notFound'
-import Plans from '../views/plans'
-import Profile from '../views/profile'
-import Signup from '../views/signup'
+import Checkout from 'components/views/Profile/Checkout'
+import Home from 'components/views/Home'
+import HowItWorks from 'components/views/HowItWorks'
+import Login from 'components/views/Login'
+import NotFound from 'components/views/NotFound'
+import Plans from 'components/views/Plans'
+import Profile from 'components/views/Profile'
+import Signup from 'components/views/Signup'
 
 class Main extends React.Component {
 	render() {

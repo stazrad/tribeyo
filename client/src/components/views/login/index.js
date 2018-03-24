@@ -95,19 +95,17 @@ class Login extends React.Component {
 	}
 
 	render() {
-        const {
-            authenticated,
-            emailError,
-            emailValue,
-            loading,
-            passwordError,
-            passwordValue,
-            serverError
-        } = this.state
+		const {
+			authenticated,
+			emailError,
+			emailValue,
+			loading,
+			passwordError,
+			passwordValue,
+			serverError
+		} = this.state
 		const id = this.props.user.uid
-		const redirect = authenticated ? (
-			<Redirect to={`/profile/${id}`} />
-		) : null
+		const redirect = authenticated ? <Redirect to={`/profile/${id}`} /> : null
 
 		return (
 			<div id="login">

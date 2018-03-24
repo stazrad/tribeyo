@@ -3,9 +3,9 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 // components
-import Checkout from './checkout'
-import CitySearch from './citySearch'
-import Dashboard from './dashboard'
+import Checkout from './Checkout'
+import CitySearch from './CitySearch'
+import Dashboard from './Dashboard'
 
 class Profile extends React.Component {
 	constructor(props) {

@@ -9,7 +9,7 @@ import Header from './header'
 import Main from './main'
 import Footer from './footer'
 
-// RESPONSIVE SIDEBAR //
+// responsive sidebar
 const mql = window.matchMedia(`(max-width: 800px)`)
 
 class Layout extends React.Component {
@@ -21,18 +21,18 @@ class Layout extends React.Component {
 			responsive: mql.matches,
 			mql
 		}
-
-		this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this)
-		this.toggleSidebar = this.toggleSidebar.bind(this)
-		this.mediaQueryChanged = this.mediaQueryChanged.bind(this)
 	}
 
-	onSetSidebarOpen(open) {
+	onSetSidebarOpen = open => {
 		this.setState({ sidebarOpen: open })
 	}
 
-	toggleSidebar() {
+	toggleSidebar = () => {
 		this.setState({ sidebarOpen: !this.state.sidebarOpen })
+	}
+
+	mediaQueryChanged = change => {
+		this.setState({ responsive: this.state.mql.matches })
 	}
 
 	componentWillMount() {
@@ -42,10 +42,6 @@ class Layout extends React.Component {
 
 	componentWillUnmount() {
 		this.state.mql.removeListener(this.mediaQueryChanged)
-	}
-
-	mediaQueryChanged(change) {
-		this.setState({ responsive: this.state.mql.matches })
 	}
 
 	render() {

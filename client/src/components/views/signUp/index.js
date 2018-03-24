@@ -44,13 +44,9 @@ class Signup extends React.Component {
 	}
 
 	handleSubmit = e => {
-        const { emailValue, nameValue, passwordValue } = this.state
+		const { emailValue, nameValue, passwordValue } = this.state
 		e.preventDefault()
-		if (
-			!nameValue ||
-			!emailValue ||
-			!passwordValue
-		) {
+		if (!nameValue || !emailValue || !passwordValue) {
 			if (!nameValue) {
 				this.setState({
 					nameError: 'Please enter your name'
@@ -112,15 +108,15 @@ class Signup extends React.Component {
 
 	render() {
 		const {
-            emailError,
-            emailValue,
-            loading,
-            nameError,
-            nameValue,
-            passwordError,
-            passwordValue,
-            uid
-        } = this.state
+			emailError,
+			emailValue,
+			loading,
+			nameError,
+			nameValue,
+			passwordError,
+			passwordValue,
+			uid
+		} = this.state
 		const redirect = this.state.profileCreated ? (
 			<Redirect to={`/profile/${uid}`} />
 		) : null
@@ -129,10 +125,11 @@ class Signup extends React.Component {
 			<div id="sign-up">
 				{redirect}
 				<Loader loading={loading} />
-                <div className="image-container">
+				<div className="image-container">
 					<img
 						className="bubbles"
-						src="/images/tribeyo_mark_chat_bubbles.png" />
+						src="/images/tribeyo_mark_chat_bubbles.png"
+					/>
 				</div>
 				<h3>Sign Up with your Email</h3>
 				<form onSubmit={this.handleSubmit}>
@@ -142,7 +139,8 @@ class Signup extends React.Component {
 						placeholder="first name"
 						error={nameError}
 						value={nameValue}
-						onChange={this.handleChangeName} />
+						onChange={this.handleChangeName}
+					/>
 					<label htmlFor="name" id="name-error-signup">
 						{nameError}
 					</label>
@@ -152,7 +150,8 @@ class Signup extends React.Component {
 						placeholder="email"
 						error={emailError}
 						value={emailValue}
-						onChange={this.handleChangeEmail} />
+						onChange={this.handleChangeEmail}
+					/>
 					<label htmlFor="email" id="email-error-signup">
 						{emailError}
 					</label>
@@ -162,10 +161,9 @@ class Signup extends React.Component {
 						placeholder="password"
 						error={passwordError}
 						value={passwordValue}
-						onChange={this.handleChangePassword} />
-					<label htmlFor="password">
-						{passwordError}
-					</label>
+						onChange={this.handleChangePassword}
+					/>
+					<label htmlFor="password">{passwordError}</label>
 					<button type="submit">Sign Up</button>
 				</form>
 				<div className="below-button">
