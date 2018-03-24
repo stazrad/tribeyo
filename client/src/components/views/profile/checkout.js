@@ -4,7 +4,7 @@ import { Link, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 // imports
-import Loader from 'components/layout/partials/loader'
+import { Loader } from 'components/styled'
 import { autocomplete, searchByCity } from 'actions/search'
 
 // stripe api
@@ -20,11 +20,9 @@ class Checkout extends React.Component {
 			cardError: '',
 			loading: false
 		}
-
-		this.onSubmit = this.onSubmit.bind(this)
 	}
 
-	onSubmit(e) {
+	onSubmit = e => {
 		e.preventDefault()
 		this.setState({ loading: true })
 		stripe
@@ -73,10 +71,9 @@ class Checkout extends React.Component {
 	}
 
 	render() {
-		const spinner = Loader(this.state.loading)
-
 		return (
 			<div id="checkout">
+				<Loader loading={this.state.loading} />
 				<h1>Checkout</h1>
 				<div>
 					<span className="area-code">

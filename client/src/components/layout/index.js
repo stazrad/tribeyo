@@ -10,7 +10,7 @@ import Main from './main'
 import Footer from './footer'
 
 // responsive sidebar
-const mql = window.matchMedia(`(max-width: 800px)`)
+const mql = window.matchMedia('(max-width: 800px)')
 
 class Layout extends React.Component {
 	constructor(props) {

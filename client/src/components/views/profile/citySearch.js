@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import _ from 'lodash'
 
 // components
-import Loader from 'components/layout/partials/loader'
+import { Loader } from 'components/styled'
 
 // actions
 import { autocomplete, searchByCity } from 'actions/search'
@@ -24,16 +24,9 @@ class CitySearch extends React.Component {
 			searchError: false,
 			selected: false
 		}
-
-		this.onBlur = this.onBlur.bind(this)
-		this.onChange = this.onChange.bind(this)
-		this.onFocus = this.onFocus.bind(this)
-		this.onSearch = _.debounce(this.onSearch, 300)
-		this.onSelect = this.onSelect.bind(this)
-		this.toCheckout = this.toCheckout.bind(this)
 	}
 
-	onChange(e) {
+	onChange = e => {
 		const { value: cityValue } = e.target
 		this.setState({
 			areaCode: undefined,
@@ -42,7 +35,7 @@ class CitySearch extends React.Component {
 		this.onSearch(cityValue)
 	}
 
-	onFocus() {
+	onFocus = () => {
 		this.setState({
 			areaCode: undefined,
 			focused: true,
@@ -50,19 +43,19 @@ class CitySearch extends React.Component {
 		})
 	}
 
-	onBlur() {
+	onBlur = () => {
 		this.setState({
 			focused: false,
 			searchError: !!this.state.cityValue
 		})
 	}
 
-	onSearch(cityValue) {
+	onSearch = cityValue => {
 		const { dispatch } = this.props
 		dispatch(autocomplete(cityValue))
 	}
 
-	onSelect({ target }) {
+	onSelect = ({ target }) => {
 		const { dispatch } = this.props
 		const cityValue = target.innerText
 		this.setState({
@@ -74,7 +67,7 @@ class CitySearch extends React.Component {
 		dispatch(searchByCity(cityValue))
 	}
 
-	toCheckout() {
+	toCheckout = () => {
 		const { dispatch } = this.props
 		dispatch(searchView(false))
 		dispatch(checkoutView(true))
@@ -90,7 +83,6 @@ class CitySearch extends React.Component {
 	}
 
 	render() {
-		const spinner = Loader(this.state.loading)
 		const inputClass = this.state.searchError
 			? 'error-border'
 			: null || this.state.selected ? 'selected' : null
@@ -116,7 +108,7 @@ class CitySearch extends React.Component {
 
 		return (
 			<div id="city-search">
-				{spinner}
+				<Loader loading={this.state.loading} />
 				<div className="image-container">
 					<img
 						className="bubbles"
