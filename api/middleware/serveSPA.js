@@ -1,7 +1,7 @@
 // packages
-var path = require('path')
+const path = require('path')
 
-module.exports = function(req, res) {
+module.exports = (req, res) => {
     // send React SPA
     return res.sendFile(path.join(__dirname, '../../client/index.html'))
 }
