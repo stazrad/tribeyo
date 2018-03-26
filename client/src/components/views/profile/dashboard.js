@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 
 // actions
 import { searchView } from 'actions/views'
+import View from 'components/View'
 
 class Dashboard extends React.Component {
 	constructor(props) {
@@ -47,8 +48,7 @@ class Dashboard extends React.Component {
 		)
 
 		return (
-			<div id="dashboard">
-				<h1>Dashboard</h1>
+			<View title={'Dashboard'}>
 				{subscription ? isSubscribed : isNotSubscribed}
 				{/* <button className='edit-profile'>Edit Profile</button> */}
 				<div className="contact">
@@ -57,7 +57,7 @@ class Dashboard extends React.Component {
 						Contact us.
 					</Link>
 				</div>
-			</div>
+			</View>
 		)
 	}
 }

@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 // imports
 import { Loader } from 'components/styled'
 import { autocomplete, searchByCity } from 'actions/search'
+import View from 'components/View'
 
 // stripe api
 const stripe = Stripe('pk_test_EWFz9MTb5qG8TyFpIp2016II')
@@ -71,26 +72,25 @@ class Checkout extends React.Component {
 	}
 
 	render() {
+		const { areaCode } = this.props
+		const { cardError, loading } = this.state
+
 		return (
-			<div id="checkout">
-				<Loader loading={this.state.loading} />
-				<h1>Checkout</h1>
+			<View loading={loading} title={'Checkout'}>
 				<div>
-					<span className="area-code">
-						{this.props.areaCode.display} XXX-XXX
-					</span>
+					<span className="area-code">{areaCode.display} XXX-XXX</span>
 				</div>
 				<form onSubmit={this.onSubmit} id="payment-form">
 					<div className="form-row">
 						<div id="stripe-form" />
 						<div id="card-errors" role="alert">
-							{this.state.cardError}
+							{cardError}
 						</div>
 					</div>
 
 					<button>Submit Payment</button>
 				</form>
-			</div>
+			</View>
 		)
 	}
 }

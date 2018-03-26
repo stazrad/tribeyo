@@ -5,7 +5,8 @@ import { connect } from 'react-redux'
 import _ from 'lodash'
 
 // components
-import { Loader } from 'components/styled'
+import { Input } from 'components/styled'
+import View from 'components/View'
 
 // actions
 import { autocomplete, searchByCity } from 'actions/search'
@@ -76,16 +77,25 @@ class CitySearch extends React.Component {
 	componentWillReceiveProps(props) {
 		const { areaCode, predictions } = props
 		this.setState({
-			areaCode: areaCode,
+			areaCode,
 			predictions: !!predictions.length,
 			searchError: !predictions.length && !this.state.cityValue
 		})
 	}
 
 	render() {
-		const inputClass = this.state.searchError
+		const {
+			areaCode,
+			cityValue,
+			focused,
+			loading,
+			predictions,
+			searchError,
+			selected
+		} = this.state
+		const inputClass = searchError
 			? 'error-border'
-			: null || this.state.selected ? 'selected' : null
+			: null || selected ? 'selected' : null
 		const predictionsDropdown = [
 			<h3 key={0}>Select One:</h3>,
 			<ul key={1}>
@@ -96,10 +106,10 @@ class CitySearch extends React.Component {
 				))}
 			</ul>
 		]
-		const areaCode = [
+		const areaCodeElement = [
 			<h4 key={0}>Area Code:</h4>,
 			<div key={1} className="area-code">
-				{this.state.areaCode}
+				{areaCode}
 			</div>
 		]
 		const toCheckout = (
@@ -107,32 +117,27 @@ class CitySearch extends React.Component {
 		)
 
 		return (
-			<div id="city-search">
-				<Loader loading={this.state.loading} />
+			<View loading={loading}>
 				<div className="image-container">
 					<img
 						className="bubbles"
 						src="/images/tribeyo_mark_chat_bubbles.png"
 					/>
 				</div>
-				{this.state.areaCode ? areaCode : <h2>Search by City</h2>}
-				<form onSubmit={e => e.preventDefault()}>
-					<input
-						type="text"
-						name="city"
-						placeholder={this.state.focused ? '' : 'start typing city name'}
-						onBlur={this.onBlur}
-						className={inputClass}
-						value={this.state.cityValue}
-						onChange={this.onChange}
-						onFocus={this.onFocus}
-					/>
-				</form>
-				{this.state.predictions && !this.state.areaCode
-					? predictionsDropdown
-					: null}
-				{this.state.areaCode ? toCheckout : null}
-			</div>
+				{areaCode ? areaCodeElement : <h2>Search by City</h2>}
+				<Input
+					type="text"
+					name="city"
+					placeholder={focused ? '' : 'start typing city name'}
+					onBlur={this.onBlur}
+					className={inputClass}
+					value={cityValue}
+					onChange={this.onChange}
+					onFocus={this.onFocus}
+				/>
+				{predictions && !areaCode ? predictionsDropdown : null}
+				{areaCode ? toCheckout : null}
+			</View>
 		)
 	}
 }

@@ -11,7 +11,7 @@ const store = configureStore()
 
 // imports
 import App from 'components/app'
-import theme from './theme'
+import theme from 'theme'
 
 const reactApp = (
 	<Provider store={store}>

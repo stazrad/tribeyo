@@ -5,7 +5,8 @@ import { connect } from 'react-redux'
 import fetch from 'isomorphic-fetch'
 
 // components
-import { Input, Loader } from 'components/styled'
+import { Input } from 'components/styled'
+import View from 'components/View'
 
 // actions
 import { userSignup } from 'actions/user'
@@ -115,16 +116,15 @@ class Signup extends React.Component {
 			nameValue,
 			passwordError,
 			passwordValue,
+			profileCreated,
 			uid
 		} = this.state
-		const redirect = this.state.profileCreated ? (
-			<Redirect to={`/profile/${uid}`} />
-		) : null
 
 		return (
-			<div id="sign-up">
-				{redirect}
-				<Loader loading={loading} />
+			<View
+				loading={loading}
+				redirect={profileCreated}
+				redirectTo={`/profile/${uid}`}>
 				<div className="image-container">
 					<img
 						className="bubbles"
@@ -169,7 +169,7 @@ class Signup extends React.Component {
 				<div className="below-button">
 					Already have an account? <Link to="/login">Login here.</Link>
 				</div>
-			</div>
+			</View>
 		)
 	}
 }

@@ -5,12 +5,13 @@ export const Input = styled.input`
 	border-radius: 5px;
 	color: ${props => props.theme.alt};
 	border: 3px solid
-		${props => props.error ? props.theme.error : props.theme.neutral};
+		${props => (props.error ? props.theme.error : props.theme.neutral)};
 	outline: none;
 	font-size: 16px;
 	margin: auto;
 	margin-top: 16px;
-	width: 92%;
+	width: 100%;
+	max-width: 350px;
 	height: 20px;
 	padding: 10px;
 	transition: all 0.2s;
@@ -39,4 +40,18 @@ export const Loader = styled.div`
 		padding-top: 50%;
 		margin: auto;
 	}
+`
+
+export const Main = styled.main`
+	text-align: center;
+`
+
+export const Title = styled.h1`
+	font-size: 35px;
+	color: ${props => props.theme.alt}
+	line-height: normal;
+    text-align: left;
+    margin-bottom: 90px;
+    text-transform: uppercase;
+    font-weight: bold;
 `

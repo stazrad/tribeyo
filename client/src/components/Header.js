@@ -42,9 +42,11 @@ class Header extends React.Component {
 	}
 
 	render() {
+		const { toggleSidebar } = this.props
+		const { hiddenClass, responsive } = this.state
 		const navRightFull = (
 			<div className="nav-button-container">
-				<span onClick={this.props.toggleSidebar} className="nav-button">
+				<span onClick={toggleSidebar} className="nav-button">
 					MENU
 				</span>
 				<Link to="/login">
@@ -53,7 +55,7 @@ class Header extends React.Component {
 			</div>
 		)
 		const navRightResponsive = (
-			<div id="hamburger" onClick={this.props.toggleSidebar}>
+			<div id="hamburger" onClick={toggleSidebar}>
 				&#9776;
 			</div>
 		)
@@ -66,14 +68,14 @@ class Header extends React.Component {
 							id="logo"
 							src="/images/tribeyo_logo_white.png"
 							alt="Tribeyo"
-							className={this.state.hiddenClass}
+							className={hiddenClass}
 							onMouseEnter={this.mouseEnter}
 							onMouseOut={this.mouseOut}
 						/>
 					</Link>
 				</div>
 				<div id="nav-right">
-					{this.state.responsive ? navRightResponsive : navRightFull}
+					{responsive ? navRightResponsive : navRightFull}
 				</div>
 			</nav>
 		)

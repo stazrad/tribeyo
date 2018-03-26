@@ -12,23 +12,21 @@ import Plans from 'components/views/Plans'
 import Profile from 'components/views/Profile'
 import Signup from 'components/views/Signup'
 
-class Main extends React.Component {
+class Router extends React.Component {
 	render() {
 		return (
-			<main>
-				<Switch>
-					<Route path="/" component={Home} exact />
-					<Route path="/how-it-works" component={HowItWorks} />
-					<Route path="/login" component={Login} />
-					<Route path="/plans" component={Plans} />
-					<Route path="/profile/:id" component={Profile} />
-					<Route path="/signup" component={Signup} />
-					<Route path="/test" component={Checkout} />
-					<Route component={NotFound} />
-				</Switch>
-			</main>
+			<Switch>
+				<Route path="/" component={Home} exact />
+				<Route path="/how-it-works" component={HowItWorks} />
+				<Route path="/login" component={Login} />
+				<Route path="/plans" component={Plans} />
+				<Route path="/profile/:id" component={Profile} />
+				<Route path="/signup" component={Signup} />
+				<Route path="/test" component={Checkout} />
+				<Route component={NotFound} />
+			</Switch>
 		)
 	}
 }
 
-export default Main
+export default Router

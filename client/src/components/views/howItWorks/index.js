@@ -1,13 +1,12 @@
 // packages
 import React from 'react'
 
+// imports
+import View from 'components/View'
+
 class HowItWorks extends React.Component {
 	render() {
-		return (
-			<div>
-				<h1>How it works</h1>
-			</div>
-		)
+		return <View title={'How it works'} />
 	}
 }
 

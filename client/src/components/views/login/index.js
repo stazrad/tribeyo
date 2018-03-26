@@ -4,7 +4,8 @@ import { Link, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 // components
-import { Input, Loader } from 'components/styled'
+import { Input } from 'components/styled'
+import View from 'components/View'
 
 // actions
 import { userLogin } from 'actions/user'
@@ -104,13 +105,13 @@ class Login extends React.Component {
 			passwordValue,
 			serverError
 		} = this.state
-		const id = this.props.user.uid
-		const redirect = authenticated ? <Redirect to={`/profile/${id}`} /> : null
+		const { uid } = this.props.user
 
 		return (
-			<div id="login">
-				{redirect}
-				<Loader loading={loading} />
+			<View
+				loading={loading}
+				redirect={authenticated}
+				redirectTo={`/profile/${uid}`}>
 				<div className="image-container">
 					<img
 						className="bubbles"
@@ -149,7 +150,7 @@ class Login extends React.Component {
 				<div className="below-button">
 					New user? <Link to="/signup">Create an account here.</Link>
 				</div>
-			</div>
+			</View>
 		)
 	}
 }
