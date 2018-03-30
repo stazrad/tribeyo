@@ -66,7 +66,7 @@ class Header extends React.Component {
 					<Link to="/">
 						<img
 							id="logo"
-							src="/images/tribeyo_logo_white.png"
+							src="images/tribeyo_logo_white.png"
 							alt="Tribeyo"
 							className={hiddenClass}
 							onMouseEnter={this.mouseEnter}

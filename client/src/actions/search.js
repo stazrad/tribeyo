@@ -17,7 +17,7 @@ export const autocomplete = input => {
 			}
 		}
 		fetch(`/api/autocomplete/${input}`, config)
-			.then(response => response.json())
+			.then(res => res.json())
 			.then(predictions => {
 				return dispatch({
 					type: 'AUTOCOMPLETE',

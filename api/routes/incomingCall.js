@@ -9,16 +9,16 @@ const admin = require('firebase-admin')
 const updateAnalytics = require('../analytics/updateData')
 
 // POST /api/voice/:id
-exports.forward = function(req, res) {
-    var ref = admin.database().ref().child('users/'+req.params.id)
+exports.forward = (req, res) => {
+    const ref = admin.database().ref().child(`users/${req.params.id}`)
     ref.once('value')
-        .then(function(snapshot){
-            var foundUser = snapshot.exportVal()
+        .then(snapshot => snapshot.exportVal())
+        .then(user => {
             console.log('REDIRECT SUCCESFUL!')
             updateAnalytics(200, req.reqId)
-            return res.redirect('http://twimlets.com/forward?PhoneNumber=' + foundUser.twilioNumber.endpointPhoneNumber)
+            return res.redirect(`http://twimlets.com/forward?PhoneNumber=${user.twilio.number.forwardToNumber.number}`)
         })
-        .catch(function(err) {
+        .catch(err => {
             updateAnalytics(500, req.reqId, err)
             return res.status(500).send(err)
         })

@@ -22,7 +22,7 @@ app.use(analytics)
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json())
 app.use(express.static('client'))
-app.use('/images', express.static('client/images'))
+app.use('images', express.static('client/images'))
 
 // routes (imports)
 const incomingCall = require('./api/routes/incomingCall')
