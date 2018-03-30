@@ -70,7 +70,7 @@ export const userSignup = formData => dispatch => {
 			if (res.status != 200) {
 				const msg = res.msg.toLowerCase()
 				const error = {}
-				
+
 				if (msg.includes('email')) {
 					error.type = 'email'
 					error.msg = res.msg

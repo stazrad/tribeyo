@@ -18,7 +18,7 @@ export const Input = styled.input`
 `
 
 export const Loader = styled.div`
-	display: ${props => props.loading ? 'block' : 'none'};
+	display: ${props => (props.loading ? 'block' : 'none')};
 	position: fixed;
 	top: 0px;
 	left: 0px;
