@@ -10,7 +10,7 @@ import configureStore from 'store'
 const store = configureStore()
 
 // imports
-import App from 'components/app'
+import App from 'components/App'
 import theme from 'theme'
 
 const reactApp = (

@@ -7,12 +7,12 @@ const viewsReducer = (state = defaultState, { checkout, search, type }) => {
 	switch (type) {
 		case 'CHECKOUT_VIEW':
 			return {
-				...state,
+				...defaultState,
 				checkout
 			}
 		case 'SEARCH_VIEW':
 			return {
-				...state,
+				...defaultState,
 				search
 			}
 		default:

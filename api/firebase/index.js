@@ -49,6 +49,25 @@ exports.addNumber = (uid, purchasedNumber) => {
     )
 }
 
+exports.authenticate = uid => {
+    const ref = db.ref().child('users')
+
+    return (
+        ref.once('value')
+            .then(snapshot => snapshot.exportVal())
+            .then(users => {
+                const ids = Object.keys(users)
+                const authenticated = ids.includes(uid)
+
+                return authenticated
+                    ? this.getUserById(uid)
+                    : null
+            })
+            .then(res => res)
+            .catch(err => console.log(err))
+    )
+}
+
 exports.createUser = ({ email, password }) => (
     firebase.auth().createUserWithEmailAndPassword(email, password)
         .then(({ uid }) => uid)
@@ -60,8 +79,8 @@ exports.getUserById = (uid) => {
 
     return (
         ref.once('value')
-            .then(snapshot => {
-                const user = snapshot.exportVal()
+            .then(snapshot => snapshot.exportVal())
+            .then(user => {
                 if (!user) throw new Error('User not found!')
                 return user
             })

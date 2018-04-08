@@ -6,6 +6,23 @@ const firebase = require('../firebase')
 const stripe = require('../stripe')
 const twilio = require('../twilio')
 
+// GET /api/profile/:id
+exports.authenticate = (req, res) => {
+    const { id } = req.params
+
+    firebase.authenticate(id)
+        .then(result => {
+            const err = {
+                status: 404,
+                message: 'User id does not exist'
+            }
+            return result
+                ? res.status(200).json(result)
+                : res.status(404).json(err)
+        })
+        .catch(err => console.log(err))
+}
+
 // POST /api/profile
 exports.create = (req, res) => {
     const { email, name, password } = req.body
@@ -43,7 +60,7 @@ exports.create = (req, res) => {
         })
         .catch(err => {
             console.log(err)
-            var error = {
+            const error = {
                 status: 409,
                 message: err.message
             }

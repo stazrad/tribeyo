@@ -1,26 +1,21 @@
-const views = require('reducers/views')
-const { checkoutView, searchView } = require('actions/views')
+import { checkoutView, searchView } from 'actions/views'
+import configureStore from 'store'
+const store = configureStore()
 
 describe('views reducer', () => {
     it('should set view to checkout', () => {
-        const store = require('store').default()
-
         store.dispatch(checkoutView())
 
-        const { checkout } = store.getState().views
-        const { search } = store.getState().views
+        const { checkout, search } = store.getState().views
 
         expect(checkout).toBe(true)
         expect(search).toBe(false)
     })
 
     it('should set view to search', () => {
-        const store = require('store').default()
-
         store.dispatch(searchView())
 
-        const { checkout } = store.getState().views
-        const { search } = store.getState().views
+        const { checkout, search } = store.getState().views
 
         expect(checkout).toBe(false)
         expect(search).toBe(true)

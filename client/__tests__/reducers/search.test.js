@@ -1,13 +1,14 @@
 import searchReducer, { defaultState } from 'reducers/search'
 import { autocomplete } from 'actions/search'
-import store from 'store'
+import configureStore from 'store'
+const store = configureStore()
 
 describe('search reducer', () => {
     it('should return empty predictions array', () => {
         // test empty input
-        store().dispatch(autocomplete())
+        store.dispatch(autocomplete())
 
-        const { predictions } = store().getState().search
+        const { predictions } = store.getState().search
 
         expect(predictions).toEqual([])
     })
