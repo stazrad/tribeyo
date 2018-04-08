@@ -1,9 +1,9 @@
-export const checkoutView = checkout => ({
+export const checkoutView = () => ({
 	type: 'CHECKOUT_VIEW',
-	checkout
+	checkout: true
 })
 
-export const searchView = search => ({
+export const searchView = () => ({
 	type: 'SEARCH_VIEW',
-	search
+	search: true
 })

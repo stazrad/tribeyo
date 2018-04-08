@@ -10,7 +10,7 @@ import View from 'components/View'
 
 // actions
 import { autocomplete, searchByCity } from 'actions/search'
-import { checkoutView, searchView } from 'actions/views'
+import { checkoutView } from 'actions/views'
 
 class CitySearch extends React.Component {
 	constructor(props) {
@@ -70,8 +70,7 @@ class CitySearch extends React.Component {
 
 	toCheckout = () => {
 		const { dispatch } = this.props
-		dispatch(searchView(false))
-		dispatch(checkoutView(true))
+		dispatch(checkoutView())
 	}
 
 	componentWillReceiveProps(props) {

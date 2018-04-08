@@ -41,9 +41,7 @@ exports.purchaseNumber = ({ areaCode, id }) => {
                 throw 'WHOOPS'
                 return client.incomingPhoneNumbers.create(numberConfig)
             })
-            .catch(err => {
-                console.log(err)
-            })
+            .catch(err => console.log(err))
     )
 }
 

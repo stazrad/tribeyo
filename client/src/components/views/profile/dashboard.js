@@ -16,7 +16,7 @@ class Dashboard extends React.Component {
 
 	onSubscribe() {
 		const { dispatch } = this.props
-		dispatch(searchView(true))
+		dispatch(searchView())
 	}
 
 	render() {
