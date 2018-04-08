@@ -2,7 +2,7 @@
 const request = require('request-json')
 const updateAnalytics = require('../analytics/updateData')
 const displayFormat = require('../../utils/format')
-const firebase = require('../firebase')
+const Firebase = require('../firebase').default
 const stripe = require('../stripe')
 const twilio = require('../twilio')
 
@@ -10,7 +10,7 @@ const twilio = require('../twilio')
 exports.authenticate = (req, res) => {
     const { id } = req.params
 
-    firebase.authenticate(id)
+    Firebase.authenticate(id)
         .then(result => {
             const err = {
                 status: 404,
@@ -37,7 +37,7 @@ exports.create = (req, res) => {
     }
     let id
 
-    firebase.createUser({email, password})
+    Firebase.createUser({email, password})
         .then(userId => {
             id = userId
             const createStripe = stripe.createUser({description: name, email})
@@ -45,7 +45,7 @@ exports.create = (req, res) => {
             return Promise.all([createStripe, createTwilio])
         })
         .then(result => {
-            return firebase.storeUser(id, result)
+            return Firebase.storeUser(id, result)
         })
         .then(user => {
             delete user.twilio.authToken
@@ -81,7 +81,7 @@ exports.login = (req, res) => {
         updateAnalytics(400, req.reqId, error)
         return res.status(400).json(error)
     }
-    firebase.loginEmail(email, password)
+    Firebase.loginEmail(email, password)
         .then(user => {
             delete user.twilio.authToken
             delete user.twilio.accountSid
@@ -165,7 +165,7 @@ exports.subscribe = (req, res) => {
         return res.status(400).json(error)
 	}
 
-    firebase.getUserById(id)
+    Firebase.getUserById(id)
         .then(user => user.stripe.id)
         .then(stripeId => {
             const config = {
@@ -183,7 +183,7 @@ exports.subscribe = (req, res) => {
                 subscribed: true,
                 subscriptionId
             }
-            const setStripe = firebase.setStripeSubscription(configStripe)
+            const setStripe = Firebase.setStripeSubscription(configStripe)
             const configTwilio = {
                 areaCode,
                 id
@@ -199,7 +199,7 @@ exports.subscribe = (req, res) => {
                 id,
                 purchasedNumber
             }
-            return firebase.addNumber(config)
+            return Firebase.addNumber(config)
         })
         .catch(err => {
             updateAnalytics(500, req.reqId, err)
@@ -209,7 +209,7 @@ exports.subscribe = (req, res) => {
 
 // POST /api/profile/:id/unsubscribe
 exports.unsubscribe = (req, res) => (
-    firebase.getUserById(req.params.id)
+    Firebase.getUserById(req.params.id)
         .then(user => {
             const { id: subscriptionId } = user.stripe.subscription
             return stripe.unsubscribe(subscriptionId)
