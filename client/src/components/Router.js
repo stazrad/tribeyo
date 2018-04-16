@@ -20,7 +20,7 @@ class Router extends React.Component {
 				<Route path="/how-it-works" component={HowItWorks} />
 				<Route path="/login" component={Login} />
 				<Route path="/plans" component={Plans} />
-				<Route path="/profile/:id" component={Profile} />
+				<Route path="/profile" component={Profile} />
 				<Route path="/signup" component={Signup} />
 				<Route path="/test" component={Checkout} />
 				<Route component={NotFound} />

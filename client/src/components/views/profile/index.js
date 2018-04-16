@@ -1,35 +1,51 @@
 // packages
 import React from 'react'
+import { Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
 // components
+import AuthRoute from 'components/AuthRoute'
 import Checkout from './Checkout'
 import CitySearch from './CitySearch'
 import Dashboard from './Dashboard'
+import Login from 'components/views/Login'
+import NotFound from 'components/views/NotFound'
 
 class Profile extends React.Component {
-	constructor(props) {
-		super(props)
-	}
-
 	render() {
-		const { checkoutView, searchView } = this.props
+		const { isLoggedIn } = this.props
 
 		return (
-			<div>
-				{!searchView && !checkoutView ? <Dashboard /> : null}
-				{searchView ? <CitySearch /> : null}
-				{checkoutView ? <Checkout /> : null}
-			</div>
+			<Switch>
+				<AuthRoute
+					path="/profile"
+					component={Dashboard}
+				 	isLoggedIn={isLoggedIn} />
+				<AuthRoute
+					path="/profile/:id"
+					component={Dashboard}
+				 	isLoggedIn={isLoggedIn} />
+				<AuthRoute
+					path="/profile/:id/search" component={CitySearch}
+				 	isLoggedIn={isLoggedIn} />
+				<AuthRoute
+					path="/profile/:id/checkout" component={Checkout}
+					isLoggedIn={isLoggedIn} />
+				<Route component={NotFound} />
+			</Switch>
 		)
 	}
 }
 
 const mapStateToProps = state => {
 	return {
-		checkoutView: state.views.checkout,
-		searchView: state.views.search
+		isLoggedIn: state.user.isLoggedIn
 	}
+}
+
+Profile.propTypes = {
+	isLoggedIn: PropTypes.bool.isRequired
 }
 
 export default connect(mapStateToProps)(Profile)
