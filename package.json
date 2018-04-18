@@ -6,7 +6,7 @@
   "main": "server.js",
   "scripts": {
     "build": "webpack -p",
-    "dev": "npm run prettier && ENV=development nodemon server.js --ignore api/analytics/data --ignore client",
+    "dev": "ENV=development nodemon server.js --ignore api/analytics/data --ignore client",
     "dev-w": "webpack-dev-server --inline --hot --history-api-fallback",
     "prettier": "prettier --single-quote --no-semi --jsx-bracket-same-line --use-tabs --write ./client/src/**/**/**/**/*.js",
     "start": "ENV=production node server.js",
