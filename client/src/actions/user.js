@@ -44,6 +44,7 @@ export const userLogin = formData => dispatch => {
 
 				return dispatch(loginError(error))
 			} else {
+				localStorage.setItem('token', JSON.stringify(res.token))
 				return dispatch(login(res.user))
 			}
 		})

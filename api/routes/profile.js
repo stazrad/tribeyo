@@ -86,8 +86,12 @@ exports.login = (req, res) => {
             delete user.twilio.authToken
             delete user.twilio.accountSid
             delete user.stripe.id
-            var response = {
+            const response = {
                 status: 200,
+                token: {
+                    accessToken: process.env.HASH,
+                    type: 'Bearer'
+                },
                 user
             }
             updateAnalytics(200, req.reqId)
