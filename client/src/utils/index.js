@@ -1,3 +1,5 @@
 export const getAuthHeader = () => `${getToken().type} ${getToken().accessToken}`
 
-export const getToken = () => JSON.parse(localStorage.token)
+export const getAuthToken = () => JSON.parse(localStorage.token)
+
+export const setAuthToken = token => localStorage.setItem('token', JSON.stringify(token))

@@ -1,6 +1,9 @@
 // packages
 import fetch from 'isomorphic-fetch'
 
+// imports
+import { setAuthToken } from 'utils'
+
 const login = user => ({
 	type: 'LOGIN',
 	user
@@ -44,7 +47,7 @@ export const userLogin = formData => dispatch => {
 
 				return dispatch(loginError(error))
 			} else {
-				localStorage.setItem('token', JSON.stringify(res.token))
+				setAuthToken(res.token)
 				return dispatch(login(res.user))
 			}
 		})
