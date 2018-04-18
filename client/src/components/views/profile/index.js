@@ -21,17 +21,23 @@ class Profile extends React.Component {
 				<AuthRoute
 					path="/profile"
 					component={Dashboard}
-				 	isLoggedIn={isLoggedIn} />
+					isLoggedIn={isLoggedIn}
+				/>
 				<AuthRoute
 					path="/profile/:id"
 					component={Dashboard}
-				 	isLoggedIn={isLoggedIn} />
+					isLoggedIn={isLoggedIn}
+				/>
 				<AuthRoute
-					path="/profile/:id/search" component={CitySearch}
-				 	isLoggedIn={isLoggedIn} />
+					path="/profile/:id/search"
+					component={CitySearch}
+					isLoggedIn={isLoggedIn}
+				/>
 				<AuthRoute
-					path="/profile/:id/checkout" component={Checkout}
-					isLoggedIn={isLoggedIn} />
+					path="/profile/:id/checkout"
+					component={Checkout}
+					isLoggedIn={isLoggedIn}
+				/>
 				<Route component={NotFound} />
 			</Switch>
 		)

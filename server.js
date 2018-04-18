@@ -23,6 +23,7 @@ app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json())
 app.use('/images', express.static('client/images'))
 app.use('/profile/images', express.static('client/images'))
+app.use('/profile/build', express.static('client/build'))
 app.use(express.static('client'))
 
 // routes (imports)
