@@ -1,5 +1,8 @@
-// imports
+// packages
 const request = require('request-json')
+const jwt = require('jsonwebtoken')
+
+// imports
 const updateAnalytics = require('../analytics/updateData')
 const displayFormat = require('../../utils/format')
 const Firebase = require('../firebase').default
@@ -86,14 +89,10 @@ exports.login = (req, res) => {
             delete user.twilio.authToken
             delete user.twilio.accountSid
             delete user.stripe.id
-            const response = {
-                status: 200,
-                token: {
-                    accessToken: process.env.HASH,
-                    type: 'Bearer'
-                },
-                user
-            }
+
+            return jwt.sign(user, process.env.HASH)
+        })
+        .then(response => {
             updateAnalytics(200, req.reqId)
             return res.status(200).json(response)
         })

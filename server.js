@@ -17,7 +17,7 @@ const auth = require('./api/middleware/auth')
 const serveSPA = require('./api/middleware/serveSPA')
 
 // middleware
-// app.use(auth)
+app.use(auth)
 // app.use(analytics)
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json())

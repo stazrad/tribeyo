@@ -1,5 +1,6 @@
 // imports
 const updateAnalytics = require('../analytics/updateData')
+const jwt = require('jsonwebtoken')
 
 module.exports = (req, res, next) => {
     const url = req.originalUrl.slice(0,4)
