@@ -1,6 +1,7 @@
 // packages
 const request = require('request-json')
 const jwt = require('jsonwebtoken')
+const promisify = require('es6-promisify')
 
 // imports
 const updateAnalytics = require('../analytics/updateData')
@@ -90,15 +91,24 @@ exports.login = (req, res) => {
             delete user.twilio.accountSid
             delete user.stripe.id
 
-            return jwt.sign(user, process.env.HASH)
+            return jwt.sign(user, process.env.HASH, { expiresIn: '1h' })
         })
-        .then(response => {
+        .then(token => {
+            const response = {
+                status: 200,
+                token
+            }
             updateAnalytics(200, req.reqId)
             return res.status(200).json(response)
         })
         .catch(err => {
+            console.log(err)
+            const error = {
+                status: 500,
+                message: 'Oops! Something went wrong. Try again...'
+            }
             updateAnalytics(500, req.reqId, err)
-            return res.status(500).send(err)
+            return res.status(500).json(error)
         })
 }
 

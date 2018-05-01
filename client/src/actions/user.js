@@ -1,5 +1,6 @@
 // packages
 import fetch from 'isomorphic-fetch'
+import jwt from 'jsonwebtoken'
 
 // imports
 import { setAuthToken } from 'utils'
@@ -31,22 +32,24 @@ export const userLogin = formData => dispatch => {
 		.then(res => res.json())
 		.then(res => {
 			if (res.status != 200) {
-				const msg = res.msg.toLowerCase()
+				const msg = res.message.toLowerCase()
 				const error = {}
 
 				if (msg.includes('email')) {
 					error.type = 'email'
-					error.msg = res.msg
+					error.msg = res.message
 				} else if (msg.includes('password')) {
 					error.type = 'password'
 					error.msg = 'This password is invalid'
 				} else {
 					error.type = 'server'
-					error.msg = res.msg
+					error.msg = res.message
 				}
 
 				return dispatch(loginError(error))
 			} else {
+				console.log(res.token)
+				// set jwt in localStorage
 				setAuthToken(res.token)
 				return dispatch(login(res.user))
 			}
@@ -72,18 +75,18 @@ export const userSignup = formData => dispatch => {
 		.then(res => res.json())
 		.then(res => {
 			if (res.status != 200) {
-				const msg = res.msg.toLowerCase()
+				const msg = res.message.toLowerCase()
 				const error = {}
 
 				if (msg.includes('email')) {
 					error.type = 'email'
-					error.msg = res.msg
+					error.msg = res.message
 				} else if (msg.includes('password')) {
 					error.type = 'password'
-					error.msg = res.msg
+					error.msg = res.message
 				} else {
 					error.type = 'server'
-					error.msg = res.msg
+					error.msg = res.message
 				}
 
 				return dispatch(signupError(error))
