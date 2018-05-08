@@ -34,7 +34,9 @@ class Profile extends React.Component {
 					path="/profile/:id/checkout"
 					component={Checkout}
 					isLoggedIn={isLoggedIn} />
-				<Route component={NotFound} />
+				<Route
+					path="profile/:id/*"
+					component={NotFound} />
 			</Switch>
 		)
 	}

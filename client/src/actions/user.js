@@ -1,9 +1,10 @@
 // packages
 import fetch from 'isomorphic-fetch'
 import jwt from 'jsonwebtoken'
+import jwtDecode from 'jwt-decode'
 
 // imports
-import { setAuthToken } from 'utils'
+import { storeAuthToken } from 'utils'
 
 const login = user => ({
 	type: 'LOGIN',
@@ -48,10 +49,11 @@ export const userLogin = formData => dispatch => {
 
 				return dispatch(loginError(error))
 			} else {
-				console.log(res.token)
+				const user = jwtDecode(res.token)
+				
 				// set jwt in localStorage
-				setAuthToken(res.token)
-				return dispatch(login(res.user))
+				storeAuthToken(res.token)
+				return dispatch(login(user))
 			}
 		})
 		.catch(err => {
