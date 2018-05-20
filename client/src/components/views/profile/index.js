@@ -14,7 +14,7 @@ import NotFound from 'components/views/NotFound'
 
 class Profile extends React.Component {
 	render() {
-		const { isLoggedIn } = this.props
+		const { isLoggedIn } = this.props // TODO check localStorage here for token
 
 		return (
 			<Switch>

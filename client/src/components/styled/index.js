@@ -5,7 +5,7 @@ export const Input = styled.input`
 	border-radius: 5px;
 	color: ${props => props.theme.alt};
 	border: 3px solid
-		${props => (props.error ? props.theme.error : props.theme.neutral)};
+		${props => props.error ? props.theme.error : props.theme.neutral};
 	outline: none;
 	font-size: 16px;
 	margin: auto;
@@ -18,7 +18,7 @@ export const Input = styled.input`
 `
 
 export const Loader = styled.div`
-	display: ${props => (props.loading ? 'block' : 'none')};
+	display: ${props => props.loading ? 'block' : 'none'};
 	position: fixed;
 	top: 0px;
 	left: 0px;
@@ -44,10 +44,42 @@ export const Loader = styled.div`
 
 export const Main = styled.main`
 	text-align: center;
+	display: flex;
+	flex-direction: column;
+	.row {
+		display: flex;
+		width: 100%;
+		height: 250px;
+		margin-bottom: 50px;
+		img {
+			height: 100%;
+			flex: 1;
+		}
+		.step {
+			flex: 3;
+			.number {
+				font-size: 35px;
+				color: ${props => props.theme.primary};
+				font-weight: bold;
+				text-align: left;
+				margin-bottom: 0px;
+			}
+		}
+	}
+	h3 {
+		color: ${props => props.theme.alt};
+	    font-weight: 100;
+	    font-size: 18px;
+	    text-align: left;
+	    margin-top: 2px;
+	    margin-bottom: 14px;
+	    cursor: default;
+	}
 `
 
 export const Title = styled.h1`
 	font-size: 35px;
+	flex: 1;
 	color: ${props => props.theme.alt}
 	line-height: normal;
     text-align: left;

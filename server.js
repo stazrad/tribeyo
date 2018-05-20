@@ -6,7 +6,7 @@ const env = require('dotenv').config()
 
 // view engine
 app.set('view engine', 'html')
-app.engine('html', (path, option) => fs.readFile(path, 'utf-8'))
+app.engine('html', path => fs.readFile(path, 'utf-8'))
 
 // analytics init
 const analyticsInit = require('./api/analytics/initData')
@@ -15,6 +15,11 @@ const analyticsInit = require('./api/analytics/initData')
 const analytics = require('./api/middleware/analytics')
 const auth = require('./api/middleware/auth')
 const serveSPA = require('./api/middleware/serveSPA')
+
+// authentication
+const passport = require('passport')
+app.use(passport.initialize())
+app.use(passport.session())
 
 // middleware
 app.use(auth)
