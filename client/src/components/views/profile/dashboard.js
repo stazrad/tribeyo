@@ -11,18 +11,29 @@ class Dashboard extends React.Component {
 	constructor(props) {
 		super(props)
 
+		this.state = {
+			redirect: false
+		}
+
 		this.onSubscribe = this.onSubscribe.bind(this)
 	}
 
 	onSubscribe() {
-		const { dispatch } = this.props
-		dispatch(searchView())
+		this.setState({
+			redirect: true
+		})
+		console.log('we gotta navigate, homes', this.props.match)
+	}
+
+	componentWillReceiveProps() {
+		this.setState({redirect: false})
 	}
 
 	render() {
 		const subscribeButton = <button className="subscribe">Subscribe Now</button>
 		const { subscription } = this.props.user.stripe.subscription.subscribed
 		const { number } = this.props.user.twilio
+		const { user } = this.props
 		const isSubscribed = (
 			<div>
 				<h2>Your Tribeyo Number:</h2>
@@ -48,7 +59,10 @@ class Dashboard extends React.Component {
 		)
 
 		return (
-			<View title={'Dashboard'}>
+			<View
+				title={'Dashboard'}
+				redirect={this.state.redirect}
+				redirectTo={`/profile/${user.uid}/search`}>
 				{subscription ? isSubscribed : isNotSubscribed}
 				{/* <button className='edit-profile'>Edit Profile</button> */}
 				<div className="contact">

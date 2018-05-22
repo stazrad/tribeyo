@@ -46,17 +46,23 @@ export const Main = styled.main`
 	text-align: center;
 	display: flex;
 	flex-direction: column;
+	flex-flow: column wrap;
 	.row {
 		display: flex;
-		width: 100%;
+		text-align: center;
+		flex: 1;
+		flex-wrap: wrap;
 		height: 250px;
 		margin-bottom: 50px;
 		img {
 			height: 100%;
+			display: flex;
 			flex: 1;
 		}
 		.step {
 			flex: 3;
+			margin-top: 70px;
+			min-width: 100px;
 			.number {
 				font-size: 35px;
 				color: ${props => props.theme.primary};
@@ -74,6 +80,16 @@ export const Main = styled.main`
 	    margin-top: 2px;
 	    margin-bottom: 14px;
 	    cursor: default;
+	}
+
+	@media (max-width: 520px) {
+		h1 {
+			text-align: center;
+		}
+		.step {
+			display: inline-block;
+			width: 100%;
+		}
 	}
 `
 

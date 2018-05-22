@@ -19,10 +19,12 @@ class Profile extends React.Component {
 		return (
 			<Switch>
 				<AuthRoute
+					exact
 					path="/profile"
 					component={Dashboard}
 					isLoggedIn={isLoggedIn} />
 				<AuthRoute
+					exact
 					path="/profile/:id"
 					component={Dashboard}
 					isLoggedIn={isLoggedIn} />
