@@ -1,7 +1,5 @@
 // packages
 import fetch from 'isomorphic-fetch'
-import jwt from 'jsonwebtoken'
-import jwtDecode from 'jwt-decode'
 
 // imports
 import { storeAuthToken } from 'utils'
@@ -26,6 +24,8 @@ export const userLogin = formData => dispatch => {
 		headers: {
 			'Content-Type': 'application/json'
 		},
+		mode: 'same-origin',
+		credentials: 'include',
 		method: 'POST',
 		body: JSON.stringify(formData)
 	}
@@ -49,7 +49,7 @@ export const userLogin = formData => dispatch => {
 
 				return dispatch(loginError(error))
 			}
-			return dispatch(login(user))
+			return dispatch(login(res.user))
 		})
 		.catch(err => {
 			const error = {
@@ -65,6 +65,8 @@ export const userSignup = formData => dispatch => {
 		headers: {
 			'Content-Type': 'application/json'
 		},
+		mode: 'same-origin',
+		credentials: 'include',
 		method: 'POST',
 		body: JSON.stringify(formData)
 	}

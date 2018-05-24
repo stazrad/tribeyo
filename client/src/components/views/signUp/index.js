@@ -2,7 +2,6 @@
 import React from 'react'
 import { Link, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
-import fetch from 'isomorphic-fetch'
 
 // components
 import { Input } from 'components/styled'

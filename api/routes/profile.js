@@ -104,11 +104,11 @@ exports.login = (req, res) => {
             }
             const opts = {
                 res,
+                domain: req.url.origin,
                 expires: stayLoggedIn
                     ? new Date(moment().day(+14))
                     : null
             }
-            console.log(stayLoggedIn)
 
             setCookie('access_token', token, opts)
             updateAnalytics(200, req.reqId)

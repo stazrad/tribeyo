@@ -6,10 +6,7 @@ export const defaultState = {
 	predictions: []
 }
 
-const searchReducer = (
-	state = defaultState,
-	{ areaCode, predictions, type }
-) => {
+const searchReducer = (state = defaultState, { areaCode, predictions, type }) => {
 	switch (type) {
 		case 'AUTOCOMPLETE':
 			return {

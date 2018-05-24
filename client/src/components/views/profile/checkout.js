@@ -38,9 +38,10 @@ class Checkout extends React.Component {
 					headers: new Headers({
 						'Content-Type': 'application/json'
 					}),
+					credentials: 'include',
 					body: JSON.stringify(body)
 				}
-				return fetch(`/api/profile/${this.props.uid}/subscribe`, config)
+				return fetch(`/api/profile/${this.props.uid}/subscribe`, config) //TODO move this to an action
 			})
 			.then(res => {
 				this.setState({ loading: false })

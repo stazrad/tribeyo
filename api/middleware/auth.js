@@ -9,20 +9,19 @@ module.exports = (req, res, next) => {
     if (!url.includes('/api')) {
         return next()
     }
-    console.log(url)
-    // ignore login & createUser routes
-    if (url == '/api/profile/login' || url == '/api/profile' || url.includes('/api/autocomplete') || url.includes('/api/searchByCity')) {
-        //TODO attach jwt with autocomplete & searchByCity requests
-        return next()
-    }
+    console.log(url, req.headers.cookie)
 	res.header("Access-Control-Allow-Origin", "*")
 	res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
 	res.header("Access-Control-Allow-Headers", "Authorization, Origin, X-Requested-With, Content-Type, Accept")
+    // ignore login & createUser routes
+    if (url == '/api/profile/login' || url == '/api/profile') {
+        return next()
+    }
     if (req.method === 'OPTIONS') {
         updateAnalytics(200, req.reqId)
 		return res.status(200).send('GET, POST')
     }
-    const authHeader = req.headers['authorization']
+    const authHeader = req.headers['cookie']
 
     if (!authHeader) {
         updateAnalytics(401, req.reqId, '401: NO AUTHENTICATION SENT')
@@ -34,8 +33,5 @@ module.exports = (req, res, next) => {
         updateAnalytics(403, req.reqId, '403: NOT AUTHORIZED')
         return res.status(403).send('403: NOT AUTHORIZED')
     }
-    // set jwt as token
-    req.token = token
-
     return next()
 }

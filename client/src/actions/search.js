@@ -1,4 +1,3 @@
-// packages
 import fetch from 'isomorphic-fetch'
 
 export const autocomplete = input => {
@@ -14,7 +13,8 @@ export const autocomplete = input => {
 		const config = {
 			headers: {
 				'Content-Type': 'application/json'
-			}
+			},
+			credentials: 'same-origin'
 		}
 		fetch(`/api/autocomplete/${input}`, config)
 			.then(res => res.json())
@@ -40,7 +40,8 @@ export const searchByCity = input => dispatch => {
 	const config = {
 		headers: {
 			'Content-Type': 'application/json'
-		}
+		},
+		credentials: 'same-origin'
 	}
 	fetch(`/api/searchByCity/${input}`, config)
 		.then(response => response.json())

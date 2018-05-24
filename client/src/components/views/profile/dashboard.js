@@ -3,8 +3,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-// actions
-import { searchView } from 'actions/views'
+// imports
 import View from 'components/View'
 
 class Dashboard extends React.Component {
