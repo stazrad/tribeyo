@@ -78,7 +78,7 @@ exports.create = (req, res) => {
 
 // POST /api/profile/login
 exports.login = (req, res) => {
-    const { email, password } = req.body
+    const { email, password, stayLoggedIn = false } = req.body
 
     if (!email || !password) {
         const error = {
@@ -102,7 +102,15 @@ exports.login = (req, res) => {
                 status: 200,
                 user
             }
-            setCookie('access_token', token, {res, expires: new Date(moment().day(+14))})
+            const opts = {
+                res,
+                expires: stayLoggedIn
+                    ? new Date(moment().day(+14))
+                    : null
+            }
+            console.log(stayLoggedIn)
+
+            setCookie('access_token', token, opts)
             updateAnalytics(200, req.reqId)
             return res.status(200).json(response)
         })
