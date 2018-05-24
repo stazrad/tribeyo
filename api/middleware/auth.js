@@ -1,3 +1,7 @@
+// packages
+const jwt = require('jsonwebtoken')
+const promisify = require('es6-promisify')
+
 // imports
 const updateAnalytics = require('../analytics/updateData')
 
@@ -9,7 +13,6 @@ module.exports = (req, res, next) => {
     if (!url.includes('/api')) {
         return next()
     }
-    console.log(url, req.headers.cookie)
 	res.header("Access-Control-Allow-Origin", "*")
 	res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
 	res.header("Access-Control-Allow-Headers", "Authorization, Origin, X-Requested-With, Content-Type, Accept")
@@ -27,11 +30,14 @@ module.exports = (req, res, next) => {
         updateAnalytics(401, req.reqId, '401: NO AUTHENTICATION SENT')
         return res.status(401).send('401: NO AUTHENTICATION SENT')
     }
-    const token = authHeader.split(' ')[1]
+    const token = authHeader.split('access_token=')[1]
 
-    if (!token) {
+    try {
+        jwt.verify(token, hash)
+        return next()
+    } catch(err) {
+        console.log(err.message)
         updateAnalytics(403, req.reqId, '403: NOT AUTHORIZED')
         return res.status(403).send('403: NOT AUTHORIZED')
     }
-    return next()
 }

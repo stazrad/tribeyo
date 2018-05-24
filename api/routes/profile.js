@@ -105,6 +105,7 @@ exports.login = (req, res) => {
             const opts = {
                 res,
                 domain: req.url.origin,
+                path: '/',
                 expires: stayLoggedIn
                     ? new Date(moment().day(+14))
                     : null

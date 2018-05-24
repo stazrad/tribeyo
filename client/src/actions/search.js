@@ -14,7 +14,8 @@ export const autocomplete = input => {
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			credentials: 'same-origin'
+			mode: 'same-origin',
+			credentials: 'include'
 		}
 		fetch(`/api/autocomplete/${input}`, config)
 			.then(res => res.json())
@@ -41,7 +42,8 @@ export const searchByCity = input => dispatch => {
 		headers: {
 			'Content-Type': 'application/json'
 		},
-		credentials: 'same-origin'
+		mode: 'same-origin',
+		credentials: 'include'
 	}
 	fetch(`/api/searchByCity/${input}`, config)
 		.then(response => response.json())
