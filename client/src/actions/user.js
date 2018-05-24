@@ -48,13 +48,8 @@ export const userLogin = formData => dispatch => {
 				}
 
 				return dispatch(loginError(error))
-			} else {
-				const user = jwtDecode(res.token)
-				
-				// set jwt in localStorage
-				storeAuthToken(res.token)
-				return dispatch(login(user))
 			}
+			return dispatch(login(user))
 		})
 		.catch(err => {
 			const error = {

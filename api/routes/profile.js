@@ -2,6 +2,9 @@
 const request = require('request-json')
 const jwt = require('jsonwebtoken')
 const promisify = require('es6-promisify')
+const setCookie = require('set-cookie')
+const moment = require('moment')
+moment().format()
 
 // imports
 const updateAnalytics = require('../analytics/updateData')
@@ -91,13 +94,15 @@ exports.login = (req, res) => {
             delete user.twilio.accountSid
             delete user.stripe.id
 
-            return jwt.sign(user, process.env.HASH, { expiresIn: '1h' })
+            return user
         })
-        .then(token => {
+        .then(user => {
+            const token = jwt.sign(user, process.env.HASH, { expiresIn: '1h' })
             const response = {
                 status: 200,
-                token
+                user
             }
+            setCookie('access_token', token, {res, expires: new Date(moment().day(+14))})
             updateAnalytics(200, req.reqId)
             return res.status(200).json(response)
         })

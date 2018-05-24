@@ -9,8 +9,10 @@ module.exports = (req, res, next) => {
     if (!url.includes('/api')) {
         return next()
     }
+    console.log(url)
     // ignore login & createUser routes
-    if (url == '/api/profile/login' || url == '/api/profile') {
+    if (url == '/api/profile/login' || url == '/api/profile' || url.includes('/api/autocomplete') || url.includes('/api/searchByCity')) {
+        //TODO attach jwt with autocomplete & searchByCity requests
         return next()
     }
 	res.header("Access-Control-Allow-Origin", "*")
