@@ -2,7 +2,7 @@
 import React from 'react'
 import { Link, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
-import _ from 'lodash'
+import debounce from 'lodash.debounce'
 
 // components
 import { Input } from 'components/styled'
@@ -24,6 +24,8 @@ class CitySearch extends React.Component {
 			searchError: false,
 			selected: false
 		}
+
+		this.onSearch = debounce(this.onSearch, 400).bind(this)
 	}
 
 	onChange = e => {
@@ -50,7 +52,7 @@ class CitySearch extends React.Component {
 		})
 	}
 
-	onSearch = cityValue => {
+	onSearch (cityValue) {
 		const { dispatch } = this.props
 		dispatch(autocomplete(cityValue))
 	}
