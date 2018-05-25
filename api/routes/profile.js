@@ -58,10 +58,22 @@ exports.create = (req, res) => {
             delete user.twilio.authToken
             delete user.twilio.accountSid
             delete user.stripe.id
+
+            return user
+        })
+        .then(user => {
+            const token = jwt.sign(user, process.env.HASH, { expiresIn: '1h' })
             const response = {
                 status: 200,
                 user
             }
+            const opts = {
+                res,
+                domain: req.url.origin,
+                path: '/'
+            }
+
+            setCookie('access_token', token, opts)
             updateAnalytics(200, req.reqId)
             return res.status(200).json(response)
         })
