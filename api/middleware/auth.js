@@ -6,7 +6,6 @@ const updateAnalytics = require('../analytics/updateData')
 
 module.exports = (req, res, next) => {
     const url = req.originalUrl
-    const hash = process.env.HASH
 
 	// ignore requests for static files
     if (!url.includes('/api')) {
@@ -23,20 +22,19 @@ module.exports = (req, res, next) => {
         updateAnalytics(200, req.reqId)
 		return res.status(200).send('GET, POST')
     }
-    const authHeader = req.headers['cookie']
-
-    if (!authHeader) {
-        updateAnalytics(401, req.reqId, '401: NO AUTHENTICATION SENT')
-        return res.status(401).send('401: NO AUTHENTICATION SENT')
-    }
-    const token = authHeader.split('access_token=')[1]
-
     try {
+        const authHeader = req.headers['cookie']
+        const hash = process.env.HASH
+        const token = authHeader.split('access_token=')[1]
+
         jwt.verify(token, hash)
         return next()
     } catch(err) {
-        console.log(err.message)
-        updateAnalytics(403, req.reqId, '403: NOT AUTHORIZED')
-        return res.status(403).send('403: NOT AUTHORIZED')
+        const error = {
+            status: 401,
+            message: 'NOT AUTHORIZED'
+        }
+        updateAnalytics(401, req.reqId, error)
+        return res.status(401).json(error)
     }
 }

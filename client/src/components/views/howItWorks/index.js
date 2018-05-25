@@ -12,7 +12,7 @@ class HowItWorks extends React.Component {
 				<div className='row'>
 					<div className='step'>
 						<div className='number'>1</div>
-						<h3>Tribeyo sets up a phone number local to your remote contact.</h3>
+						<h5>Tribeyo sets up a phone number local to your remote contact.</h5>
 					</div>
 					<img src='images/how_it_works_step_1.gif' />
 				</div>
@@ -20,13 +20,13 @@ class HowItWorks extends React.Component {
 					<img src='images/how_it_works_step_2.gif' />
 					<div className='step'>
 						<div className='number'>2</div>
-						<h3>When they dial this local number, Tribeyo bypasses the long distance fees and forwards the call to your phone.</h3>
+						<h5>When they dial this local number, Tribeyo bypasses the long distance fees and forwards the call to your phone.</h5>
 					</div>
 				</div>
 				<div className='row'>
 					<div className='step'>
 						<div className='number'>3</div>
-						<h3>Use up to 300 minutes on your Tribeyo number for just $20/month.</h3>
+						<h5>Use up to 300 minutes on your Tribeyo number for just $20/month.</h5>
 					</div>
 					<img src='images/how_it_works_step_3.gif' />
 				</div>

@@ -20,7 +20,7 @@ class Login extends React.Component {
 			serverError: null,
 			emailValue: '',
 			passwordValue: '',
-			stayLoggedIn: false,
+			stayLoggedIn: true,
 			authenticated: false,
 			loading: false
 		}

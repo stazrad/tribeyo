@@ -76,7 +76,6 @@ export const Main = styled.main`
 		color: ${props => props.theme.alt};
 	    font-weight: 100;
 	    font-size: 18px;
-	    text-align: left;
 	    margin-top: 2px;
 	    margin-bottom: 14px;
 	    cursor: default;
