@@ -1,4 +1,4 @@
-// IMPORTS //
+// imports
 const accountSid = process.env.ACCOUNT_SID
 const authToken = process.env.AUTH_TOKEN
 const twilio = require('twilio')(accountSid, authToken)
@@ -41,9 +41,7 @@ exports.purchaseNumber = ({ areaCode, id }) => {
                 throw 'WHOOPS'
                 return client.incomingPhoneNumbers.create(numberConfig)
             })
-            .catch(err => {
-                console.log(err)
-            })
+            .catch(err => console.log(err))
     )
 }
 

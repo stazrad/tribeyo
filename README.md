@@ -1,4 +1,4 @@
-Steps to deploy:
+Steps to deploy server:
 
 (must have Node.js installed on local machine)
 

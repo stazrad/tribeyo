@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`search reducer should return area code object 1`] = `
+Object {
+  "areaCode": Object {
+    "code": "615",
+    "display": "(615)",
+  },
+  "predictions": Array [],
+}
+`;
+
+exports[`search reducer should return autocomplete predictions 1`] = `
+Object {
+  "areaCode": Object {
+    "code": "",
+    "display": "",
+  },
+  "predictions": Array [
+    "you have my sword",
+    "and my bow",
+    "and my axe",
+  ],
+}
+`;

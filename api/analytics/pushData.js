@@ -1,7 +1,7 @@
-// PACKAGES //
+// packages
 var fs = require('fs');
 
-// IMPORTS //
+// imports
 var storage = require('./data/storage.json');
 
 module.exports = function(analytics) {

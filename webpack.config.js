@@ -1,4 +1,4 @@
-// PACKAGES //
+// packages
 var webpack           = require('webpack'),
     path              = require('path'),
     ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -24,8 +24,8 @@ module.exports = {
     },
     module: {
         rules: [{
-            test: /.jsx?$/,
-            loaders: ['react-hot-loader/webpack', 'babel-loader?presets[]=react,presets[]=es2015'],
+            test: /.js$/,
+            loaders: ['react-hot-loader/webpack', 'babel-loader'],
             exclude: /node_modules/
         },
         {

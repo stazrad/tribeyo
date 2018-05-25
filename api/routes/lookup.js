@@ -1,4 +1,4 @@
-// PACKAGES //
+// packages
 const accountSid = process.env.ACCOUNT_SID
 const authToken = process.env.AUTH_TOKEN
 const twilio = require('twilio')(accountSid, authToken)
@@ -8,7 +8,7 @@ const promisify = require('es6-promisify')
 const fetch = require('isomorphic-fetch')
 const osmosis = require('osmosis')
 
-// IMPORTS //
+// imports
 const updateAnalytics = require('../analytics/updateData')
 
 // GET /api/areaCode/:areaCode

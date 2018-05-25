@@ -1,10 +1,34 @@
-// IMPORTS //
+// packages
 const request = require('request-json')
+const jwt = require('jsonwebtoken')
+const promisify = require('es6-promisify')
+const setCookie = require('set-cookie')
+const moment = require('moment')
+moment().format()
+
+// imports
 const updateAnalytics = require('../analytics/updateData')
 const displayFormat = require('../../utils/format')
-const firebase = require('../firebase')
+const Firebase = require('../firebase').default
 const stripe = require('../stripe')
 const twilio = require('../twilio')
+
+// GET /api/profile/:id
+exports.authenticate = (req, res) => {
+    const { id } = req.params
+
+    Firebase.authenticate(id)
+        .then(result => {
+            const err = {
+                status: 404,
+                message: 'User id does not exist'
+            }
+            return result
+                ? res.status(200).json(result)
+                : res.status(404).json(err)
+        })
+        .catch(err => console.log(err))
+}
 
 // POST /api/profile
 exports.create = (req, res) => {
@@ -20,7 +44,7 @@ exports.create = (req, res) => {
     }
     let id
 
-    firebase.createUser({email, password})
+    Firebase.createUser({email, password})
         .then(userId => {
             id = userId
             const createStripe = stripe.createUser({description: name, email})
@@ -28,22 +52,34 @@ exports.create = (req, res) => {
             return Promise.all([createStripe, createTwilio])
         })
         .then(result => {
-            return firebase.storeUser(id, result)
+            return Firebase.storeUser(id, result)
         })
         .then(user => {
             delete user.twilio.authToken
             delete user.twilio.accountSid
             delete user.stripe.id
+
+            return user
+        })
+        .then(user => {
+            const token = jwt.sign(user, process.env.HASH, { expiresIn: '1h' })
             const response = {
                 status: 200,
                 user
             }
+            const opts = {
+                res,
+                domain: req.url.origin,
+                path: '/'
+            }
+
+            setCookie('access_token', token, opts)
             updateAnalytics(200, req.reqId)
             return res.status(200).json(response)
         })
         .catch(err => {
             console.log(err)
-            var error = {
+            const error = {
                 status: 409,
                 message: err.message
             }
@@ -54,7 +90,7 @@ exports.create = (req, res) => {
 
 // POST /api/profile/login
 exports.login = (req, res) => {
-    const { email, password } = req.body
+    const { email, password, stayLoggedIn = false } = req.body
 
     if (!email || !password) {
         const error = {
@@ -64,21 +100,41 @@ exports.login = (req, res) => {
         updateAnalytics(400, req.reqId, error)
         return res.status(400).json(error)
     }
-    firebase.loginEmail(email, password)
+    Firebase.loginEmail(email, password)
         .then(user => {
             delete user.twilio.authToken
             delete user.twilio.accountSid
             delete user.stripe.id
-            var response = {
+
+            return user
+        })
+        .then(user => {
+            const token = jwt.sign(user, process.env.HASH, { expiresIn: '1h' })
+            const response = {
                 status: 200,
                 user
             }
+            const opts = {
+                res,
+                domain: req.url.origin,
+                path: '/',
+                expires: stayLoggedIn
+                    ? new Date(moment().day(+14))
+                    : null
+            }
+
+            setCookie('access_token', token, opts)
             updateAnalytics(200, req.reqId)
             return res.status(200).json(response)
         })
         .catch(err => {
+            console.log(err)
+            const error = {
+                status: 500,
+                message: 'Oops! Something went wrong. Try again...'
+            }
             updateAnalytics(500, req.reqId, err)
-            return res.status(500).send(err)
+            return res.status(500).json(error)
         })
 }
 
@@ -148,7 +204,7 @@ exports.subscribe = (req, res) => {
         return res.status(400).json(error)
 	}
 
-    firebase.getUserById(id)
+    Firebase.getUserById(id)
         .then(user => user.stripe.id)
         .then(stripeId => {
             const config = {
@@ -166,7 +222,7 @@ exports.subscribe = (req, res) => {
                 subscribed: true,
                 subscriptionId
             }
-            const setStripe = firebase.setStripeSubscription(configStripe)
+            const setStripe = Firebase.setStripeSubscription(configStripe)
             const configTwilio = {
                 areaCode,
                 id
@@ -182,7 +238,7 @@ exports.subscribe = (req, res) => {
                 id,
                 purchasedNumber
             }
-            return firebase.addNumber(config)
+            return Firebase.addNumber(config)
         })
         .catch(err => {
             updateAnalytics(500, req.reqId, err)
@@ -192,7 +248,7 @@ exports.subscribe = (req, res) => {
 
 // POST /api/profile/:id/unsubscribe
 exports.unsubscribe = (req, res) => (
-    firebase.getUserById(req.params.id)
+    Firebase.getUserById(req.params.id)
         .then(user => {
             const { id: subscriptionId } = user.stripe.subscription
             return stripe.unsubscribe(subscriptionId)

@@ -80,7 +80,7 @@ nav {
     float: right;
     margin-top: 14px;
     margin-right: 40%;
-    transition: all .6s;
+    transition: color .6s;
 }
 #hamburger:hover {
     color: $secondary-color-on-alt;
@@ -120,7 +120,7 @@ nav {
     margin-left: 50px;
 }
 
-// RESPONSIVE //
+// responsive
 @media (max-width: 800px) {
     .sidebar {
         width: 100% !important;

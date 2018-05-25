@@ -1,29 +1,40 @@
-// IMPORTS //
-var updateAnalytics = require('../analytics/updateData')
+// packages
+const jwt = require('jsonwebtoken')
 
-module.exports = function(req, res, next) {
-    var url     = req.originalUrl.slice(0,4),
-        hash    = process.env.HASH
+// imports
+const updateAnalytics = require('../analytics/updateData')
+
+module.exports = (req, res, next) => {
+    const url = req.originalUrl
+
 	// ignore requests for static files
-    if(url != '/api') {
+    if (!url.includes('/api')) {
         return next()
     }
 	res.header("Access-Control-Allow-Origin", "*")
 	res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
 	res.header("Access-Control-Allow-Headers", "Authorization, Origin, X-Requested-With, Content-Type, Accept")
-    if(req.method === 'OPTIONS') {
+    // ignore login & createUser routes
+    if (url == '/api/profile/login' || url == '/api/profile') {
+        return next()
+    }
+    if (req.method === 'OPTIONS') {
         updateAnalytics(200, req.reqId)
 		return res.status(200).send('GET, POST')
     }
-    var auth = req.headers.authorization
-    if(!auth) {
-        updateAnalytics(401, req.reqId, '401: NO AUTHENTICATION SENT')
-        return res.status(401).send('401: NO AUTHENTICATION SENT')
+    try {
+        const authHeader = req.headers['cookie']
+        const hash = process.env.HASH
+        const token = authHeader.split('access_token=')[1]
+
+        jwt.verify(token, hash)
+        return next()
+    } catch(err) {
+        const error = {
+            status: 401,
+            message: 'NOT AUTHORIZED'
+        }
+        updateAnalytics(401, req.reqId, error)
+        return res.status(401).json(error)
     }
-    var token = auth.split(' ')[1]
-    if(token != hash) {
-        updateAnalytics(403, req.reqId, '403: NOT AUTHORIZED')
-        return res.status(403).send('403: NOT AUTHORIZED')
-    }
-    return next()
 }

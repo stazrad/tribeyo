@@ -1,14 +1,13 @@
-// PACKAGES //
-import React from 'react';
+// packages
+import React from 'react'
+
+// imports
+import View from 'components/View'
 
 class Plans extends React.Component {
-    render() {
-        return (
-            <div>
-                <h1>Plans</h1>
-            </div>
-        )
-    }
+	render() {
+		return <View title={'Plans'} />
+	}
 }
 
-export default Plans;
+export default Plans
