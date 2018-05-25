@@ -14,3 +14,15 @@
     max-width: 140px;
     margin: auto;
 }
+
+.checkbox {
+    display: inline-block;
+    position: relative;
+    width: unset;
+    margin-right: 10px;
+    top: 6px;
+}
+
+.checkbox-text {
+    font-size: 12px;
+}

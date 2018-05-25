@@ -20,6 +20,7 @@ class Login extends React.Component {
 			serverError: null,
 			emailValue: '',
 			passwordValue: '',
+			stayLoggedIn: false,
 			authenticated: false,
 			loading: false
 		}
@@ -35,9 +36,15 @@ class Login extends React.Component {
 		this.setState({ passwordValue, passwordError: '' })
 	}
 
+	handleChangeStayLoggedIn = e => {
+		const stayLoggedIn = e.target.checked
+		this.setState({ stayLoggedIn })
+	}
+
 	handleSubmit = e => {
-		const { emailValue, passwordError, passwordValue } = this.state
 		e.preventDefault()
+		const { emailValue, passwordError, passwordValue, stayLoggedIn } = this.state
+
 		if (!emailValue || !passwordValue) {
 			if (!emailValue) {
 				this.setState({
@@ -58,7 +65,8 @@ class Login extends React.Component {
 		})
 		const formData = {
 			email: emailValue,
-			password: passwordValue
+			password: passwordValue,
+			stayLoggedIn
 		}
 		return this.props.dispatch(userLogin(formData))
 	}
@@ -103,7 +111,8 @@ class Login extends React.Component {
 			loading,
 			passwordError,
 			passwordValue,
-			serverError
+			serverError,
+			stayLoggedIn
 		} = this.state
 		const { uid } = this.props.user
 
@@ -142,6 +151,15 @@ class Login extends React.Component {
 					<label htmlFor="password" id="password-error-login">
 						{passwordError}
 					</label>
+					<div>
+						<input
+							type='checkbox'
+							name='stayLoggedIn'
+							className='checkbox'
+						 	checked={stayLoggedIn}
+						 	onChange={this.handleChangeStayLoggedIn} />
+						<span className='checkbox-text'>Keep me signed in on this device</span>
+					</div>
 					<label className="server-error" id="server-error-login">
 						{serverError}
 					</label>

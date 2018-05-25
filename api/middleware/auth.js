@@ -1,6 +1,5 @@
 // packages
 const jwt = require('jsonwebtoken')
-const promisify = require('es6-promisify')
 
 // imports
 const updateAnalytics = require('../analytics/updateData')
