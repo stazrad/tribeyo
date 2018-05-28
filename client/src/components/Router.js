@@ -1,6 +1,8 @@
 // packages
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
 // components
 import Checkout from 'components/views/Profile/Checkout'
@@ -12,7 +14,23 @@ import Plans from 'components/views/Plans'
 import Profile from 'components/views/Profile'
 import Signup from 'components/views/Signup'
 
+// actions
+import { userLogin } from 'actions/user'
+
 class Router extends React.Component {
+	componentDidMount () {
+		const { dispatch, isLoggedIn } = this.props
+
+		if (!isLoggedIn) {
+			dispatch(userLogin())
+		}
+		console.log('did mount', this.props)
+	}
+
+	componentWillReceiveProps (nextProps) {
+		console.log('props', nextProps)
+	}
+
 	render() {
 		return (
 			<Switch>
@@ -29,4 +47,14 @@ class Router extends React.Component {
 	}
 }
 
-export default Router
+const mapStateToProps = state => {
+	return {
+		isLoggedIn: state.user.isLoggedIn
+	}
+}
+
+Profile.propTypes = {
+	isLoggedIn: PropTypes.bool.isRequired
+}
+
+export default connect(mapStateToProps)(Router)

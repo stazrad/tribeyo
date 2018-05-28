@@ -13,7 +13,7 @@ import Login from 'components/views/Login'
 import NotFound from 'components/views/NotFound'
 
 class Profile extends React.Component {
-	render() {
+	render () {
 		const { isLoggedIn } = this.props
 
 		return (
