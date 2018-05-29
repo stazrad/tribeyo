@@ -20,7 +20,6 @@ import { userLogin } from 'actions/user'
 class Router extends React.Component {
 	componentDidMount () {
 		const { dispatch, isLoggedIn } = this.props
-		console.log('did mount')
 
 		if (!isLoggedIn) {
 			// fire on page load to check for cookie
@@ -29,16 +28,15 @@ class Router extends React.Component {
 	}
 
 	render() {
-		console.log('render Router')
 		return (
 			<Switch>
-				<Route path="/" component={Home} exact />
-				<Route path="/how-it-works" component={HowItWorks} />
-				<Route path="/login" component={Login} />
-				<Route path="/plans" component={Plans} />
-				<Route path="/profile" component={Profile} />
-				<Route path="/signup" component={Signup} />
-				<Route path="/test" component={Checkout} />
+				<Route path='/' component={Home} exact />
+				<Route path='/how-it-works' component={HowItWorks} />
+				<Route path='/login' component={Login} />
+				<Route path='/plans' component={Plans} />
+				<Route path='/profile' component={Profile} />
+				<Route path='/signup' component={Signup} />
+				<Route path='/test' component={Checkout} />
 				<Route component={NotFound} />
 			</Switch>
 		)

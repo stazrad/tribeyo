@@ -88,26 +88,27 @@ exports.login = (req, res) => {
 
     if (!email || !password) {
         // check for login via cookie
-        if (req.headers['cookie']) {
-            const authHeader = req.headers['cookie']
+        const authHeader = req.headers['cookie']
+        if (authHeader) {
             const cookie = authHeader.split(';').filter(cookie => cookie.includes('access_token'))[0]
 
             if (cookie) {
                 const hash = process.env.HASH
                 const token = cookie.split('access_token=')[1]
                 let verifyToken
+
                 try {
-                    verifyToken = promisify(jwt.verify(token, hash))
+                    verifyToken = promisify(jwt.verify)
                 } catch(err) {
                     const error = {
-                        status: 400,
+                        status: 498,
                         message: 'Previous session expired'
                     }
-                    updateAnalytics(400, req.reqId, err)
-                    return res.status(400).json(error)
+                    updateAnalytics(498, req.reqId, err)
+                    return res.status(498).json(error)
                 }
 
-                return verifyToken
+                return verifyToken(token, hash)
                     .then(user => Firebase.getUserById(user.uid))
                     .then(user => {
                         const response = {
@@ -122,6 +123,7 @@ exports.login = (req, res) => {
                             status: 400,
                             message: 'Failed to login with cookie'
                         }
+                        console.log(err)
                         updateAnalytics(400, req.reqId, err)
                         return res.status(400).json(error)
                     })
@@ -144,7 +146,7 @@ exports.login = (req, res) => {
             return user
         })
         .then(user => {
-            const token = jwt.sign(user, process.env.HASH, { expiresIn: '10s' })
+            const token = jwt.sign(user, process.env.HASH, { expiresIn: '1hr' })
             const response = {
                 status: 200,
                 user
