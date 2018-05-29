@@ -13,22 +13,20 @@ class Dashboard extends React.Component {
 		this.state = {
 			redirect: false
 		}
-
-		this.onSubscribe = this.onSubscribe.bind(this)
 	}
 
-	onSubscribe() {
+	onSubscribe = () => {
 		this.setState({
 			redirect: true
 		})
 		console.log('we gotta navigate, homes', this.props.match)
 	}
 
-	componentWillReceiveProps() {
+	componentWillReceiveProps () {
 		this.setState({redirect: false})
 	}
 
-	render() {
+	render () {
 		const subscribeButton = <button className="subscribe">Subscribe Now</button>
 		const { subscription } = this.props.user.stripe.subscription.subscribed
 		const { number } = this.props.user.twilio

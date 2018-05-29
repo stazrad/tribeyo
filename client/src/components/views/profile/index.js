@@ -16,28 +16,30 @@ class Profile extends React.Component {
 	render () {
 		const { isLoggedIn } = this.props
 
+		console.log('profile router', this.props)
+
 		return (
 			<Switch>
 				<AuthRoute
 					exact
-					path="/profile"
+					path='/profile'
 					component={Dashboard}
 					isLoggedIn={isLoggedIn} />
 				<AuthRoute
 					exact
-					path="/profile/:id"
+					path='/profile/:id'
 					component={Dashboard}
 					isLoggedIn={isLoggedIn} />
 				<AuthRoute
-					path="/profile/:id/search"
+					path='/profile/:id/search'
 					component={CitySearch}
 					isLoggedIn={isLoggedIn} />
 				<AuthRoute
-					path="/profile/:id/checkout"
+					path='/profile/:id/checkout'
 					component={Checkout}
 					isLoggedIn={isLoggedIn} />
 				<Route
-					path="profile/:id/*"
+					path='profile/:id/*'
 					component={NotFound} />
 			</Switch>
 		)

@@ -29,6 +29,7 @@ const defaultState = {
 const userReducer = (state = defaultState, action) => {
 	switch (action.type) {
 		case 'LOGIN':
+		console.log('login')
 			return {
 				...state,
 				...action.user,
@@ -37,6 +38,7 @@ const userReducer = (state = defaultState, action) => {
 			}
 		case 'LOGIN_ERROR':
 			return {
+				...state,
 				isLoggedIn: false,
 				error: action.error // FIXME need forced typing here (boolean -> string?)
 			}
@@ -48,6 +50,7 @@ const userReducer = (state = defaultState, action) => {
 			}
 		case 'SIGNUP_ERROR':
 			return {
+				...state,
 				isLoggedIn: false,
 				error: action.error
 			}

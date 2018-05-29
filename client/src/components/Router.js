@@ -1,6 +1,6 @@
 // packages
 import React from 'react'
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
@@ -20,18 +20,16 @@ import { userLogin } from 'actions/user'
 class Router extends React.Component {
 	componentDidMount () {
 		const { dispatch, isLoggedIn } = this.props
+		console.log('did mount')
 
 		if (!isLoggedIn) {
+			// fire on page load to check for cookie
 			dispatch(userLogin())
 		}
-		console.log('did mount', this.props)
-	}
-
-	componentWillReceiveProps (nextProps) {
-		console.log('props', nextProps)
 	}
 
 	render() {
+		console.log('render Router')
 		return (
 			<Switch>
 				<Route path="/" component={Home} exact />
@@ -57,4 +55,4 @@ Profile.propTypes = {
 	isLoggedIn: PropTypes.bool.isRequired
 }
 
-export default connect(mapStateToProps)(Router)
+export default withRouter(connect(mapStateToProps)(Router))
