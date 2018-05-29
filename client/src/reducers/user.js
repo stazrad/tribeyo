@@ -29,7 +29,6 @@ const defaultState = {
 const userReducer = (state = defaultState, action) => {
 	switch (action.type) {
 		case 'LOGIN':
-		console.log('login')
 			return {
 				...state,
 				...action.user,

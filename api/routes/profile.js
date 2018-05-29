@@ -95,18 +95,7 @@ exports.login = (req, res) => {
             if (cookie) {
                 const hash = process.env.HASH
                 const token = cookie.split('access_token=')[1]
-                let verifyToken
-
-                try {
-                    verifyToken = promisify(jwt.verify)
-                } catch(err) {
-                    const error = {
-                        status: 498,
-                        message: 'Previous session expired'
-                    }
-                    updateAnalytics(498, req.reqId, err)
-                    return res.status(498).json(error)
-                }
+                const verifyToken = promisify(jwt.verify)
 
                 return verifyToken(token, hash)
                     .then(user => Firebase.getUserById(user.uid))
@@ -123,7 +112,6 @@ exports.login = (req, res) => {
                             status: 400,
                             message: 'Failed to login with cookie'
                         }
-                        console.log(err)
                         updateAnalytics(400, req.reqId, err)
                         return res.status(400).json(error)
                     })
@@ -146,7 +134,7 @@ exports.login = (req, res) => {
             return user
         })
         .then(user => {
-            const token = jwt.sign(user, process.env.HASH, { expiresIn: '1hr' })
+            const token = jwt.sign(user, process.env.HASH, { expiresIn: '14d' })
             const response = {
                 status: 200,
                 user

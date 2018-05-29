@@ -1,6 +1,6 @@
 // packages
 import React from 'react'
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
@@ -15,8 +15,6 @@ import NotFound from 'components/views/NotFound'
 class Profile extends React.Component {
 	render () {
 		const { isLoggedIn } = this.props
-
-		console.log('profile router', this.props)
 
 		return (
 			<Switch>
@@ -56,4 +54,4 @@ Profile.propTypes = {
 	isLoggedIn: PropTypes.bool.isRequired
 }
 
-export default connect(mapStateToProps)(Profile)
+export default withRouter(connect(mapStateToProps)(Profile))
