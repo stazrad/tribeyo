@@ -25,7 +25,8 @@ module.exports = (req, res, next) => {
     try {
         const authHeader = req.headers['cookie']
         const hash = process.env.HASH
-        const token = authHeader.split('access_token=')[1]
+        const cookie = authHeader.split(';').filter(cookie => cookie.includes('access_token'))[0]
+        const token = cookie.split('access_token=')[1]
 
         jwt.verify(token, hash)
         return next()

@@ -2,7 +2,6 @@
 const request = require('request-json')
 const jwt = require('jsonwebtoken')
 const promisify = require('es6-promisify')
-const setCookie = require('set-cookie')
 const moment = require('moment')
 moment().format()
 
@@ -67,18 +66,13 @@ exports.create = (req, res) => {
                 status: 200,
                 user
             }
-            const opts = {
-                res,
-                domain: req.url.origin,
-                path: '/'
-            }
+            const accessToken = `access_token=${token}; HttpOnly; Path=/;`
 
-            setCookie('access_token', token, opts)
+            res.setHeader('Set-Cookie', accessToken)
             updateAnalytics(200, req.reqId)
             return res.status(200).json(response)
         })
         .catch(err => {
-            console.log(err)
             const error = {
                 status: 409,
                 message: err.message
@@ -93,12 +87,43 @@ exports.login = (req, res) => {
     const { email, password, stayLoggedIn = false } = req.body
 
     if (!email || !password) {
-        const error = {
-            status: 400,
-            message: 'Include password & email!'
+        // check for login via cookie
+        const authHeader = req.headers['cookie']
+        if (authHeader) {
+            const cookie = authHeader.split(';').filter(cookie => cookie.includes('access_token'))[0]
+
+            if (cookie) {
+                const hash = process.env.HASH
+                const token = cookie.split('access_token=')[1]
+                const verifyToken = promisify(jwt.verify)
+
+                return verifyToken(token, hash)
+                    .then(user => Firebase.getUserById(user.uid))
+                    .then(user => {
+                        const response = {
+                            status: 200,
+                            user
+                        }
+                        updateAnalytics(200, req.reqId)
+                        return res.status(200).json(response)
+                    })
+                    .catch(err => {
+                        const error = {
+                            status: 400,
+                            message: 'Failed to login with cookie'
+                        }
+                        updateAnalytics(400, req.reqId, err)
+                        return res.status(400).json(error)
+                    })
+            }
+        } else {
+            const error = {
+                status: 400,
+                message: 'Include password & email!'
+            }
+            updateAnalytics(400, req.reqId, error)
+            return res.status(400).json(error)
         }
-        updateAnalytics(400, req.reqId, error)
-        return res.status(400).json(error)
     }
     Firebase.loginEmail(email, password)
         .then(user => {
@@ -109,26 +134,19 @@ exports.login = (req, res) => {
             return user
         })
         .then(user => {
-            const token = jwt.sign(user, process.env.HASH, { expiresIn: '1h' })
+            const token = jwt.sign(user, process.env.HASH, { expiresIn: '14d' })
             const response = {
                 status: 200,
                 user
             }
-            const opts = {
-                res,
-                domain: req.url.origin,
-                path: '/',
-                expires: stayLoggedIn
-                    ? new Date(moment().day(+14))
-                    : null
-            }
+            const expires = stayLoggedIn ? ` ${new Date(moment().day(+14))};` : ''
+            const accessToken = `access_token=${token};${expires} HttpOnly; Path=/;`
 
-            setCookie('access_token', token, opts)
+            res.setHeader('Set-Cookie', accessToken)
             updateAnalytics(200, req.reqId)
             return res.status(200).json(response)
         })
         .catch(err => {
-            console.log(err)
             const error = {
                 status: 500,
                 message: 'Oops! Something went wrong. Try again...'

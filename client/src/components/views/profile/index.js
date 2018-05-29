@@ -1,6 +1,6 @@
 // packages
 import React from 'react'
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
@@ -13,31 +13,31 @@ import Login from 'components/views/Login'
 import NotFound from 'components/views/NotFound'
 
 class Profile extends React.Component {
-	render() {
+	render () {
 		const { isLoggedIn } = this.props
 
 		return (
 			<Switch>
 				<AuthRoute
 					exact
-					path="/profile"
+					path='/profile'
 					component={Dashboard}
 					isLoggedIn={isLoggedIn} />
 				<AuthRoute
 					exact
-					path="/profile/:id"
+					path='/profile/:id'
 					component={Dashboard}
 					isLoggedIn={isLoggedIn} />
 				<AuthRoute
-					path="/profile/:id/search"
+					path='/profile/:id/search'
 					component={CitySearch}
 					isLoggedIn={isLoggedIn} />
 				<AuthRoute
-					path="/profile/:id/checkout"
+					path='/profile/:id/checkout'
 					component={Checkout}
 					isLoggedIn={isLoggedIn} />
 				<Route
-					path="profile/:id/*"
+					path='profile/:id/*'
 					component={NotFound} />
 			</Switch>
 		)
@@ -54,4 +54,4 @@ Profile.propTypes = {
 	isLoggedIn: PropTypes.bool.isRequired
 }
 
-export default connect(mapStateToProps)(Profile)
+export default withRouter(connect(mapStateToProps)(Profile))
