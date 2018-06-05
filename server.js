@@ -22,7 +22,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 // middleware
-app.use(auth)
+// app.use(auth) //TODO reenable auth
 // app.use(analytics)
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json())
@@ -35,6 +35,7 @@ app.use(express.static('client'))
 // routes (imports)
 const incomingCall = require('./api/routes/incomingCall')
 const lookup = require('./api/routes/lookup')
+const prisonDb = require('./api/routes/prisonDb')
 const profile = require('./api/routes/profile')
 
 // REST api
@@ -42,6 +43,7 @@ app.get('/api/areaCode/:areaCode', lookup.areaCode)
 app.get('/api/autocomplete/:input', lookup.autocomplete)
 app.get('/api/profile/:id', profile.authenticate)
 app.get('/api/searchByCity/:city', lookup.searchByCity)
+app.get('/api/searchByInmate', prisonDb.searchByInmate)
 app.get('/api/validate/:number', lookup.validate)
 
 app.post('/api/profile', profile.create)
