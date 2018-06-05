@@ -29,6 +29,7 @@ app.use(bodyParser.json())
 app.use('/images', express.static('client/images'))
 app.use('/profile/images', express.static('client/images'))
 app.use('/profile/build', express.static('client/build'))
+app.use('/profile/:id/:x/:y/:z', express.static('client'))
 app.use(express.static('client'))
 
 // routes (imports)
