@@ -2,7 +2,7 @@
 exports.searchByInmate = (req, res) => {
     const { nameFirst, nameLast } = req.query
     if (!nameFirst || !nameLast) {
-        var error = {
+        const error = {
             status: 400,
             message: 'Include first and last name.'
         }

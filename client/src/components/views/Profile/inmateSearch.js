@@ -9,14 +9,14 @@ import { Input } from 'components/styled'
 import View from 'components/View'
 
 // actions
-import { autocomplete, searchByCity } from 'actions/areaCodeSearch'
+import { searchByInmate } from 'actions/search'
 
-class CitySearch extends React.Component {
+class InmateSearch extends React.Component {
 	constructor(props) {
 		super(props)
 
 		this.state = {
-			areaCode: undefined,
+			matchFound: undefined,
 			cityValue: '',
 			focused: false,
 			loading: false,
@@ -31,7 +31,7 @@ class CitySearch extends React.Component {
 	onChange = e => {
 		const { value: cityValue } = e.target
 		this.setState({
-			areaCode: undefined,
+			matchFound: undefined,
 			cityValue
 		})
 		this.onSearch(cityValue)
@@ -39,7 +39,7 @@ class CitySearch extends React.Component {
 
 	onFocus = () => {
 		this.setState({
-			areaCode: undefined,
+			matchFound: undefined,
 			focused: true,
 			selected: false
 		})
@@ -74,9 +74,9 @@ class CitySearch extends React.Component {
 	}
 
 	componentWillReceiveProps(props) {
-		const { areaCode, predictions } = props
+		const { matchFound, predictions } = props
 		this.setState({
-			areaCode,
+			matchFound,
 			predictions: !!predictions.length,
 			searchError: !predictions.length && !this.state.cityValue
 		})
@@ -84,7 +84,7 @@ class CitySearch extends React.Component {
 
 	render() {
 		const {
-			areaCode,
+			matchFound,
 			cityValue,
 			focused,
 			loading,
@@ -99,7 +99,7 @@ class CitySearch extends React.Component {
 			<h3 key={0}>Select One:</h3>,
 			<ul key={1}>
 				{this.props.predictions.map((city, i) => (
-					<li key={i} className="prediction" onClick={this.onSelect}>
+					<li key={i} className='prediction' onClick={this.onSelect}>
 						{city}
 					</li>
 				))}
@@ -107,7 +107,7 @@ class CitySearch extends React.Component {
 		]
 		const areaCodeElement = [
 			<h4 key={0}>Area Code:</h4>,
-			<div key={1} className="area-code">
+			<div key={1} className='area-code'>
 				{areaCode}
 			</div>
 		]
@@ -117,16 +117,16 @@ class CitySearch extends React.Component {
 
 		return (
 			<View loading={loading}>
-				<div className="image-container">
+				<div className='image-container'>
 					<img
-						className="bubbles"
-						src="/images/tribeyo_mark_chat_bubbles.png"
+						className='bubbles'
+						src='/images/tribeyo_mark_chat_bubbles.png'
 					/>
 				</div>
-				{areaCode ? areaCodeElement : <h2>Search by City</h2>}
+				{matchFound ? areaCodeElement : <h2>Search by City</h2>}
 				<Input
-					type="text"
-					name="city"
+					type='text'
+					name='city'
 					placeholder={focused ? '' : 'start typing city name'}
 					onBlur={this.onBlur}
 					className={inputClass}
@@ -134,8 +134,8 @@ class CitySearch extends React.Component {
 					onChange={this.onChange}
 					onFocus={this.onFocus}
 				/>
-				{predictions && !areaCode ? predictionsDropdown : null}
-				{areaCode ? toCheckout : null}
+				{predictions && !matchFound ? predictionsDropdown : null}
+				{matchFound ? toCheckout : null}
 			</View>
 		)
 	}
@@ -143,9 +143,9 @@ class CitySearch extends React.Component {
 
 const mapStateToProps = state => {
 	return {
-		areaCode: state.search.areaCode.display,
+		matchFound: state.search.inmate,
 		predictions: state.search.predictions
 	}
 }
 
-export default connect(mapStateToProps)(CitySearch)
+export default connect(mapStateToProps)(InmateSearch)

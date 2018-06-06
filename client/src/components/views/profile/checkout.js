@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 
 // imports
 import { Loader } from 'components/styled'
-import { autocomplete, searchByCity } from 'actions/search'
+import { autocomplete, searchByCity } from 'actions/areaCodeSearch'
 import View from 'components/View'
 
 // stripe api

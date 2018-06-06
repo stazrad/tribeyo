@@ -3,7 +3,8 @@ import { applyMiddleware, combineReducers, compose, createStore } from 'redux'
 import thunk from 'redux-thunk'
 
 // imports
-import search from 'reducers/search'
+import areaCodeSearch from 'reducers/areaCodeSearch'
+import inmateSearch from 'reducers/InmateSearch'
 import user from 'reducers/user'
 
 const composeEnhancers =
@@ -12,7 +13,8 @@ const composeEnhancers =
 export default () =>
 	createStore(
 		combineReducers({
-			search,
+			areaCodeSearch,
+			inmateSearch,
 			user
 		}),
 		composeEnhancers(applyMiddleware(thunk))
