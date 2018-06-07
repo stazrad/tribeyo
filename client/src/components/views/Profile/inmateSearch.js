@@ -9,52 +9,58 @@ import { Input } from 'components/styled'
 import View from 'components/View'
 
 // actions
-import { searchByInmate } from 'actions/search'
+import { searchByInmate } from 'actions/inmateSearch'
 
 class InmateSearch extends React.Component {
 	constructor(props) {
 		super(props)
 
 		this.state = {
-			matchFound: undefined,
-			cityValue: '',
-			focused: false,
+			inmate: null,
+			firstName: '',
+			lastName: '',
 			loading: false,
 			predictions: false,
-			searchError: false,
+			firstNameError: false,
+			lastNameError: false,
 			selected: false
 		}
-
-		this.onSearch = debounce(this.onSearch, 400).bind(this)
 	}
 
-	onChange = e => {
-		const { value: cityValue } = e.target
+	onChangeFirst = e => {
+		const { value: firstName } = e.target
 		this.setState({
-			matchFound: undefined,
-			cityValue
-		})
-		this.onSearch(cityValue)
-	}
-
-	onFocus = () => {
-		this.setState({
-			matchFound: undefined,
-			focused: true,
-			selected: false
+			firstName,
+			firstNameError: false
 		})
 	}
 
-	onBlur = () => {
+	onChangeLast = e => {
+		const { value: lastName } = e.target
 		this.setState({
-			focused: false,
-			searchError: !!this.state.cityValue
+			lastName,
+			lastNameError: false
 		})
 	}
 
-	onSearch (cityValue) {
+	onSearch = () => {
 		const { dispatch } = this.props
-		dispatch(autocomplete(cityValue))
+		const { firstName, lastName, firstNameError, lastNameError } = this.state
+		const name = {
+			first: firstName,
+			last: lastName
+		}
+
+		if (!firstName || !lastName) {
+			this.setState({
+				firstNameError: !firstName,
+				lastNameError: !lastName
+			})
+
+			return
+		}
+
+		dispatch(searchByInmate(name))
 	}
 
 	onSelect = ({ target }) => {
@@ -74,9 +80,9 @@ class InmateSearch extends React.Component {
 	}
 
 	componentWillReceiveProps(props) {
-		const { matchFound, predictions } = props
+		const { inmate, predictions } = props
 		this.setState({
-			matchFound,
+			inmate,
 			predictions: !!predictions.length,
 			searchError: !predictions.length && !this.state.cityValue
 		})
@@ -84,17 +90,14 @@ class InmateSearch extends React.Component {
 
 	render() {
 		const {
-			matchFound,
-			cityValue,
-			focused,
+			inmate,
+			firstName,
+			lastName,
 			loading,
 			predictions,
-			searchError,
-			selected
+			firstNameError,
+			lastNameError
 		} = this.state
-		const inputClass = searchError
-			? 'error-border'
-			: null || selected ? 'selected' : null
 		const predictionsDropdown = [
 			<h3 key={0}>Select One:</h3>,
 			<ul key={1}>
@@ -104,12 +107,6 @@ class InmateSearch extends React.Component {
 					</li>
 				))}
 			</ul>
-		]
-		const areaCodeElement = [
-			<h4 key={0}>Area Code:</h4>,
-			<div key={1} className='area-code'>
-				{areaCode}
-			</div>
 		]
 		const toCheckout = (
 			<button onClick={this.toCheckout}>Proceed to checkout</button>
@@ -123,28 +120,33 @@ class InmateSearch extends React.Component {
 						src='/images/tribeyo_mark_chat_bubbles.png'
 					/>
 				</div>
-				{matchFound ? areaCodeElement : <h2>Search by City</h2>}
 				<Input
 					type='text'
-					name='city'
-					placeholder={focused ? '' : 'start typing city name'}
-					onBlur={this.onBlur}
-					className={inputClass}
-					value={cityValue}
-					onChange={this.onChange}
-					onFocus={this.onFocus}
+					placeholder='first name'
+					error={firstNameError}
+					value={firstName}
+					onChange={this.onChangeFirst}
 				/>
-				{predictions && !matchFound ? predictionsDropdown : null}
-				{matchFound ? toCheckout : null}
+				<Input
+					type='text'
+					placeholder='last name'
+					error={lastNameError}
+					value={lastName}
+					onChange={this.onChangeLast}
+				/>
+				<button onClick={this.onSearch}>Search</button>
+				{predictions && !inmate ? predictionsDropdown : null}
+				{/* {inmate ? toCheckout : null} */}
 			</View>
 		)
 	}
 }
 
 const mapStateToProps = state => {
+	console.log(state)
 	return {
-		matchFound: state.search.inmate,
-		predictions: state.search.predictions
+		inmate: state.inmateSearch.inmate,
+		predictions: state.inmateSearch.predictions
 	}
 }
 

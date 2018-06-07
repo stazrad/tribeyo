@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
 // components
-import Checkout from 'components/views/Profile/Checkout'
 import Home from 'components/views/Home'
 import HowItWorks from 'components/views/HowItWorks'
 import Login from 'components/views/Login'
@@ -13,6 +12,11 @@ import NotFound from 'components/views/NotFound'
 import Plans from 'components/views/Plans'
 import Profile from 'components/views/Profile'
 import Signup from 'components/views/Signup'
+
+
+// TESTS
+import Checkout from 'components/views/Profile/Checkout'
+import InmateSearch from 'components/views/Profile/InmateSearch'
 
 // actions
 import { userLogin } from 'actions/user'
@@ -36,7 +40,7 @@ class Router extends React.Component {
 				<Route path='/plans' component={Plans} />
 				<Route path='/profile' component={Profile} />
 				<Route path='/signup' component={Signup} />
-				<Route path='/test' component={Checkout} />
+				<Route path='/test' component={InmateSearch} />
 				<Route component={NotFound} />
 			</Switch>
 		)

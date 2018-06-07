@@ -97,7 +97,6 @@ class Checkout extends React.Component {
 }
 
 const mapStateToProps = state => {
-	state.search.areaCode.code = '314' // remove
 	return {
 		areaCode: state.search.areaCode,
 		forwardToNumber: state.user.twilio.forwardToNumber,

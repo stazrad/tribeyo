@@ -1,8 +1,4 @@
 export const defaultState = {
-	areaCode: {
-		code: '',
-		display: ''
-	},
 	inmate: {
 		nameFirst: '',
 		nameLast: '',
@@ -20,17 +16,17 @@ export const defaultState = {
 	predictions: []
 }
 
-const searchReducer = (state = defaultState, { areaCode, predictions, type }) => {
+const searchReducer = (state = defaultState, { inmate, predictions, type }) => {
 	switch (type) {
 		case 'AUTOCOMPLETE':
 			return {
 				...state,
 				predictions
 			}
-		case 'SEARCH_BY_CITY':
+		case 'SEARCH_BY_INMATE':
 			return {
 				...state,
-				areaCode
+				inmate
 			}
 		default:
 			return state
