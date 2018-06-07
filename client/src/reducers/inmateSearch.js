@@ -18,7 +18,7 @@ export const defaultState = {
 
 const searchReducer = (state = defaultState, { inmate, predictions, type }) => {
 	switch (type) {
-		case 'AUTOCOMPLETE':
+		case 'INMATE_RESULTS':
 			return {
 				...state,
 				predictions

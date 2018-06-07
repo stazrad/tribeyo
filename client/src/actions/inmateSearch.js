@@ -45,10 +45,10 @@ export const searchByInmate = name => dispatch => {
 	}
 	fetch(`/api/searchByInmate?nameFirst=${name.first}&nameLast=${name.last}`, config)
 		.then(response => response.json())
-		.then(inmate => {
+		.then(predictions => {
 			return dispatch({
-				type: 'SEARCH_BY_INMATE',
-				inmate
+				type: 'INMATE_RESULTS',
+				predictions
 			})
 		})
 		.catch(err => {

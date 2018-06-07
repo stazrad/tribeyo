@@ -65,14 +65,11 @@ class InmateSearch extends React.Component {
 
 	onSelect = ({ target }) => {
 		const { dispatch } = this.props
-		const cityValue = target.innerText
-		this.setState({
-			cityValue,
-			focused: false,
-			predictions: false,
-			selected: true
-		})
-		dispatch(searchByCity(cityValue))
+		const id = target.id
+
+		console.log('id', id)
+
+		// TODO more info/dropdown?
 	}
 
 	toCheckout = () => {
@@ -83,8 +80,7 @@ class InmateSearch extends React.Component {
 		const { inmate, predictions } = props
 		this.setState({
 			inmate,
-			predictions: !!predictions.length,
-			searchError: !predictions.length && !this.state.cityValue
+			predictions: !!predictions.length
 		})
 	}
 
@@ -101,9 +97,13 @@ class InmateSearch extends React.Component {
 		const predictionsDropdown = [
 			<h3 key={0}>Select One:</h3>,
 			<ul key={1}>
-				{this.props.predictions.map((city, i) => (
-					<li key={i} className='prediction' onClick={this.onSelect}>
-						{city}
+				{this.props.predictions.map((inmate, i) => (
+					<li key={i} id={inmate.inmateNum} className='prediction' onClick={this.onSelect}>
+						{console.log(inmate)}
+						<div>
+							<h2>{inmate.nameFirst} {inmate.nameLast}</h2>
+							<div>Race: {inmate.race} | Age: {inmate.age} | Facility: {inmate.faclName}</div>
+						</div>
 					</li>
 				))}
 			</ul>
@@ -135,7 +135,7 @@ class InmateSearch extends React.Component {
 					onChange={this.onChangeLast}
 				/>
 				<button onClick={this.onSearch}>Search</button>
-				{predictions && !inmate ? predictionsDropdown : null}
+				{predictions ? predictionsDropdown : null}
 				{/* {inmate ? toCheckout : null} */}
 			</View>
 		)
