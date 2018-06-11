@@ -1,4 +1,5 @@
 export const defaultState = {
+	facility: {},
 	inmate: {
 		nameFirst: '',
 		nameLast: '',
@@ -13,15 +14,20 @@ export const defaultState = {
 		faclName: '',
 		faclType: ''
 	},
-	predictions: []
+	results: []
 }
 
-const searchReducer = (state = defaultState, { inmate, predictions, type }) => {
+const searchReducer = (state = defaultState, { facility, inmate, results, type }) => {
 	switch (type) {
+		case 'FACILITY_RESULT':
+			return {
+				...state,
+				facility
+			}
 		case 'INMATE_RESULTS':
 			return {
 				...state,
-				predictions
+				results
 			}
 		case 'SEARCH_BY_INMATE':
 			return {

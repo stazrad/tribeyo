@@ -9,7 +9,7 @@ import { Input } from 'components/styled'
 import View from 'components/View'
 
 // actions
-import { searchByInmate } from 'actions/inmateSearch'
+import { searchByFaclCode, searchByInmate } from 'actions/inmateSearch'
 
 class InmateSearch extends React.Component {
 	constructor(props) {
@@ -20,7 +20,7 @@ class InmateSearch extends React.Component {
 			firstName: '',
 			lastName: '',
 			loading: false,
-			predictions: false,
+			results: false,
 			firstNameError: false,
 			lastNameError: false,
 			selected: false
@@ -63,11 +63,11 @@ class InmateSearch extends React.Component {
 		dispatch(searchByInmate(name))
 	}
 
-	onSelect = ({ target }) => {
+	onSelect = faclCode => {
 		const { dispatch } = this.props
-		const id = target.id
 
-		console.log('id', id)
+		dispatch(searchByFaclCode(faclCode))
+		console.log(this.props)
 
 		// TODO more info/dropdown?
 	}
@@ -77,10 +77,10 @@ class InmateSearch extends React.Component {
 	}
 
 	componentWillReceiveProps(props) {
-		const { inmate, predictions } = props
+		const { inmate, results } = props
 		this.setState({
 			inmate,
-			predictions: !!predictions.length
+			results: !!results.length
 		})
 	}
 
@@ -90,15 +90,15 @@ class InmateSearch extends React.Component {
 			firstName,
 			lastName,
 			loading,
-			predictions,
+			results,
 			firstNameError,
 			lastNameError
 		} = this.state
-		const predictionsDropdown = [
+		const resultsDropdown = [
 			<h3 key={0}>Select One:</h3>,
 			<ul key={1}>
-				{this.props.predictions.map((inmate, i) => (
-					<li key={i} id={inmate.inmateNum} className='prediction' onClick={this.onSelect}>
+				{this.props.results.map((inmate, i) => (
+					<li key={i} className='prediction' onClick={this.onSelect.bind(this, inmate.faclCode)}>
 						{console.log(inmate)}
 						<div>
 							<h2>{inmate.nameFirst} {inmate.nameLast}</h2>
@@ -135,7 +135,7 @@ class InmateSearch extends React.Component {
 					onChange={this.onChangeLast}
 				/>
 				<button onClick={this.onSearch}>Search</button>
-				{predictions ? predictionsDropdown : null}
+				{results ? resultsDropdown : null}
 				{/* {inmate ? toCheckout : null} */}
 			</View>
 		)
@@ -146,7 +146,7 @@ const mapStateToProps = state => {
 	console.log(state)
 	return {
 		inmate: state.inmateSearch.inmate,
-		predictions: state.inmateSearch.predictions
+		results: state.inmateSearch.results
 	}
 }
 

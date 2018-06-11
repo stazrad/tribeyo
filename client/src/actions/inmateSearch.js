@@ -45,10 +45,35 @@ export const searchByInmate = name => dispatch => {
 	}
 	fetch(`/api/searchByInmate?nameFirst=${name.first}&nameLast=${name.last}`, config)
 		.then(response => response.json())
-		.then(predictions => {
+		.then(results => {
 			return dispatch({
 				type: 'INMATE_RESULTS',
-				predictions
+				results
+			})
+		})
+		.catch(err => {
+			const error = {
+				type: 'server',
+				message: 'Oops! Something went wrong...try again.'
+			}
+			console.log(err)
+		})
+}
+
+export const searchByFaclCode = faclCode => dispatch => {
+	const config = {
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		mode: 'same-origin',
+		credentials: 'include'
+	}
+	fetch(`/api/searchByFaclCode/${faclCode}`, config)
+		.then(response => response.json())
+		.then(facility => {
+			return dispatch({
+				type: 'FACILITY_RESULT',
+				facility
 			})
 		})
 		.catch(err => {

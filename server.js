@@ -43,6 +43,7 @@ app.get('/api/areaCode/:areaCode', lookup.areaCode)
 app.get('/api/autocomplete/:input', lookup.autocomplete)
 app.get('/api/profile/:id', profile.authenticate)
 app.get('/api/searchByCity/:city', lookup.searchByCity)
+app.get('/api/searchByFaclCode/:faclCode', prisonDb.searchByFaclCode)
 app.get('/api/searchByInmate', prisonDb.searchByInmate)
 app.get('/api/validate/:number', lookup.validate)
 
