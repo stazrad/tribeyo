@@ -46,6 +46,7 @@ export const searchByInmate = name => dispatch => {
 	fetch(`/api/searchByInmate?nameFirst=${name.first}&nameLast=${name.last}`, config)
 		.then(response => response.json())
 		.then(results => {
+			console.log(results)
 			return dispatch({
 				type: 'INMATE_RESULTS',
 				results
