@@ -26,14 +26,13 @@ exports.searchByInmate = (req, res) => {
         }
         return res.status(400).json(error)
     }
+    console.log('here')
     fetch(`http://www.bop.gov/PublicInfo/execute/inmateloc?todo=query&output=json&nameLast=${nameLast}&nameFirst=${nameFirst}`)
         .then(res => res.json())
         .then(result => {
-            const results = [
-                ...result.InmateLocator
-            ]
-
-            return res.status(200).json(results)
+            const response = result.filter(inmate => inmate.releaseCode !== 'R')
+            console.log('response', response)
+            return res.status(200).json(response)
         })
         .catch(err => res.status(500).json(err))
 }

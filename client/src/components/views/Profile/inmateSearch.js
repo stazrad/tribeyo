@@ -71,8 +71,12 @@ class InmateSearch extends React.Component {
 	onSelect = faclCode => {
 		const { dispatch } = this.props
 
+		if (!faclCode) {
+			// TODO handle no faclCode
+		}
+
 		dispatch(searchByFaclCode(faclCode))
-		console.log(this.props)
+		console.log('onSelect', this.props)
 
 		// TODO more info/dropdown?
 	}
