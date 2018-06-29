@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import debounce from 'lodash.debounce'
 
 // components
-import { Input } from 'components/styled'
+import { Input, Loader } from 'components/styled'
 import View from 'components/View'
 
 // actions
@@ -17,12 +17,13 @@ class InmateSearch extends React.Component {
 
 		this.state = {
 			inmate: null,
-			firstName: '',
-			lastName: '',
+			firstName: 'jake', // FIXME
+			lastName: 'smith', // FIXME
 			loading: false,
 			results: false,
 			firstNameError: false,
 			lastNameError: false,
+			searched: false,
 			selected: false
 		}
 	}
@@ -51,6 +52,10 @@ class InmateSearch extends React.Component {
 			last: lastName
 		}
 
+		this.setState({
+			loading: true,
+			searched: true
+		})
 		if (!firstName || !lastName) {
 			this.setState({
 				firstNameError: !firstName,
@@ -73,14 +78,39 @@ class InmateSearch extends React.Component {
 	}
 
 	toCheckout = () => {
-		//TODO add redirect
+		// TODO add redirect
 	}
 
-	componentWillReceiveProps(props) {
-		const { inmate, results } = props
+	renderResults = () => {
+		const { results } = this.props
+		const { loading } = this.state
+		const resultsDropdown = [
+			<h3 key={0}>Select One:</h3>,
+			<ul key={1}>
+				{results.map((inmate, i) => (
+					<li key={i} className='inmate-result' onClick={this.onSelect.bind(this, inmate.faclCode)}>
+						{console.log(inmate)}
+						<h2>{inmate.nameFirst} {inmate.nameLast}</h2>
+						<div>Race: {inmate.race} | Age: {inmate.age} | Facility: {inmate.faclName}</div>
+					</li>
+				))}
+			</ul>
+		]
+		const noResults = <div>No results :(</div>
+
+		console.log('loading', loading)
+
+		if (loading) return <Loader loading={loading} inline={true} />
+
+		return results && results.length > 0 ? resultsDropdown : noResults
+	}
+
+	componentWillReceiveProps(nextProps) {
+		const { inmate, results } = nextProps
 		this.setState({
 			inmate,
-			results: !!results.length
+			loading: false,
+			results: results.length ? results : []
 		})
 	}
 
@@ -89,37 +119,16 @@ class InmateSearch extends React.Component {
 			inmate,
 			firstName,
 			lastName,
-			loading,
 			results,
+			searched,
 			firstNameError,
 			lastNameError
 		} = this.state
-		const resultsDropdown = [
-			<h3 key={0}>Select One:</h3>,
-			<ul key={1}>
-				{this.props.results.map((inmate, i) => (
-					<li key={i} className='prediction' onClick={this.onSelect.bind(this, inmate.faclCode)}>
-						{console.log(inmate)}
-						<div>
-							<h2>{inmate.nameFirst} {inmate.nameLast}</h2>
-							<div>Race: {inmate.race} | Age: {inmate.age} | Facility: {inmate.faclName}</div>
-						</div>
-					</li>
-				))}
-			</ul>
-		]
-		const toCheckout = (
-			<button onClick={this.toCheckout}>Proceed to checkout</button>
-		)
+		const toCheckout = <button onClick={this.toCheckout}>Proceed to checkout</button>
 
 		return (
-			<View loading={loading}>
-				<div className='image-container'>
-					<img
-						className='bubbles'
-						src='/images/tribeyo_mark_chat_bubbles.png'
-					/>
-				</div>
+			<View>
+				<h2>Search for inmate by name:</h2>
 				<Input
 					type='text'
 					placeholder='first name'
@@ -135,7 +144,9 @@ class InmateSearch extends React.Component {
 					onChange={this.onChangeLast}
 				/>
 				<button onClick={this.onSearch}>Search</button>
-				{results ? resultsDropdown : null}
+				<div className='results-container'>
+					{results && searched ? this.renderResults() : null}
+				</div>
 				{/* {inmate ? toCheckout : null} */}
 			</View>
 		)

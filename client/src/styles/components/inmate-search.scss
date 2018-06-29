@@ -1,0 +1,24 @@
+// inmate search styles
+.inmate-result {
+    background: $neutral-color;
+    color: $black;
+    width: 100%;
+    min-width: 300px;
+    margin: auto;
+    margin-bottom: 10px;
+    border-radius: 2px;
+    padding: 10px;
+    transition: all .2s;
+}
+.inmate-result h2 {
+    font-size: 14px;
+    margin: auto;
+}
+
+.results-container {
+    width: 100%;
+    height: 900px;
+    position: relative;
+    margin: auto;
+    padding: 10px;
+}

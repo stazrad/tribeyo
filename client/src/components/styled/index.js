@@ -19,13 +19,13 @@ export const Input = styled.input`
 
 export const Loader = styled.div`
 	display: ${props => props.loading ? 'block' : 'none'};
-	position: fixed;
+	position: ${props => props.inline ? 'absolute' : 'fixed'};
 	top: 0px;
 	left: 0px;
 	width: 100%;
 	height: 100%;
 	z-index: 998;
-	background-color: rgb(0, 0, 0, 0.8);
+	background-color: ${props => props.inline ? 'unset' : 'rgb(0, 0, 0, 0.8)'};
 	&:after {
 		position: absolute;
 		display: block;
@@ -37,7 +37,7 @@ export const Loader = styled.div`
 		left: 0;
 		bottom: 0;
 		right: 0;
-		padding-top: 50%;
+		padding-top: ${props => props.inline ? '0px' : '50%'};
 		margin: auto;
 	}
 `
