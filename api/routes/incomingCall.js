@@ -1,25 +1,25 @@
-// PACKAGES //
-var accountSid     = process.env.ACCOUNT_SID,
-    authToken      = process.env.AUTH_TOKEN,
-    twilio         = require('twilio')(accountSid, authToken),
-    firebase       = require('firebase'),
-    admin          = require('firebase-admin');
+// packages
+const accountSid = process.env.ACCOUNT_SID
+const authToken = process.env.AUTH_TOKEN
+const twilio = require('twilio')(accountSid, authToken)
+const firebase = require('firebase')
+const admin = require('firebase-admin')
 
-// IMPORTS //
-var updateAnalytics = require('../analytics/updateData');
+// imports
+const updateAnalytics = require('../analytics/updateData')
 
 // POST /api/voice/:id
-exports.forward = function(req, res) {
-    var ref = admin.database().ref().child('users/'+req.params.id);
+exports.forward = (req, res) => {
+    const ref = admin.database().ref().child(`users/${req.params.id}`)
     ref.once('value')
-        .then(function(snapshot){
-            var foundUser = snapshot.exportVal();
-            console.log('REDIRECT SUCCESFUL!');
-            updateAnalytics(200, req.reqId);
-            return res.redirect('http://twimlets.com/forward?PhoneNumber=' + foundUser.twilioNumber.endpointPhoneNumber);
+        .then(snapshot => snapshot.exportVal())
+        .then(user => {
+            console.log('REDIRECT SUCCESFUL!')
+            updateAnalytics(200, req.reqId)
+            return res.redirect(`http://twimlets.com/forward?PhoneNumber=${user.twilio.number.forwardToNumber.number}`)
         })
-        .catch(function(err) {
-            updateAnalytics(500, req.reqId, err);
-            return res.status(500).send(err);
-        });
-};
+        .catch(err => {
+            updateAnalytics(500, req.reqId, err)
+            return res.status(500).send(err)
+        })
+}

@@ -1,0 +1,28 @@
+// login view styles
+#login {
+    text-align: center;
+}
+
+.image-container {
+    width: 50%;
+    margin: auto;
+    margin-bottom: 40px;
+}
+
+.bubbles {
+    width: 100%;
+    max-width: 140px;
+    margin: auto;
+}
+
+.checkbox {
+    display: inline-block;
+    position: relative;
+    width: unset;
+    margin-right: 10px;
+    top: 6px;
+}
+
+.checkbox-text {
+    font-size: 12px;
+}

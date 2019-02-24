@@ -1,5 +1,5 @@
-build/
+client/build
 node_modules
 .env
-serviceAccountKey.json
+api/firebase/serviceAccountKey.json
 .DS_Store

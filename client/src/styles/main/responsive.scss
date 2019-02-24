@@ -1,0 +1,36 @@
+// responsive
+@media (max-width: 800px) {
+    main {
+        padding: 50px 5%;
+    }
+
+    form {
+        width: 100%;
+    }
+
+    input {
+        text-align: center;
+        width: 90%;
+    }
+
+    h1 {
+        font-size: 35px;
+    }
+
+    .image-block {
+        display: none !important;
+    }
+
+    .text-block {
+        width: 80% !important;
+        text-align: center;
+        float: unset !important;
+        display: block !important;
+        margin: auto;
+    }
+
+    .blurb {
+        width: 100% !important;
+        font-size: 14px;
+    }
+}

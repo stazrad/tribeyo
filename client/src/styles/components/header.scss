@@ -1,0 +1,132 @@
+// nav bar styles
+nav {
+    z-index: 1;
+    position: fixed;
+    width: 100%;
+    background-color: $alt-color;
+    color: $white;
+    font-size: 20px;
+    height: 88px;
+    padding: 0px 10%;
+}
+
+.navbar-toggle {
+    width: unset;
+}
+
+#logo-container {
+    width: 150px;
+    display: inline-block;
+}
+#logo {
+    width: 100%;
+    margin-top: 22px;
+    position: relative;
+    left: 0px;
+    transition: all .6s;
+}
+#logo.hidden {
+    left: -100px;
+}
+#logo-hider {
+    position: absolute;
+    width: 300px;
+    height: 68px;
+    top: 14px;
+    left: -158px;
+    z-index: 1;
+    background: $alt-color;
+    box-shadow: 0px 0px 8px $alt-color;
+    -webkit-box-shadow: 0px 0px 8px $alt-color;
+    -moz-box-shadow: 0px 0px 8px $alt-color;
+}
+
+#nav-right {
+    float: right;
+    display: inline-block;
+    cursor: pointer;
+    color: $white;
+    font-size: 15px;
+    font-weight: normal;
+    width: 50%;
+}
+.nav-button-container {
+    color: $white;
+    display: inline-block;
+    float: right;
+    margin-top: 34px;
+    margin-right: 40%;
+    transition: all .6s;
+}
+.nav-button {
+    color: $white;
+    font-weight: 400;
+    padding-left: 14px;
+    cursor: pointer;
+    transition: all .2s;
+}
+.nav-button:hover {
+    color: $secondary-color-on-alt;
+}
+#nav-right>div>span {
+    padding-left: 0px;
+    padding-right: 14px;
+    border-right: 2px solid white;
+}
+#hamburger {
+    color: $white;
+    display: inline-block;
+    font-size: 38px;
+    float: right;
+    margin-top: 14px;
+    margin-right: 40%;
+    transition: color .6s;
+}
+#hamburger:hover {
+    color: $secondary-color-on-alt;
+}
+
+.sidebar>ul {
+    list-style: none;
+    padding-left: 8%;
+}
+.sidebar>ul>li.profile {
+    margin: 20px 0px;
+}
+.sidebar>ul>li>a {
+    font-size: 30px;
+    font-color: $alt-color;
+    transition: all .2s;
+}
+.sidebar>ul>li>a:hover {
+    color: $primary-color;
+    border-bottom: 2px solid $primary-color;
+}
+
+.sidebar-logo {
+    width: 50%;
+    min-width: 140px;
+    max-width: 210px;
+    margin-bottom: 10%;
+}
+
+.sidebar-exit {
+    cursor: pointer;
+    color: $alt-color;
+    position: absolute;
+    top: -18px;
+    right: 40px;
+    font-size: 80px;
+    margin-left: 50px;
+}
+
+// responsive
+@media (max-width: 800px) {
+    .sidebar {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    .sidebar-exit {
+        display: block;
+    }
+}

@@ -1,0 +1,37 @@
+// city search styles
+#city-search {
+    text-align: center;
+}
+
+.prediction {
+    background: $neutral-color;
+    color: $black;
+    width: 40%;
+    min-width: 300px;
+    margin: auto;
+    margin-bottom: 10px;
+    border-radius: 2px;
+    padding: 10px;
+    transition: all .2s;
+}
+.prediction:hover {
+    background: $secondary-color;
+    color: $white;
+    cursor: pointer;
+}
+
+input {
+    text-align: center;
+}
+input.selected {
+    // color: $neutral-color-on-white;
+    // border: $neutral-color-on-white: solid 3px;
+}
+
+.area-code {
+    color: $alt-color;
+    font-weight: 600;
+    font-size: 35px;
+    letter-spacing: 4px;
+    margin-bottom: 60px;
+}

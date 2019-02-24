@@ -1,50 +1,65 @@
-// PACKAGES //
-var express       = require('express'),
-    app           = express(),
-    bodyParser    = require('body-parser'),
-    env           = require('dotenv').config(),
-    request       = require('request');
+// packages
+const express = require('express')
+const app = express()
+const bodyParser = require('body-parser')
+const env = require('dotenv').config()
 
-// VIEW ENGINE //
-app.set('view engine', 'html');
-app.engine('html', function(path, option) {
-    fs.readFile(path, 'utf-8');
-});
+// view engine
+app.set('view engine', 'html')
+app.engine('html', path => fs.readFile(path, 'utf-8'))
 
-// ANALYTICS INIT //
-var analyticsInit = require('./api/analytics/initData');
+// analytics init
+const analyticsInit = require('./api/analytics/initData')
 
-// MIDDLEWARE (IMPORTS) //
-var analytics  = require('./api/middleware/analytics'),
-    auth       = require('./api/middleware/auth');
+// middleware (imports)
+const analytics = require('./api/middleware/analytics')
+const auth = require('./api/middleware/auth')
+const serveSPA = require('./api/middleware/serveSPA')
 
-// MIDDLEWARE //
-app.use(auth);
-app.use(analytics);
-app.use(bodyParser.urlencoded({extended:true}));
-app.use(bodyParser.json());
-app.use(express.static('client'));
+// authentication
+const passport = require('passport')
+app.use(passport.initialize())
+app.use(passport.session())
 
-// SERVE STATIC POLYMER SPA //
-app.get('/', function(req, res) {
-    res.render('index.html');
-});
+// middleware
+// app.use(auth) //TODO reenable auth
+// app.use(analytics)
+app.use(bodyParser.urlencoded({extended:true}))
+app.use(bodyParser.json())
+app.use('/images', express.static('client/images'))
+app.use('/profile/images', express.static('client/images'))
+app.use('/profile/build', express.static('client/build'))
+app.use('/profile/:id/:x/:y/:z', express.static('client'))
+app.use(express.static('client'))
 
-// ROUTES (IMPORTS) //
-var incomingCall  = require('./api/routes/incomingCall'),
-    profile       = require('./api/routes/profile');
+// routes (imports)
+const incomingCall = require('./api/routes/incomingCall')
+const lookup = require('./api/routes/lookup')
+const prisonDb = require('./api/routes/prisonDb')
+const profile = require('./api/routes/profile')
 
-// REST API //
-app.get('/api/profile/:id/queryUserInfo', profile.queryUserInfo);
-app.post('/api/profile', profile.create);
-app.post('/api/profile/auth', profile.auth);
-app.post('/api/profile/:id/charge', profile.stripeCharge);
-app.post('/api/profile/:id/purchaseNumber', profile.purchaseNumber);
-app.post('/api/profile/:id/unsubscribe', profile.unsubscribe);
-app.post('/api/voice/:id', incomingCall.forward);
+// REST api
+app.get('/api/areaCode/:areaCode', lookup.areaCode)
+app.get('/api/autocomplete/:input', lookup.autocomplete)
+app.get('/api/profile/:id', profile.authenticate)
+app.get('/api/searchByCity/:city', lookup.searchByCity)
+app.get('/api/searchByFaclCode/:faclCode', prisonDb.searchByFaclCode)
+app.get('/api/searchByInmate', prisonDb.searchByInmate)
+app.get('/api/validate/:number', lookup.validate)
 
-// LISTEN ON PORT //
-var port = process.env.PORT;
-app.listen(port, function() {
-    console.log('Server is listening on port: ' + port);
-});
+app.post('/api/profile', profile.create)
+app.post('/api/profile/login', profile.login)
+app.post('/api/profile/:id/setupNumber', profile.setupNumber)
+app.post('/api/profile/:id/subscribe', profile.subscribe)
+app.post('/api/profile/:id/unsubscribe', profile.unsubscribe)
+app.post('/api/voice/:id', incomingCall.forward)
+
+// serve React app
+app.use(serveSPA)
+
+// listen on port
+const port = process.env.PORT
+
+app.listen(port, () => {
+    console.log('Server is listening on port: ' + port)
+})
